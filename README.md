@@ -1,17 +1,39 @@
-# bad_log
+# Bad Log
 
-A new Flutter project.
+バドミントンの試合結果を記録するアプリ
 
-## Getting Started
+## 開発の進め方
 
-This project is a starting point for a Flutter application.
+開発に関して、``develop``ブランチからブランチを切って作業を行う。ブランチ名は``{自分の名前}/#{issue番号}_{実装内容の概略}``で行う。プルリクは少なくとも一人から``approve``されている状態で``develop``ブランチにマージする。
 
-A few resources to get you started if this is your first Flutter project:
+### ローカルでの開発の準備
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+#### リポジトリの複製
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
-# bad-log
+Github のリポジトリを複製するために任意のディレクトリで以下のコマンドを実行してください。
+
+```shell
+git clone https://github.com/Ryotaewamoto/bad-log.git
+```
+
+or
+
+```shell
+git clone git@github.com:Ryotaewamoto/bad-log.git
+```
+
+#### FVM の導入
+
+Flutter のバージョンを統一するために[Flutter Version Management(略して、FVM)](https://fvm.app/)を使用します。まだインストールが済んでいない場合は[この記事](https://zenn.dev/altiveinc/articles/flutter-version-management)を参考にインストールをしてください。
+
+このプロジェクトでは Flutter のバージョンは``3.3.10``を使用するのでルートディレクトリ（``bad-log``）で以下のコマンドを実行してください。
+
+```shell
+fvm use 3.3.10
+```
+
+#### デバックビルドの確認
+
+Android（iOSも同様）のエミュレータを起動し以下の操作を行い、デバックビルドが``mobile dev``と``mobile prod``で通るかどうかを確認してください。(VSCodeの場合)
+
+<img src="https://user-images.githubusercontent.com/75112184/210572448-2b8be289-e06c-4a70-9a73-07b4d594b745.png" width=70%>
