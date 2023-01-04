@@ -1,0 +1,4 @@
+FLUTTER_FLAVOR=dev
+PRODUCT_BUNDLE_IDENTIFIER=com.ryotaiwamoto.badLog.dev
+DISPLAY_NAME=BadLog.dev
+FLUTTER_TARGET=lib/main.dart
