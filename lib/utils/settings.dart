@@ -10,7 +10,6 @@ final flavor = Flavor.values.firstWhere((f) => f.name == flavorString);
 
 /// Flutter のビルドオプションの flavor
 enum Flavor {
-  local,
   dev,
   prod;
 
@@ -22,7 +21,6 @@ enum Flavor {
       case prod:
         return prod_options.DefaultFirebaseOptions.currentPlatform;
       case dev:
-      case local:
         return dev_options.DefaultFirebaseOptions.currentPlatform;
     }
   }

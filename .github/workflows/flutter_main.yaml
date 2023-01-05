@@ -1,0 +1,31 @@
+name: 'Static Analysis and Testing'
+
+on:
+  # プルリクエストが作成 or 更新された時
+  pull_request:
+    types:
+      - opened
+      - synchronize
+
+  # main or develop ブランチに push された時
+  push:
+    branches:
+      - main
+      - develop
+
+jobs:
+  analyzer:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/actions
+      - run: flutter analyze
+
+  formatter:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/actions
+      - run: flutter format --output=none --set-exit-if-changed .
