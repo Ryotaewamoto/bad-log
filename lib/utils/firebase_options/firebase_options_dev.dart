@@ -64,7 +64,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '662203539287',
     projectId: 'bad-log-dev',
     storageBucket: 'bad-log-dev.appspot.com',
-    iosClientId: '662203539287-970h0d7jh9hn7if9gh2ssrvp693eimtu.apps.googleusercontent.com',
+    iosClientId:
+        '662203539287-970h0d7jh9hn7if9gh2ssrvp693eimtu.apps.googleusercontent.com',
     iosBundleId: 'com.ryotaiwamoto.badLog.dev',
   );
 }
