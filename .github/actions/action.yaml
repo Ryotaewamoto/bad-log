@@ -1,0 +1,14 @@
+# This is a "Composite action" or "Composite Run Steps" file.
+
+runs:
+  using: 'composite'
+  steps:
+    - uses: actions/checkout@v2
+    - uses: kuhnroyal/flutter-fvm-config-action@v1
+    - uses: subosito/flutter-action@v2
+      with:
+        flutter-version: ${{ env.FLUTTER_VERSION }}
+        channel: ${{ env.FLUTTER_CHANNEL }}
+        cache: true
+        cache-key: flutter
+        cache-path: ${{ runner.tool_cache }}/flutter
