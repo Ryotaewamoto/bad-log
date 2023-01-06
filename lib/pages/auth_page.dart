@@ -1,9 +1,10 @@
-import 'package:bad_log/features/auth.dart';
-import 'package:bad_log/pages/error_page.dart';
-import 'package:bad_log/pages/home_page.dart';
-import 'package:bad_log/pages/log_in_page.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+
+import '../features/auth.dart';
+import 'error_page.dart';
+import 'home_page.dart';
+import 'log_in_page.dart';
 
 class AuthPage extends HookConsumerWidget {
   const AuthPage({super.key});
@@ -22,7 +23,7 @@ class AuthPage extends HookConsumerWidget {
         return const ErrorPage();
       },
       loading: () {
-        return const CircularProgressIndicator();
+        return const SizedBox();
       },
     );
   }
