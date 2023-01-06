@@ -25,3 +25,7 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  fonts:
+    - family: Helvetica
+      fonts:
+        - asset: assets/fonts/Helvetica.ttc

@@ -10,7 +10,7 @@ class App extends StatelessWidget {
     return MaterialApp(
       title: 'BadLog',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        fontFamily: 'Helvetica',
       ),
       home: const AuthPage(),
     );
