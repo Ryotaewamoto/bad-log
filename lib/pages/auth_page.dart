@@ -3,8 +3,8 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../features/auth.dart';
 import 'error_page.dart';
+import 'get_started_page.dart';
 import 'home_page.dart';
-import 'log_in_page.dart';
 
 class AuthPage extends HookConsumerWidget {
   const AuthPage({super.key});
@@ -16,7 +16,7 @@ class AuthPage extends HookConsumerWidget {
         if (data != null) {
           return const HomePage();
         } else {
-          return const LogInPage();
+          return const GetStartedPage();
         }
       },
       error: (error, stackTrace) {

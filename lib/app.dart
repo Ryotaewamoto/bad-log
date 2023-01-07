@@ -1,3 +1,4 @@
+import 'package:bad_log/utils/constants/app_colors.dart';
 import 'package:flutter/material.dart';
 
 import 'pages/auth_page.dart';
@@ -11,6 +12,7 @@ class App extends StatelessWidget {
       title: 'BadLog',
       theme: ThemeData(
         fontFamily: 'Helvetica',
+        scaffoldBackgroundColor: AppColors.baseWhite,
       ),
       home: const AuthPage(),
     );
