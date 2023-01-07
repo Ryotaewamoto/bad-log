@@ -20,6 +20,7 @@ dependencies:
   hooks_riverpod: ^2.1.3
 
 dev_dependencies:
+  flutter_launcher_icons: ^0.11.0
   flutter_test:
     sdk: flutter
   pedantic_mono: ^1.20.1
@@ -30,3 +31,7 @@ flutter:
     - family: Helvetica
       fonts:
         - asset: assets/fonts/Helvetica.ttc
+
+flutter_icons:
+  android: true
+  ios: true
