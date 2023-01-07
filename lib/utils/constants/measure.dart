@@ -14,7 +14,7 @@ class Measure {
 
   // 例外的な数値
   static const double s_20 = 20;
-  static const double s_40 = 40;
+  static const double s_32 = 32;
 
   // MARK: - Gap
 
@@ -23,7 +23,7 @@ class Measure {
   static const Gap g_12 = Gap(Measure.s_12);
   static const Gap g_16 = Gap(Measure.s_16);
   static const Gap g_24 = Gap(Measure.s_24);
-  static const Gap g_40 = Gap(Measure.s_40);
+  static const Gap g_32 = Gap(Measure.s_32);
 
   // MARK: - EdgeInsets(padding)
 

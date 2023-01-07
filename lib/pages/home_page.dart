@@ -1,4 +1,5 @@
 import 'package:bad_log/pages/account_page.dart';
+import 'package:bad_log/widgets/white_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -8,8 +9,15 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Home'),
+      appBar: WhiteAppBar(
+        title: '',
+        leading: IconButton(
+          onPressed: () {},
+          icon: const FaIcon(
+            Icons.sort,
+            size: 32,
+          ),
+        ),
         actions: [
           IconButton(
             onPressed: () {
@@ -20,7 +28,10 @@ class HomePage extends StatelessWidget {
                 ),
               );
             },
-            icon: const FaIcon(Icons.account_circle_rounded),
+            icon: const FaIcon(
+              Icons.account_circle_rounded,
+              size: 32,
+            ),
           )
         ],
       ),

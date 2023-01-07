@@ -1,8 +1,9 @@
-import 'package:bad_log/features/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import 'log_in_page.dart';
+import '../features/auth.dart';
+import '../widgets/white_app_bar.dart';
+import 'get_started_page.dart';
 
 class AccountPage extends HookConsumerWidget {
   const AccountPage({super.key});
@@ -10,8 +11,8 @@ class AccountPage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Account'),
+      appBar: const WhiteAppBar(
+        title: '',
       ),
       body: Center(
         child: TextButton(
@@ -25,7 +26,7 @@ class AccountPage extends HookConsumerWidget {
             await Navigator.pushAndRemoveUntil<dynamic>(
               context,
               MaterialPageRoute<dynamic>(
-                builder: (_) => const LogInPage(),
+                builder: (_) => const GetStartedPage(),
               ),
               (_) => false,
             );
