@@ -21,7 +21,6 @@ class WhiteAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      // TODO: バックボタンを SVG で表示
       leading: leading,
       centerTitle: true,
       elevation: 0,
