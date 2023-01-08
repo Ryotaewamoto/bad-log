@@ -13,6 +13,7 @@ class AccountPage extends HookConsumerWidget {
     return Scaffold(
       appBar: const WhiteAppBar(
         title: '',
+        automaticallyImplyLeading: true,
       ),
       body: Center(
         child: TextButton(
@@ -23,12 +24,11 @@ class AccountPage extends HookConsumerWidget {
             // https://twitter.com/riscait/status/1607587400271921152
             // context.mounted が可能になった時に置き換える
             // ignore: use_build_context_synchronously
-            await Navigator.pushAndRemoveUntil<dynamic>(
+            await Navigator.push<dynamic>(
               context,
               MaterialPageRoute<dynamic>(
                 builder: (_) => const GetStartedPage(),
               ),
-              (_) => false,
             );
           },
           child: const Text('Log Out'),

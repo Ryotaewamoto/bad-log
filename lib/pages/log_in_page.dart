@@ -70,12 +70,11 @@ class LogInPage extends HookConsumerWidget {
                             // https://twitter.com/riscait/status/1607587400271921152
                             // context.mounted が可能になった時に置き換える
                             // ignore: use_build_context_synchronously
-                            await Navigator.pushAndRemoveUntil<dynamic>(
+                            await Navigator.push<dynamic>(
                               context,
                               MaterialPageRoute<dynamic>(
                                 builder: (_) => const HomePage(),
                               ),
-                              (_) => false,
                             );
                           } on Exception catch (e) {
                             throw Exception(e.toString());

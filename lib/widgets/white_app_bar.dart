@@ -7,11 +7,13 @@ class WhiteAppBar extends StatelessWidget implements PreferredSizeWidget {
   const WhiteAppBar({
     super.key,
     required this.title,
+    this.automaticallyImplyLeading = false,
     this.leading,
     this.actions,
   });
 
   final String title;
+  final bool automaticallyImplyLeading;
   final Widget? leading;
   final List<Widget>? actions;
 
@@ -21,6 +23,7 @@ class WhiteAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      automaticallyImplyLeading: automaticallyImplyLeading,
       leading: leading,
       centerTitle: true,
       elevation: 0,

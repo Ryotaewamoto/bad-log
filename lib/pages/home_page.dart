@@ -8,35 +8,38 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: WhiteAppBar(
-        title: '',
-        leading: IconButton(
-          onPressed: () {},
-          icon: const FaIcon(
-            Icons.sort,
-            size: 32,
-          ),
-        ),
-        actions: [
-          IconButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute<bool>(
-                  builder: (_) => const AccountPage(),
-                ),
-              );
-            },
+    return WillPopScope(
+      onWillPop: () async => false,
+      child: Scaffold(
+        appBar: WhiteAppBar(
+          title: '',
+          leading: IconButton(
+            onPressed: () {},
             icon: const FaIcon(
-              Icons.account_circle_rounded,
+              Icons.sort,
               size: 32,
             ),
-          )
-        ],
-      ),
-      body: const Center(
-        child: Text('home'),
+          ),
+          actions: [
+            IconButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute<bool>(
+                    builder: (_) => const AccountPage(),
+                  ),
+                );
+              },
+              icon: const FaIcon(
+                Icons.account_circle_rounded,
+                size: 32,
+              ),
+            )
+          ],
+        ),
+        body: const Center(
+          child: Text('home'),
+        ),
       ),
     );
   }
