@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../features/auth.dart';
 import '../widgets/white_app_bar.dart';
 import 'get_started_page.dart';
+import 'settings_page.dart';
 
 class AccountPage extends HookConsumerWidget {
   const AccountPage({super.key});
@@ -11,9 +13,25 @@ class AccountPage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
-      appBar: const WhiteAppBar(
-        title: '',
+      appBar: WhiteAppBar(
+        title: 'Account',
         automaticallyImplyLeading: true,
+        actions: [
+          IconButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute<bool>(
+                  builder: (_) => const SettingsPage(),
+                ),
+              );
+            },
+            icon: const FaIcon(
+              Icons.settings,
+              size: 32,
+            ),
+          ),
+        ],
       ),
       body: Center(
         child: TextButton(

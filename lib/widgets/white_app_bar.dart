@@ -26,7 +26,7 @@ class WhiteAppBar extends StatelessWidget implements PreferredSizeWidget {
       automaticallyImplyLeading: automaticallyImplyLeading,
       leading: leading,
       centerTitle: true,
-      elevation: 0,
+      elevation: 1,
       title: Text(title, style: TextStyles.h2()),
       backgroundColor: AppColors.baseWhite,
       iconTheme: const IconThemeData(color: AppColors.primary),

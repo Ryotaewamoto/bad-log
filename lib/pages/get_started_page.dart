@@ -1,11 +1,11 @@
-import 'package:bad_log/gen/assets.gen.dart';
-import 'package:bad_log/utils/constants/app_colors.dart';
-import 'package:bad_log/utils/constants/measure.dart';
-import 'package:bad_log/utils/text_styles.dart';
-import 'package:bad_log/widgets/rounded_button.dart';
-import 'package:bad_log/widgets/white_app_bar.dart';
 import 'package:flutter/material.dart';
 
+import '../gen/assets.gen.dart';
+import '../utils/constants/app_colors.dart';
+import '../utils/constants/measure.dart';
+import '../utils/text_styles.dart';
+import '../widgets/rounded_button.dart';
+import '../widgets/white_app_bar.dart';
 import 'log_in_page.dart';
 import 'sign_up_page.dart';
 

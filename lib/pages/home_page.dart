@@ -34,7 +34,7 @@ class HomePage extends StatelessWidget {
                 Icons.account_circle_rounded,
                 size: 32,
               ),
-            )
+            ),
           ],
         ),
         body: const Center(

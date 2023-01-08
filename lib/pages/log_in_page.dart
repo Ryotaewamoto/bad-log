@@ -1,14 +1,14 @@
-import 'package:bad_log/features/auth.dart';
-import 'package:bad_log/pages/home_page.dart';
-import 'package:bad_log/utils/constants/measure.dart';
-import 'package:bad_log/utils/loading.dart';
-import 'package:bad_log/widgets/rounded_button.dart';
-import 'package:bad_log/widgets/white_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+import '../features/auth.dart';
 import '../gen/assets.gen.dart';
 import '../utils/constants/app_colors.dart';
+import '../utils/constants/measure.dart';
+import '../utils/loading.dart';
+import '../widgets/rounded_button.dart';
+import '../widgets/white_app_bar.dart';
+import 'home_page.dart';
 
 class LogInPage extends HookConsumerWidget {
   const LogInPage({super.key});
