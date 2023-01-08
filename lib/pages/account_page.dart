@@ -13,6 +13,7 @@ class AccountPage extends HookConsumerWidget {
     return Scaffold(
       appBar: const WhiteAppBar(
         title: '',
+        automaticallyImplyLeading: true,
       ),
       body: Center(
         child: TextButton(
