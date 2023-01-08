@@ -13,71 +13,74 @@ class GetStartedPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: const WhiteAppBar(title: ''),
-      body: Stack(
-        children: [
-          const SizedBox.expand(
-            child: DecoratedBox(
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  stops: [
-                    0.75,
-                    1.0,
-                  ],
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                  colors: <Color>[
-                    AppColors.baseWhite,
-                    AppColors.accent,
-                  ],
+    return WillPopScope(
+      onWillPop: ()async => false ,
+      child: Scaffold(
+        appBar: const WhiteAppBar(title: ''),
+        body: Stack(
+          children: [
+            const SizedBox.expand(
+              child: DecoratedBox(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    stops: [
+                      0.75,
+                      1.0,
+                    ],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: <Color>[
+                      AppColors.baseWhite,
+                      AppColors.accent,
+                    ],
+                  ),
                 ),
               ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 32,
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 32,
+              ),
+              child: Column(
+                children: [
+                  Measure.g_32,
+                  Measure.g_32,
+                  Container(
+                    width: 150,
+                    height: 150,
+                    color: AppColors.baseLight,
+                  ),
+                  Measure.g_32,
+                  Measure.g_32,
+                  Text(
+                    'Welcome to BadLog !!',
+                    style: TextStyles.h3(),
+                  ),
+                  Measure.g_32,
+                  PrimaryRoundedButton(
+                    text: 'Create an account',
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        _fadeAnimationBuilder(widget: const SignUpPage()),
+                      );
+                    },
+                  ),
+                  Measure.g_16,
+                  SecondaryRoundedButton(
+                    text: 'Log In',
+                    onTap: () async {
+                      await Navigator.push(
+                        context,
+                        _fadeAnimationBuilder(widget: const LogInPage()),
+                      );
+                    },
+                  ),
+                ],
+              ),
             ),
-            child: Column(
-              children: [
-                Measure.g_32,
-                Measure.g_32,
-                Container(
-                  width: 150,
-                  height: 150,
-                  color: AppColors.baseLight,
-                ),
-                Measure.g_32,
-                Measure.g_32,
-                Text(
-                  'Welcome to BadLog !!',
-                  style: TextStyles.h3(),
-                ),
-                Measure.g_32,
-                PrimaryRoundedButton(
-                  text: 'Create an account',
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      _fadeAnimationBuilder(widget: const SignUpPage()),
-                    );
-                  },
-                ),
-                Measure.g_16,
-                SecondaryRoundedButton(
-                  text: 'Log In',
-                  onTap: () async {
-                    await Navigator.push(
-                      context,
-                      _fadeAnimationBuilder(widget: const LogInPage()),
-                    );
-                  },
-                ),
-              ],
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

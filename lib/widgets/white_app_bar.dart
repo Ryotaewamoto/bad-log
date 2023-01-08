@@ -21,6 +21,7 @@ class WhiteAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      automaticallyImplyLeading: false,
       leading: leading,
       centerTitle: true,
       elevation: 0,
