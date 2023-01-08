@@ -14,7 +14,7 @@ class GetStartedPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: ()async => false ,
+      onWillPop: () async => false,
       child: Scaffold(
         appBar: const WhiteAppBar(title: ''),
         body: Stack(
