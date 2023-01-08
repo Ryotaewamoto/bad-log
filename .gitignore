@@ -46,3 +46,5 @@ app.*.map.json
 # Flutter Vesrion Manager related
 .fvm/flutter_sdk
 
+# Android App Icon
+**/android/app/src/main/res/mipmap*/
