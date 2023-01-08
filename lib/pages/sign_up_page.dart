@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 
+import '../gen/assets.gen.dart';
 import '../utils/constants/app_colors.dart';
+import '../utils/constants/measure.dart';
+import '../widgets/rounded_button.dart';
 import '../widgets/white_app_bar.dart';
 
 class SignUpPage extends StatelessWidget {
@@ -11,6 +14,7 @@ class SignUpPage extends StatelessWidget {
     return Scaffold(
       appBar: const WhiteAppBar(
         title: 'Sign Up',
+        automaticallyImplyLeading: true,
       ),
       body: Stack(
         children: [
@@ -32,11 +36,23 @@ class SignUpPage extends StatelessWidget {
               ),
             ),
           ),
-          Center(
+          Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 32,
+            ),
             child: Column(
               children: [
+                Measure.g_24,
+                Assets.images.badLogIcon.image(width: 200, height: 200),
+                Measure.g_24,
+                const Text('現状、ボタンを押しても反応しません。'),
                 TextFormField(),
                 TextFormField(),
+                Measure.g_16,
+                PrimaryRoundedButton(
+                  text: 'Sign up',
+                  onTap: () async {},
+                ),
               ],
             ),
           ),

@@ -7,6 +7,7 @@ import 'package:bad_log/widgets/white_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+import '../gen/assets.gen.dart';
 import '../utils/constants/app_colors.dart';
 
 class LogInPage extends HookConsumerWidget {
@@ -22,6 +23,7 @@ class LogInPage extends HookConsumerWidget {
           Scaffold(
             appBar: const WhiteAppBar(
               title: 'Log In',
+              automaticallyImplyLeading: true,
             ),
             body: Stack(
               children: [
@@ -49,6 +51,9 @@ class LogInPage extends HookConsumerWidget {
                   ),
                   child: Column(
                     children: [
+                      Measure.g_24,
+                      Assets.images.badLogIcon.image(width: 200, height: 200),
+                      Measure.g_24,
                       const Text('何も入力しなくても現状はログインできます'),
                       TextFormField(),
                       TextFormField(),
