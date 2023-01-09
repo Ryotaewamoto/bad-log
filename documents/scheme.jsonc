@@ -16,7 +16,8 @@
         "collection: members": {
             "document: {memberId}": {
                 "memberId": "{memberId}",
-                "name": "Kazuma Igarashi"
+                "name": "Kazuma Igarashi",
+                "lastPlayedAt": "2022-11-19 00:00:00"
             }
         },
         "collection: results": {

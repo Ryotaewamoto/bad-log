@@ -1,3 +1,4 @@
+import 'package:bad_log/gen/fonts.gen.dart';
 import 'package:bad_log/utils/constants/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -14,7 +15,7 @@ class App extends HookConsumerWidget {
     return MaterialApp(
       title: 'BadLog',
       theme: ThemeData(
-        fontFamily: 'Helvetica',
+        fontFamily: FontFamily.helvetica,
         scaffoldBackgroundColor: AppColors.baseWhite,
       ),
       scaffoldMessengerKey: ref.watch(scaffoldMessengerKeyProvider),

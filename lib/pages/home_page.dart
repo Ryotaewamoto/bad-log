@@ -1,7 +1,10 @@
-import 'package:bad_log/pages/account_page.dart';
-import 'package:bad_log/widgets/white_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
+import '../utils/constants/app_colors.dart';
+import '../widgets/white_app_bar.dart';
+import 'account_page.dart';
+import 'result_detail_page.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -34,11 +37,23 @@ class HomePage extends StatelessWidget {
                 Icons.account_circle_rounded,
                 size: 32,
               ),
-            )
+            ),
           ],
         ),
         body: const Center(
           child: Text('home'),
+        ),
+        floatingActionButton: FloatingActionButton(
+          backgroundColor: AppColors.secondary,
+          child: const FaIcon(Icons.add),
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute<bool>(
+                builder: (_) => const ResultDetailPage(),
+              ),
+            );
+          },
         ),
       ),
     );

@@ -1,10 +1,11 @@
-import 'package:bad_log/utils/constants/app_colors.dart';
-import 'package:bad_log/utils/constants/measure.dart';
-import 'package:bad_log/utils/text_styles.dart';
-import 'package:bad_log/widgets/rounded_button.dart';
-import 'package:bad_log/widgets/white_app_bar.dart';
 import 'package:flutter/material.dart';
 
+import '../gen/assets.gen.dart';
+import '../utils/constants/app_colors.dart';
+import '../utils/constants/measure.dart';
+import '../utils/text_styles.dart';
+import '../widgets/rounded_button.dart';
+import '../widgets/white_app_bar.dart';
 import 'log_in_page.dart';
 import 'sign_up_page.dart';
 
@@ -44,17 +45,25 @@ class GetStartedPage extends StatelessWidget {
               child: Column(
                 children: [
                   Measure.g_32,
+                  Assets.images.badLogIcon.image(width: 280, height: 280),
                   Measure.g_32,
-                  Container(
-                    width: 150,
-                    height: 150,
-                    color: AppColors.baseLight,
-                  ),
-                  Measure.g_32,
-                  Measure.g_32,
-                  Text(
-                    'Welcome to BadLog !!',
-                    style: TextStyles.h3(),
+                  RichText(
+                    text: TextSpan(
+                      children: <TextSpan>[
+                        TextSpan(
+                          text: 'Welcome to ',
+                          style: TextStyles.h2(),
+                        ),
+                        TextSpan(
+                          text: 'BadLog',
+                          style: TextStyles.h2(color: AppColors.primary),
+                        ),
+                        TextSpan(
+                          text: ' !!',
+                          style: TextStyles.h2(),
+                        ),
+                      ],
+                    ),
                   ),
                   Measure.g_32,
                   PrimaryRoundedButton(
