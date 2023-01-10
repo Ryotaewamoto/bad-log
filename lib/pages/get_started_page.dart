@@ -69,7 +69,7 @@ class GetStartedPage extends StatelessWidget {
                   PrimaryRoundedButton(
                     text: 'Create an account',
                     onTap: () {
-                      Navigator.push(
+                      Navigator.push<dynamic>(
                         context,
                         _fadeAnimationBuilder(widget: const SignUpPage()),
                       );
@@ -79,7 +79,7 @@ class GetStartedPage extends StatelessWidget {
                   SecondaryRoundedButton(
                     text: 'Log In',
                     onTap: () async {
-                      await Navigator.push(
+                      await Navigator.push<dynamic>(
                         context,
                         _fadeAnimationBuilder(widget: const LogInPage()),
                       );
