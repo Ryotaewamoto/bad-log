@@ -4,7 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../utils/constants/app_colors.dart';
 import '../widgets/white_app_bar.dart';
 import 'account_page.dart';
-import 'create_page.dart';
+import 'create_result_page.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -50,7 +50,7 @@ class HomePage extends StatelessWidget {
             Navigator.push(
               context,
               MaterialPageRoute<bool>(
-                builder: (_) => const CreatePage(),
+                builder: (_) => const CreateResultPage(),
               ),
             );
           },

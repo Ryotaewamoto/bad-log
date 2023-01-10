@@ -1,1 +1,11 @@
 include: package:pedantic_mono/analysis_options.yaml
+
+analyzer:
+  strong-mode:
+    implicit-casts: false
+    implicit-dynamic: false
+
+  exclude:
+    - lib/firebase_options.dart
+    - 'lib/**/*.g.dart'
+    - 'lib/**/*.freezed.dart'
