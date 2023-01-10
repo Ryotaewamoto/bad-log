@@ -11,7 +11,7 @@ class PrimaryRoundedButton extends StatelessWidget {
   });
 
   final String text;
-  final VoidCallback onTap;
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +53,7 @@ class SecondaryRoundedButton extends StatelessWidget {
   });
 
   final String text;
-  final VoidCallback onTap;
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {

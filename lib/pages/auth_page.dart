@@ -2,7 +2,8 @@ import 'package:bad_log/utils/extensions/widget_ref.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../features/auth.dart';
+import '../repositories/auth_repository.dart';
+import '../utils/loading.dart';
 import 'error_page.dart';
 import 'get_started_page.dart';
 import 'home_page.dart';

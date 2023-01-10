@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../features/auth.dart';
+import '../repositories/auth_repository.dart';
 import '../widgets/white_app_bar.dart';
 import 'get_started_page.dart';
 import 'settings_page.dart';
@@ -37,7 +37,7 @@ class AccountPage extends HookConsumerWidget {
         child: TextButton(
           onPressed: () async {
             // ログアウト
-            await ref.watch(authProvider).signOut();
+            await ref.watch(authRepositoryProvider).signOut();
 
             // https://twitter.com/riscait/status/1607587400271921152
             // context.mounted が可能になった時に置き換える

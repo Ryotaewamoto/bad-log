@@ -1,11 +1,13 @@
+import 'package:bad_log/widgets/async_value_error_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../features/auth.dart';
+import '../features/auth/sign_in.dart';
 import '../gen/assets.gen.dart';
 import '../utils/constants/app_colors.dart';
 import '../utils/constants/measure.dart';
 import '../utils/loading.dart';
+import '../utils/scaffold_messenger_service.dart';
 import '../widgets/rounded_button.dart';
 import '../widgets/white_app_bar.dart';
 import 'home_page.dart';
@@ -15,6 +17,45 @@ class LogInPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    ref.listen<AsyncValue<void>>(
+      signInControllerProvider,
+      (_, state) async {
+        if (state.isLoading) {
+          ref.watch(overlayLoadingProvider.notifier).update((state) => true);
+          return;
+        }
+
+        await state.when(
+          data: (_) async {
+            // ローディングを非表示にする
+            ref.watch(overlayLoadingProvider.notifier).update((state) => false);
+
+            // ログインできたらスナックバーでメッセージを表示してホーム画面に遷移する
+            ref
+                .read(scaffoldMessengerServiceProvider)
+                .showSnackBar('You are now logged !');
+
+            await Navigator.of(context).push<void>(
+              MaterialPageRoute(
+                builder: (context) => const HomePage(),
+              ),
+            );
+          },
+          error: (e, s) async {
+            // ローディングを非表示にする
+            ref.watch(overlayLoadingProvider.notifier).update((state) => false);
+
+            // エラーが発生したらエラーダイアログを表示する
+            state.showAlertDialogOnError(context);
+          },
+          loading: () {
+            // ローディングを表示する
+            ref.watch(overlayLoadingProvider.notifier).update((state) => true);
+          },
+        );
+      },
+    );
+    final state = ref.watch(signInControllerProvider);
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
@@ -60,35 +101,16 @@ class LogInPage extends HookConsumerWidget {
                       Measure.g_16,
                       PrimaryRoundedButton(
                         text: 'Log In',
-                        onTap: () async {
-                          try {
-                            ref
-                                .watch(overlayLoadingProvider.notifier)
-                                .update((state) => true);
-                            // 匿名ユーザーでサインインする
-                            await ref.watch(authProvider).signInAnonymously();
-
-                            ref
-                                .watch(overlayLoadingProvider.notifier)
-                                .update((state) => false);
-
-                            // https://twitter.com/riscait/status/1607587400271921152
-                            // context.mounted が可能になった時に置き換える
-                            // ignore: use_build_context_synchronously
-                            await Navigator.push<dynamic>(
-                              context,
-                              MaterialPageRoute<dynamic>(
-                                builder: (_) => const HomePage(),
-                              ),
-                            );
-                          } on Exception catch (e) {
-                            throw Exception(e.toString());
-                          } finally {
-                            ref
-                                .watch(overlayLoadingProvider.notifier)
-                                .update((state) => false);
-                          }
-                        },
+                        onTap: state.isLoading
+                            ? null
+                            : () async {
+                                await ref
+                                    .read(signInControllerProvider.notifier)
+                                    .signIn(
+                                      email: 'sample6@gmail.com',
+                                      password: 'password',
+                                    );
+                              },
                       ),
                     ],
                   ),

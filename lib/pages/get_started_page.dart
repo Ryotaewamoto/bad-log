@@ -17,7 +17,10 @@ class GetStartedPage extends StatelessWidget {
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
-        appBar: const WhiteAppBar(title: ''),
+        appBar: const WhiteAppBar(
+          title: '',
+          elevation: 0,
+        ),
         body: Stack(
           children: [
             const SizedBox.expand(

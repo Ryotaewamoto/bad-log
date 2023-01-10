@@ -7,7 +7,7 @@ final connectivityProvider = StreamProvider((ref) {
 });
 
 /// インターネットに接続しているかどうか
-Future<bool> get isNetworkConnected async {
+Future<bool> isNetworkConnected() async {
   final result = await Connectivity().checkConnectivity();
   return result != ConnectivityResult.none;
 }
