@@ -21,6 +21,7 @@ class SignUpController extends AutoDisposeAsyncNotifier<void> {
 
   /// 新規登録する
   Future<void> signUp({
+    required String userName,
     required String email,
     required String password,
   }) async {
@@ -31,6 +32,12 @@ class SignUpController extends AutoDisposeAsyncNotifier<void> {
     // ログイン処理を実行する
     state = await AsyncValue.guard(() async {
       try {
+        if (userName.isEmpty || email.isEmpty || password.isEmpty) {
+          const exception = AppException(
+            message: 'ユーザ名、メールアドレス、パスワードを入力してください。',
+          );
+          throw exception;
+        }
         await authRepository.signUp(
           email: email,
           password: password,

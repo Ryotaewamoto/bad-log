@@ -8,7 +8,7 @@ extension FirebaseAuthExceptionEx on FirebaseAuthException {
       case 'weak-password':
         return 'パスワードが短すぎます。6文字以上を入力してください。';
       case 'invalid-email':
-        return 'メールアドレスが正しくありません';
+        return 'メールアドレスの形式が正しくありません';
       case 'user-not-found':
         return 'アカウントが見つかりません';
       case 'wrong-password':

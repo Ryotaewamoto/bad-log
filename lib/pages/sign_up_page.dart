@@ -150,8 +150,9 @@ class SignUpPage extends HookConsumerWidget {
                                   await ref
                                       .read(signUpControllerProvider.notifier)
                                       .signUp(
-                                        email: 'sample1@gmail.com',
-                                        password: 'password',
+                                        userName: useNameController.value.text,
+                                        email: useEmailController.value.text,
+                                        password: usePasswordController.value.text,
                                       );
                                 },
                         ),
