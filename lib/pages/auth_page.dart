@@ -1,20 +1,23 @@
-import 'package:bad_log/utils/extensions/widget_ref.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../features/auth.dart';
+import '../repositories/auth_repository_impl.dart';
+import '../utils/extensions/widget_ref.dart';
+import '../utils/loading.dart';
 import 'error_page.dart';
 import 'get_started_page.dart';
 import 'home_page.dart';
 
-/// 目には見えないが、アプリケーション上の全てのページがこの Scaffold の上に載るので
-/// ScaffoldMessengerService でどこからでもスナックバーなどが表示できるようになっている。
+/// 注意：画面遷移に [MaterialPageRoute] を採用しているので、ローディング時に重ねる
+/// [OverlayLoadingWidget] は各画面で実装が必要である。
 class AuthPage extends HookConsumerWidget {
   const AuthPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    // インターネットの接続が切れた際にスナックバーを表示
     ref.handleConnectivity();
+
     return Scaffold(
       body: ref.watch(authUserProvider).when(
         data: (data) {
@@ -28,7 +31,7 @@ class AuthPage extends HookConsumerWidget {
           return const ErrorPage();
         },
         loading: () {
-          return const SizedBox();
+          return const OverlayLoadingWidget();
         },
       ),
     );
