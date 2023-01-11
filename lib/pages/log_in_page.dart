@@ -144,8 +144,9 @@ class LogInPage extends HookConsumerWidget {
                                   await ref
                                       .read(signInControllerProvider.notifier)
                                       .signIn(
-                                        email: 'sample6@gmail.com',
-                                        password: 'password',
+                                        email: useEmailController.value.text,
+                                        password:
+                                            usePasswordController.value.text,
                                       );
                                 },
                         ),

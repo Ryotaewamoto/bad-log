@@ -31,6 +31,12 @@ class SignInController extends AutoDisposeAsyncNotifier<void> {
     // ログイン処理を実行する
     state = await AsyncValue.guard(() async {
       try {
+        if (email.isEmpty || password.isEmpty) {
+          const exception = AppException(
+            message: 'メールアドレスとパスワードを入力してください。',
+          );
+          throw exception;
+        }
         await authRepository.signIn(
           email: email,
           password: password,
