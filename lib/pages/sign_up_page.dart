@@ -68,7 +68,6 @@ class SignUpPage extends HookConsumerWidget {
     final useEmailController = useTextEditingController();
     final usePasswordController = useTextEditingController();
 
-
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
@@ -152,7 +151,8 @@ class SignUpPage extends HookConsumerWidget {
                                       .signUp(
                                         userName: useNameController.value.text,
                                         email: useEmailController.value.text,
-                                        password: usePasswordController.value.text,
+                                        password:
+                                            usePasswordController.value.text,
                                       );
                                 },
                         ),
