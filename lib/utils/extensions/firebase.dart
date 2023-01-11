@@ -1,6 +1,7 @@
-import 'package:firebase_core/firebase_core.dart';
 
-extension FirebaseExceptionEx on FirebaseException {
+import 'package:firebase_auth/firebase_auth.dart';
+
+extension FirebaseAuthExceptionEx on FirebaseAuthException {
   String get toJapanese {
     switch (code) {
       case 'network-request-failed':

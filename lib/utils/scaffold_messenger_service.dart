@@ -1,7 +1,7 @@
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+import 'async_value_error_dialog.dart';
 import 'constants/snack_bar.dart';
 
 final scaffoldMessengerKeyProvider = Provider(
@@ -21,6 +21,8 @@ class ScaffoldMessengerService {
       _ref.read(scaffoldMessengerKeyProvider);
 
   /// showDialog で指定したビルダー関数を返す。
+  ///
+  /// エラーに関しては別で [AsyncValueErrorDialog] を用いて対応する。
   Future<T?> showDialogByBuilder<T>({
     required Widget Function(BuildContext) builder,
     bool barrierDismissible = true,
@@ -48,16 +50,6 @@ class ScaffoldMessengerService {
         behavior: defaultSnackBarBehavior,
         duration: duration,
       ),
-    );
-  }
-
-  /// FirebaseException 起点でスナックバーを表示する
-  ScaffoldFeatureController<SnackBar, SnackBarClosedReason>
-      showSnackBarByFirebaseException(
-    FirebaseException e,
-  ) {
-    return showSnackBar(
-      '[${e.code}]: ${e.message ?? 'FirebaseException が発生しました。'}',
     );
   }
 }

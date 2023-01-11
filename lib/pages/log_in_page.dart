@@ -1,9 +1,9 @@
-import 'package:bad_log/widgets/async_value_error_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../features/auth/sign_in.dart';
 import '../gen/assets.gen.dart';
+import '../utils/async_value_error_dialog.dart';
 import '../utils/constants/app_colors.dart';
 import '../utils/constants/measure.dart';
 import '../utils/loading.dart';
