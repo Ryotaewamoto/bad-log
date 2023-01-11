@@ -1,3 +1,5 @@
+import 'package:bad_log/utils/constants/app_colors.dart';
+import 'package:bad_log/utils/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -46,7 +48,11 @@ class ScaffoldMessengerService {
     }
     return scaffoldMessengerState.showSnackBar(
       SnackBar(
-        content: Text(message),
+        content: Text(
+          message,
+          style: TextStyles.p2(color: AppColors.baseWhite),
+        ),
+        backgroundColor: AppColors.baseBlack,
         behavior: defaultSnackBarBehavior,
         duration: duration,
       ),

@@ -1,13 +1,12 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import 'exceptions/app_exception.dart';
 
-/// [error] には基本的に [AppException] が入る。そうでない場合、[_message] で
-/// [String] に変換する処理を行う。[AppException] でない場合はエラーハンドリングの漏れ
-/// であるので要注意。
+/// [AsyncValue] の [error] には基本的に [AppException] が入る。そうでない場合、
+/// [_message] で [String] に変換する処理を行う。
+/// [AppException] でない場合はエラーハンドリングの漏れであるので注意。
 extension AsyncValueErrorDialog on AsyncValue<void> {
   void showAlertDialogOnError(BuildContext context) {
     debugPrint('isLoading: $isLoading, hasError: $hasError');
@@ -35,12 +34,6 @@ Future<void> showExceptionAlertDialog({
 
 String _message(dynamic exception) {
   if (exception is AppException) {
-    return exception.message ?? exception.toString();
-  }
-  if (exception is FirebaseException) {
-    return exception.message ?? exception.toString();
-  }
-  if (exception is FirebaseAuthException) {
     return exception.message ?? exception.toString();
   }
   if (exception is PlatformException) {

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:gap/gap.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../features/auth/sign_up.dart';
@@ -8,6 +10,7 @@ import '../utils/constants/app_colors.dart';
 import '../utils/constants/measure.dart';
 import '../utils/loading.dart';
 import '../utils/scaffold_messenger_service.dart';
+import '../utils/text_form_styles.dart';
 import '../widgets/rounded_button.dart';
 import '../widgets/white_app_bar.dart';
 import 'home_page.dart';
@@ -55,67 +58,114 @@ class SignUpPage extends HookConsumerWidget {
         );
       },
     );
+
+    // Provider
     final state = ref.watch(signUpControllerProvider);
-    return Stack(
-      children: [
-        Scaffold(
-          appBar: const WhiteAppBar(
-            title: 'Sign Up',
-            automaticallyImplyLeading: true,
-          ),
-          body: Stack(
-            children: [
-              const SizedBox.expand(
-                child: DecoratedBox(
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      stops: [
-                        0.80,
-                        1.0,
-                      ],
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                      colors: <Color>[
-                        AppColors.baseWhite,
-                        AppColors.accent,
+
+    // Hooks
+    final isObscure = useState(true);
+    final useNameController = useTextEditingController();
+    final useEmailController = useTextEditingController();
+    final usePasswordController = useTextEditingController();
+
+
+    return GestureDetector(
+      behavior: HitTestBehavior.opaque,
+      onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+      child: Stack(
+        children: [
+          Scaffold(
+            appBar: const WhiteAppBar(
+              title: 'Sign Up',
+              elevation: 0,
+              automaticallyImplyLeading: true,
+            ),
+            body: Stack(
+              children: [
+                const SizedBox.expand(
+                  child: DecoratedBox(
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        stops: [
+                          0.80,
+                          1.0,
+                        ],
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                        colors: <Color>[
+                          AppColors.baseWhite,
+                          AppColors.accent,
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                SingleChildScrollView(
+                  reverse: true,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 32,
+                    ),
+                    child: Column(
+                      children: [
+                        Measure.g_24,
+                        Assets.images.badLogIcon.image(
+                          width: 200,
+                          height: 200,
+                        ),
+                        Measure.g_24,
+                        const TextFormHeader(title: 'User Name'),
+                        Measure.g_4,
+                        TextFormField(
+                          controller: useNameController,
+                          decoration: AppTextFormStyles.onGeneral(
+                            iconData: Icons.account_circle,
+                          ),
+                        ),
+                        Measure.g_16,
+                        const TextFormHeader(title: 'Email'),
+                        Measure.g_4,
+                        TextFormField(
+                          controller: useEmailController,
+                          decoration: AppTextFormStyles.onGeneral(
+                            iconData: Icons.mail,
+                          ),
+                        ),
+                        Measure.g_16,
+                        const TextFormHeader(title: 'Password'),
+                        Measure.g_4,
+                        TextFormField(
+                          obscureText: isObscure.value,
+                          controller: usePasswordController,
+                          decoration: AppTextFormStyles.onPassword(
+                            isObscure: isObscure,
+                          ),
+                        ),
+                        const Gap(64),
+                        PrimaryRoundedButton(
+                          text: 'Sign up',
+                          onTap: state.isLoading
+                              ? null
+                              : () async {
+                                  await ref
+                                      .read(signUpControllerProvider.notifier)
+                                      .signUp(
+                                        email: 'sample1@gmail.com',
+                                        password: 'password',
+                                      );
+                                },
+                        ),
+                        Measure.g_32,
                       ],
                     ),
                   ),
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 32,
-                ),
-                child: Column(
-                  children: [
-                    Measure.g_24,
-                    Assets.images.badLogIcon.image(width: 200, height: 200),
-                    Measure.g_24,
-                    TextFormField(),
-                    TextFormField(),
-                    Measure.g_16,
-                    PrimaryRoundedButton(
-                      text: 'Sign up',
-                      onTap: state.isLoading
-                          ? null
-                          : () async {
-                              await ref
-                                  .read(signUpControllerProvider.notifier)
-                                  .signUp(
-                                    email: 'sample1@gmail.com',
-                                    password: 'password',
-                                  );
-                            },
-                    ),
-                  ],
-                ),
-              ),
-            ],
+              ],
+            ),
           ),
-        ),
-        if (ref.watch(overlayLoadingProvider)) const OverlayLoadingWidget(),
-      ],
+          if (ref.watch(overlayLoadingProvider)) const OverlayLoadingWidget(),
+        ],
+      ),
     );
   }
 }

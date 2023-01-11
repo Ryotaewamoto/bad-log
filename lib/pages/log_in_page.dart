@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../features/auth/sign_in.dart';
@@ -8,6 +9,8 @@ import '../utils/constants/app_colors.dart';
 import '../utils/constants/measure.dart';
 import '../utils/loading.dart';
 import '../utils/scaffold_messenger_service.dart';
+import '../utils/text_form_styles.dart';
+import '../utils/text_styles.dart';
 import '../widgets/rounded_button.dart';
 import '../widgets/white_app_bar.dart';
 import 'home_page.dart';
@@ -55,7 +58,15 @@ class LogInPage extends HookConsumerWidget {
         );
       },
     );
+
+    // Provider
     final state = ref.watch(signInControllerProvider);
+
+    // Hooks
+    final isObscure = useState(true);
+    final useEmailController = useTextEditingController();
+    final usePasswordController = useTextEditingController();
+
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
@@ -64,6 +75,7 @@ class LogInPage extends HookConsumerWidget {
           Scaffold(
             appBar: const WhiteAppBar(
               title: 'Log In',
+              elevation: 0,
               automaticallyImplyLeading: true,
             ),
             body: Stack(
@@ -86,33 +98,60 @@ class LogInPage extends HookConsumerWidget {
                     ),
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 32,
-                  ),
-                  child: Column(
-                    children: [
-                      Measure.g_24,
-                      Assets.images.badLogIcon.image(width: 200, height: 200),
-                      Measure.g_24,
-                      const Text('何も入力しなくても現状はログインできます'),
-                      TextFormField(),
-                      TextFormField(),
-                      Measure.g_16,
-                      PrimaryRoundedButton(
-                        text: 'Log In',
-                        onTap: state.isLoading
-                            ? null
-                            : () async {
-                                await ref
-                                    .read(signInControllerProvider.notifier)
-                                    .signIn(
-                                      email: 'sample6@gmail.com',
-                                      password: 'password',
-                                    );
-                              },
-                      ),
-                    ],
+                SingleChildScrollView(
+                  reverse: true,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 32,
+                    ),
+                    child: Column(
+                      children: [
+                        Measure.g_24,
+                        Assets.images.badLogIcon.image(
+                          width: 200,
+                          height: 200,
+                        ),
+                        Measure.g_24,
+                        const TextFormHeader(title: 'Email'),
+                        Measure.g_4,
+                        TextFormField(
+                          controller: useEmailController,
+                          decoration: AppTextFormStyles.onGeneral(
+                            iconData: Icons.mail,
+                          ),
+                        ),
+                        Measure.g_16,
+                        const TextFormHeader(title: 'Password'),
+                        Measure.g_4,
+                        TextFormField(
+                          obscureText: isObscure.value,
+                          controller: usePasswordController,
+                          decoration: AppTextFormStyles.onPassword(
+                            isObscure: isObscure,
+                          ),
+                        ),
+                        Measure.g_32,
+                        Text(
+                          'Lost your password?',
+                          style: TextStyles.p1(color: AppColors.secondary),
+                        ),
+                        Measure.g_32,
+                        PrimaryRoundedButton(
+                          text: 'Log In',
+                          onTap: state.isLoading
+                              ? null
+                              : () async {
+                                  await ref
+                                      .read(signInControllerProvider.notifier)
+                                      .signIn(
+                                        email: 'sample6@gmail.com',
+                                        password: 'password',
+                                      );
+                                },
+                        ),
+                        Measure.g_32,
+                      ],
+                    ),
                   ),
                 ),
               ],

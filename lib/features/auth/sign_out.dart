@@ -4,7 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../../repositories/auth_repository.dart';
+import '../../repositories/auth_repository_impl.dart';
 import '../../utils/exceptions/app_exception.dart';
 import '../../utils/extensions/firebase.dart';
 
@@ -16,12 +16,12 @@ final signOutControllerProvider =
 class SignOutController extends AutoDisposeAsyncNotifier<void> {
   @override
   FutureOr<void> build() {
-    throw UnimplementedError();
+    // FutureOr<void> より、初期の処理の必要がないため何もしない。
   }
 
   /// 新規登録する
   Future<void> signOut() async {
-    final authRepository = ref.read(authRepositoryProvider);
+    final authRepository = ref.read(authRepositoryImplProvider);
     // ログイン結果をローディング中にする
     state = const AsyncLoading();
 
