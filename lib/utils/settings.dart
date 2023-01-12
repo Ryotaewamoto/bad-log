@@ -1,7 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 
-import 'firebase_options/firebase_options_dev.dart' as dev_options;
-import 'firebase_options/firebase_options_prod.dart' as prod_options;
+import '/firebase_options_dev.dart' as dev_options;
+import '/firebase_options_prod.dart' as prod_options;
 
 const flavorString = String.fromEnvironment('FLAVOR');
 
