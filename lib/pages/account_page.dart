@@ -1,10 +1,13 @@
+import 'package:bad_log/utils/constants/app_colors.dart';
+import 'package:bad_log/utils/constants/measure.dart';
+import 'package:bad_log/utils/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../repositories/auth_repository_impl.dart';
+import '../utils/loading.dart';
 import '../widgets/white_app_bar.dart';
-import 'auth_page.dart';
 import 'settings_page.dart';
 
 class AccountPage extends HookConsumerWidget {
@@ -12,47 +15,154 @@ class AccountPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return Scaffold(
-      appBar: WhiteAppBar(
-        title: 'Account',
-        automaticallyImplyLeading: true,
-        actions: [
-          IconButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute<bool>(
-                  builder: (_) => const SettingsPage(),
+    final user = ref.watch(authUserProvider).valueOrNull?.uid ?? 'error';
+    return Stack(
+      children: [
+        Scaffold(
+          appBar: WhiteAppBar(
+            title: 'Account',
+            automaticallyImplyLeading: true,
+            actions: [
+              IconButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute<bool>(
+                      builder: (_) => const SettingsPage(),
+                    ),
+                  );
+                },
+                icon: const FaIcon(
+                  Icons.settings,
+                  size: 32,
                 ),
-              );
-            },
-            icon: const FaIcon(
-              Icons.settings,
-              size: 32,
-            ),
-          ),
-        ],
-      ),
-      body: Center(
-        child: TextButton(
-          onPressed: () async {
-            // ログアウト
-            await ref.watch(authRepositoryImplProvider).signOut();
-
-            // https://twitter.com/riscait/status/1607587400271921152
-            // context.mounted が可能になった時に置き換える
-            // ignore: use_build_context_synchronously
-            await Navigator.pushAndRemoveUntil<dynamic>(
-              context,
-              MaterialPageRoute<dynamic>(
-                builder: (_) => const AuthPage(),
               ),
-              (_) => false,
-            );
-          },
-          child: const Text('Log Out'),
+            ],
+          ),
+          body: Column(
+            children: [
+              Measure.g_32,
+              const Center(
+                child: Icon(
+                  Icons.account_circle,
+                  color: AppColors.primary,
+                  size: 128,
+                ),
+              ),
+              Measure.g_8,
+              Text(
+                user,
+                style: TextStyles.p1(),
+              ),
+              Measure.g_24,
+              Padding(
+                padding: Measure.p_h16,
+                child: Column(
+                  children: [
+                    Row(
+                      children: [
+                        Text('Rate', style: TextStyles.h2()),
+                      ],
+                    ),
+                    Measure.g_8,
+                    Container(
+                      decoration: const BoxDecoration(
+                        color: AppColors.baseLight,
+                        boxShadow: [
+                          BoxShadow(
+                            offset: Offset(1, 1),
+                            blurRadius: 2,
+                          )
+                        ],
+                      ),
+                      width: double.infinity,
+                      child: Padding(
+                        padding: Measure.p_a8,
+                        child: Column(
+                          children: [
+                            Container(
+                              width: double.infinity,
+                              color: AppColors.baseWhite,
+                              child: Padding(
+                                padding: Measure.p_a8,
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Expanded(
+                                      child: Column(
+                                        children: [
+                                          Align(
+                                            alignment: Alignment.centerLeft,
+                                            child: Text(
+                                              'Jonatan Christie',
+                                              style: TextStyles.p2(),
+                                            ),
+                                          ),
+                                          Measure.g_4,
+                                          const Divider(
+                                            height: 0,
+                                            thickness: 2,
+                                          ),
+                                          Measure.g_4,
+                                          Align(
+                                            alignment: Alignment.centerLeft,
+                                            child: Text(
+                                              'Thomas Rouxel',
+                                              style: TextStyles.p2Bold(),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    const SizedBox(
+                                      width: 8,
+                                    ),
+                                    Center(
+                                      child: Row(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.baseline,
+                                        textBaseline: TextBaseline.alphabetic,
+                                        children: [
+                                          Text(
+                                            '54',
+                                            style: TextStyles.h1(),
+                                          ),
+                                          Align(
+                                            child: Text(
+                                              '%',
+                                              style: TextStyles.h2(),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 8, top: 8),
+                              child: Align(
+                                alignment: Alignment.bottomLeft,
+                                child: Text(
+                                  'Latest: 2022/03/25',
+                                  style: TextStyles.p3(),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
-      ),
+        if (ref.watch(overlayLoadingProvider)) const OverlayLoadingWidget(),
+      ],
     );
   }
 }

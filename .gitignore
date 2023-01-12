@@ -48,3 +48,6 @@ app.*.map.json
 
 # Android App Icon
 **/android/app/src/main/res/mipmap*/
+
+# VSCode
+.vscode/

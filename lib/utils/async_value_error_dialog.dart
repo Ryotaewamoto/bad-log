@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+import 'dialog.dart';
 import 'exceptions/app_exception.dart';
 
 /// [AsyncValue] の [error] には基本的に [AppException] が入る。そうでない場合、
@@ -40,31 +41,4 @@ String _message(dynamic exception) {
     return exception.message ?? exception.toString();
   }
   return exception.toString();
-}
-
-Future<bool?> showAlertDialog({
-  required BuildContext context,
-  required String title,
-  String? content,
-  String? cancelActionText,
-  required String defaultActionText,
-}) async {
-  return showDialog(
-    context: context,
-    builder: (context) => AlertDialog(
-      title: Text(title),
-      content: content != null ? Text(content) : null,
-      actions: <Widget>[
-        if (cancelActionText != null)
-          TextButton(
-            child: Text(cancelActionText),
-            onPressed: () => Navigator.of(context).pop(false),
-          ),
-        TextButton(
-          child: Text(defaultActionText),
-          onPressed: () => Navigator.of(context).pop(true),
-        ),
-      ],
-    ),
-  );
 }
