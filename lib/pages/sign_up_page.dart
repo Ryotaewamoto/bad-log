@@ -212,10 +212,10 @@ class SignUpPage extends HookConsumerWidget {
                                           Uri.parse(privacyPolicyLink),
                                           mode: LaunchMode.externalApplication,
                                         )) {
-                                          // ignore: lines_longer_than_80_chars
                                           const exception = AppException(
-                                            message:
-                                                'Could not launch $privacyPolicyLink',
+                                            message: '''
+Could not launch $privacyPolicyLink .
+''',
                                           );
                                           throw exception;
                                         }
