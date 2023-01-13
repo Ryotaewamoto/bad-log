@@ -19,7 +19,7 @@ class SettingsPage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     // Provider
-    final userEmail = ref.watch(authRepositoryImplProvider).currentUser!.email;
+    final userEmail = ref.watch(authRepositoryImplProvider).currentUser?.email;
     final members = ref.watch(membersProvider).maybeWhen<int>(
           data: (data) {
             return data.length;
