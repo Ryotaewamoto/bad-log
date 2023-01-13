@@ -1,16 +1,21 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:gap/gap.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../features/auth/sign_up.dart';
 import '../gen/assets.gen.dart';
 import '../utils/async_value_error_dialog.dart';
 import '../utils/constants/app_colors.dart';
 import '../utils/constants/measure.dart';
+import '../utils/constants/string.dart';
+import '../utils/dialog.dart';
+import '../utils/exceptions/app_exception.dart';
 import '../utils/loading.dart';
 import '../utils/scaffold_messenger_service.dart';
 import '../utils/text_form_styles.dart';
+import '../utils/text_styles.dart';
 import '../widgets/rounded_button.dart';
 import '../widgets/white_app_bar.dart';
 import 'home_page.dart';
@@ -140,7 +145,108 @@ class SignUpPage extends HookConsumerWidget {
                             isObscure: isObscure,
                           ),
                         ),
-                        const Gap(64),
+                        Measure.g_32,
+                        Padding(
+                          padding: Measure.p_h16,
+                          child: RichText(
+                            text: TextSpan(
+                              children: <TextSpan>[
+                                TextSpan(
+                                  text: 'By signing up,  you agree to our',
+                                  style: TextStyles.p1(),
+                                ),
+                                TextSpan(
+                                  text: ' Terms ',
+                                  recognizer: TapGestureRecognizer()
+                                    ..onTap = () async {
+                                      ref
+                                          .watch(
+                                            overlayLoadingProvider.notifier,
+                                          )
+                                          .update((state) => true);
+                                      try {
+                                        if (!await launchUrl(
+                                          Uri.parse(termsLink),
+                                          mode: LaunchMode.externalApplication,
+                                        )) {
+                                          const exception = AppException(
+                                            message:
+                                                'Could not launch $termsLink',
+                                          );
+                                          throw exception;
+                                        }
+                                      } on AppException catch (e) {
+                                        await showAlertDialog(
+                                          context: context,
+                                          title: 'Error',
+                                          content: e.message,
+                                          defaultActionText: 'OK',
+                                        );
+                                      } finally {
+                                        ref
+                                            .watch(
+                                              overlayLoadingProvider.notifier,
+                                            )
+                                            .update((state) => false);
+                                      }
+                                    },
+                                  style: TextStyles.p1(
+                                    color: AppColors.secondary,
+                                  ),
+                                ),
+                                TextSpan(
+                                  text: 'and',
+                                  style: TextStyles.p1(),
+                                ),
+                                TextSpan(
+                                  text: ' Privacy Policy ',
+                                  recognizer: TapGestureRecognizer()
+                                    ..onTap = () async {
+                                      ref
+                                          .watch(
+                                            overlayLoadingProvider.notifier,
+                                          )
+                                          .update((state) => true);
+                                      try {
+                                        if (!await launchUrl(
+                                          Uri.parse(privacyPolicyLink),
+                                          mode: LaunchMode.externalApplication,
+                                        )) {
+                                          // ignore: lines_longer_than_80_chars
+                                          const exception = AppException(
+                                            message:
+                                                'Could not launch $privacyPolicyLink',
+                                          );
+                                          throw exception;
+                                        }
+                                      } on AppException catch (e) {
+                                        await showAlertDialog(
+                                          context: context,
+                                          title: 'Error',
+                                          content: e.message,
+                                          defaultActionText: 'OK',
+                                        );
+                                      } finally {
+                                        ref
+                                            .watch(
+                                              overlayLoadingProvider.notifier,
+                                            )
+                                            .update((state) => false);
+                                      }
+                                    },
+                                  style: TextStyles.p1(
+                                    color: AppColors.secondary,
+                                  ),
+                                ),
+                                TextSpan(
+                                  text: '.',
+                                  style: TextStyles.p1(),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        Measure.g_32,
                         PrimaryRoundedButton(
                           text: 'Sign up',
                           onTap: state.isLoading
