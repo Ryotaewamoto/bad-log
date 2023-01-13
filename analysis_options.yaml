@@ -6,7 +6,9 @@ analyzer:
     implicit-dynamic: false
 
   exclude:
-    - lib/firebase_options.dart
+    - lib/utils/settings.dart
+    - lib/firebase_options_dev.dart
+    - lib/firebase_options_prod.dart
     - 'lib/**/*.g.dart'
     - 'lib/**/*.freezed.dart'
 
