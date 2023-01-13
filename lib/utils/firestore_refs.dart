@@ -3,7 +3,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../models/app_user.dart';
 
-
 final _db = FirebaseFirestore.instance;
 
 /// appUsers コレクションの参照。
