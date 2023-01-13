@@ -21,6 +21,7 @@ class CreateResultPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    // Provider
     final members = ref.watch(membersProvider).maybeWhen<List<Member>>(
           data: (data) {
             return [initMember, ...data];
@@ -29,7 +30,6 @@ class CreateResultPage extends HookConsumerWidget {
             initMember,
           ],
         );
-
     final selectedPartnerMember = ref.watch(
       dropdownButtonPartnerMemberProvider,
     );
@@ -40,6 +40,7 @@ class CreateResultPage extends HookConsumerWidget {
       dropdownButtonSecondOpponentMemberProvider,
     );
 
+    // Hooks
     final yours1gameNumberState = useState(0);
     final opponents1gameNumberState = useState(0);
 

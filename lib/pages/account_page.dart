@@ -15,10 +15,12 @@ class AccountPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    // Provider
     final appUserName = ref.watch(appUserFutureProvider).maybeWhen<String?>(
           data: (data) => data?.userName,
           orElse: () => null,
         );
+
     return Stack(
       children: [
         Scaffold(
