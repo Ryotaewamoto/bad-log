@@ -8,6 +8,6 @@ import '../repositories/auth/auth_repository_impl.dart';
 final appUserFutureProvider = FutureProvider.autoDispose<AppUser?>((ref) async {
   final userId = ref.watch(authRepositoryImplProvider).currentUser!.uid;
   final appUser =
-      await ref.read(appUserRepositoryImplProvider).retrieve(userId: userId);
+      await ref.read(appUserRepositoryImplProvider).fetch(userId: userId);
   return appUser;
 });

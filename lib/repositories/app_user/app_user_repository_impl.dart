@@ -35,7 +35,7 @@ class AppUserRepositoryImpl implements AppUserRepository {
   }
 
   @override
-  Future<AppUser?> retrieve({required String userId}) async {
+  Future<AppUser?> fetch({required String userId}) async {
     final ds = await appUserRef(userId: userId).get();
     if (!ds.exists) {
       logger.warning('Document not found: ${ds.reference.path}');

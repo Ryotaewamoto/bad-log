@@ -8,7 +8,7 @@ import '../../models/app_user.dart';
 import '../../repositories/app_user/app_user_repository_impl.dart';
 import '../../repositories/auth/auth_repository_impl.dart';
 import '../../utils/exceptions/app_exception.dart';
-import '../../utils/extensions/firebase.dart';
+import '../../utils/extensions/firebase_auth_exception.dart';
 import '../../utils/json_converters/union_timestamp.dart';
 
 final signUpControllerProvider =

@@ -6,7 +6,7 @@ abstract class AppUserRepository {
     required AppUser appUser,
   });
 
-  Future<AppUser?> retrieve({required String userId});
+  Future<AppUser?> fetch({required String userId});
 
   Future<void> update({
     required String userId,

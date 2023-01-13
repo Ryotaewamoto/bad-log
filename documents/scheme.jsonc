@@ -27,7 +27,8 @@
         "type": "singles", // or doubles
         "partner": "{memberId}",
         "opponents": ["{memberId}"],
-        "createdAt": "2022-11-19 00:00:00"
+        "createdAt": "2022-11-19 00:00:00",
+        "updatedAt": "2022-11-19 00:00:00"
       },
       //   "document: {resultId(2)}": {
       //     "resultId": "{resultId(2)}",
@@ -41,7 +42,7 @@
           "scoreId": "{scoreId}",
           "yours": [19, 21, 19],
           "opponents": [21, 19, 21],
-          "winner": "opponents",
+          "isWinner": false,
           "comment": "長いラリーであまり点数を取れなかった。サーブミスがなかったのは良い。",
           "createdAt": "2022-11-19 00:00:00"
         }

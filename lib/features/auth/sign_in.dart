@@ -6,7 +6,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../repositories/auth/auth_repository_impl.dart';
 import '../../utils/exceptions/app_exception.dart';
-import '../../utils/extensions/firebase.dart';
+import '../../utils/extensions/firebase_auth_exception.dart';
 
 final signInControllerProvider =
     AutoDisposeAsyncNotifierProvider<SignInController, void>(
