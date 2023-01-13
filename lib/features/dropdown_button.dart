@@ -5,7 +5,7 @@ import '../utils/fakes/member.dart';
 
 /// 味方の [Member] の状態を保持する Provider。
 final dropdownButtonPartnerMemberProvider =
-    StateNotifierProvider<DropdownButtonMemberNotifier, Member>((ref) {
+    StateNotifierProvider.autoDispose<DropdownButtonMemberNotifier, Member>((ref) {
   return DropdownButtonMemberNotifier();
 });
 

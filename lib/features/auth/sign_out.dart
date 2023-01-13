@@ -4,7 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../../repositories/auth_repository_impl.dart';
+import '../../repositories/auth/auth_repository_impl.dart';
 import '../../utils/exceptions/app_exception.dart';
 import '../../utils/extensions/firebase.dart';
 

@@ -1,11 +1,11 @@
-import 'package:bad_log/utils/constants/app_colors.dart';
-import 'package:bad_log/utils/dialog.dart';
-import 'package:bad_log/utils/fakes/member.dart';
-import 'package:bad_log/utils/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../repositories/auth_repository_impl.dart';
+import '../repositories/auth/auth_repository_impl.dart';
+import '../utils/constants/app_colors.dart';
+import '../utils/dialog.dart';
+import '../utils/fakes/member.dart';
+import '../utils/text_styles.dart';
 import '../widgets/white_app_bar.dart';
 import 'auth_page.dart';
 
@@ -14,7 +14,7 @@ class SettingsPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final userEmail = ref.watch(authUserProvider).valueOrNull?.email ?? 'error';
+    final userEmail = ref.watch(authRepositoryImplProvider).currentUser!.email;
     return Scaffold(
       appBar: const WhiteAppBar(
         title: 'Settings',
@@ -35,7 +35,7 @@ class SettingsPage extends HookConsumerWidget {
                   style: TextStyles.h4(),
                 ),
                 subtitle: Text(
-                  userEmail,
+                  userEmail ?? '',
                   style: TextStyles.p2(),
                 ),
               ),

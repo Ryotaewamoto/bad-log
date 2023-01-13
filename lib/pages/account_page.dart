@@ -1,3 +1,4 @@
+import 'package:bad_log/features/app_user.dart';
 import 'package:bad_log/utils/constants/app_colors.dart';
 import 'package:bad_log/utils/constants/measure.dart';
 import 'package:bad_log/utils/text_styles.dart';
@@ -5,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../repositories/auth_repository_impl.dart';
 import '../utils/loading.dart';
 import '../widgets/white_app_bar.dart';
 import 'settings_page.dart';
@@ -15,7 +15,24 @@ class AccountPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final user = ref.watch(authUserProvider).valueOrNull?.uid ?? 'error';
+    final appUserName = ref.watch(appUserFutureProvider).maybeWhen<Widget>(
+          data: (data) {
+            if (data != null) {
+              return Text(
+                data.userName,
+                style: TextStyles.p1(),
+              );
+            }
+            return Text(
+              '',
+              style: TextStyles.p1(),
+            );
+          },
+          orElse: () => Text(
+            '',
+            style: TextStyles.p1(),
+          ),
+        );
     return Stack(
       children: [
         Scaffold(
@@ -50,10 +67,7 @@ class AccountPage extends HookConsumerWidget {
                 ),
               ),
               Measure.g_8,
-              Text(
-                user,
-                style: TextStyles.p1(),
-              ),
+              appUserName,
               Measure.g_24,
               Padding(
                 padding: Measure.p_h16,

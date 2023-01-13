@@ -27,14 +27,16 @@ class AuthRepositoryImpl implements AuthRepository {
 
   /// ユーザー作成
   @override
-  Future<void> signUp({
+  Future<String?> signUp({
     required String email,
     required String password,
   }) async {
-    await _auth.createUserWithEmailAndPassword(
+    final userCredential = await _auth.createUserWithEmailAndPassword(
       email: email,
       password: password,
     );
+
+    return userCredential.user?.uid;
   }
 
   /// ログイン
