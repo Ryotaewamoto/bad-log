@@ -31,7 +31,6 @@ class AppUserRepositoryImpl implements AppUserRepository {
 
   @override
   Future<void> delete({required String userId}) {
-    // TODO: implement delete
     throw UnimplementedError();
   }
 
@@ -47,7 +46,6 @@ class AppUserRepositoryImpl implements AppUserRepository {
 
   @override
   Future<void> update({required String userId, required AppUser appUser}) {
-    // TODO: implement update
     throw UnimplementedError();
   }
 }

@@ -23,7 +23,6 @@ class CreateResultPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final members = ref.watch(membersProvider).maybeWhen<List<Member>>(
           data: (data) {
-            debugPrint([initMember, ...data].toString());
             return [initMember, ...data];
           },
           orElse: () => [

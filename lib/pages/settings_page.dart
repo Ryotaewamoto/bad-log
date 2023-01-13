@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+import '../features/member.dart';
 import '../repositories/auth/auth_repository_impl.dart';
 import '../utils/constants/app_colors.dart';
 import '../utils/dialog.dart';
-import '../utils/fakes/member.dart';
 import '../utils/text_styles.dart';
 import '../widgets/white_app_bar.dart';
 import 'auth_page.dart';
@@ -15,6 +15,12 @@ class SettingsPage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final userEmail = ref.watch(authRepositoryImplProvider).currentUser!.email;
+    final members = ref.watch(membersProvider).maybeWhen<int>(
+          data: (data) {
+            return data.length;
+          },
+          orElse: () => 0,
+        );
     return Scaffold(
       appBar: const WhiteAppBar(
         title: 'Settings',
@@ -57,7 +63,7 @@ class SettingsPage extends HookConsumerWidget {
                   style: TextStyles.h4(),
                 ),
                 subtitle: Text(
-                  '${fakeMembers.length} / 20',
+                  '$members / 20',
                   style: TextStyles.p2(),
                 ),
               ),

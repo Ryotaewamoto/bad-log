@@ -9,14 +9,14 @@ part 'app_user.g.dart';
 @freezed
 class AppUser with _$AppUser {
   const factory AppUser({
-    @Assert('userName.length <= 20')
-    @Default('') String userId,
+    @Assert('userName.length <= 20') @Default('') String userId,
     @Default('') String userName,
     @alwaysUseServerTimestampUnionTimestampConverter
-    required UnionTimestamp createdAt,
+        required UnionTimestamp createdAt,
   }) = _AppUser;
 
-  factory AppUser.fromJson(Map<String, dynamic> json) => _$AppUserFromJson(json);
+  factory AppUser.fromJson(Map<String, dynamic> json) =>
+      _$AppUserFromJson(json);
 
   factory AppUser.fromDocumentSnapshot(DocumentSnapshot ds) {
     final data = ds.data()! as Map<String, dynamic>;
