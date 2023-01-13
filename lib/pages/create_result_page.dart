@@ -4,6 +4,7 @@ import 'package:gap/gap.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../features/dropdown_button.dart';
+import '../features/member.dart';
 import '../features/radio_button.dart';
 import '../features/toggle_button.dart';
 import '../models/member.dart';
@@ -20,6 +21,15 @@ class CreateResultPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final members = ref.watch(membersProvider).maybeWhen<List<Member>>(
+          data: (data) {
+            return [initMember, ...data];
+          },
+          orElse: () => [
+            initMember,
+          ],
+        );
+
     final selectedPartnerMember = ref.watch(
       dropdownButtonPartnerMemberProvider,
     );
@@ -99,6 +109,7 @@ class CreateResultPage extends HookConsumerWidget {
                         Padding(
                           padding: Measure.p_h8,
                           child: DropdownMemberSelectButton(
+                            membersList: members,
                             selectedSecondOpponentMember: selectedPartnerMember,
                             onChanged: (value) => ref
                                 .read(
@@ -123,6 +134,7 @@ class CreateResultPage extends HookConsumerWidget {
                       Padding(
                         padding: Measure.p_h8,
                         child: DropdownMemberSelectButton(
+                          membersList: members,
                           selectedSecondOpponentMember:
                               selectedFirstOpponentMember,
                           onChanged: (value) => ref
@@ -150,6 +162,7 @@ class CreateResultPage extends HookConsumerWidget {
                         Padding(
                           padding: Measure.p_h8,
                           child: DropdownMemberSelectButton(
+                            membersList: members,
                             selectedSecondOpponentMember:
                                 selectedSecondOpponentMember,
                             onChanged: (value) => ref
@@ -331,15 +344,17 @@ class ScoreSelectCard extends StatelessWidget {
   }
 }
 
-class DropdownMemberSelectButton extends StatelessWidget {
+class DropdownMemberSelectButton extends HookWidget {
   const DropdownMemberSelectButton({
     super.key,
     required this.selectedSecondOpponentMember,
     required this.onChanged,
+    required this.membersList,
   });
 
   final Member selectedSecondOpponentMember;
   final void Function(Member?)? onChanged;
+  final List<Member> membersList;
 
   @override
   Widget build(BuildContext context) {
@@ -365,7 +380,7 @@ class DropdownMemberSelectButton extends StatelessWidget {
               color: AppColors.secondary,
             ),
             onChanged: onChanged, //追加
-            items: fakeMembers.map<DropdownMenuItem<Member?>>((value) {
+            items: membersList.map<DropdownMenuItem<Member?>>((value) {
               return DropdownMenuItem(
                 value: value,
                 child: Text(value.memberName),

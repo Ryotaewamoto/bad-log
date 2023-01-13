@@ -5,21 +5,22 @@ import '../utils/fakes/member.dart';
 
 /// 味方の [Member] の状態を保持する Provider。
 final dropdownButtonPartnerMemberProvider =
-    StateNotifierProvider<DropdownButtonMemberNotifier, Member>((ref) {
+    StateNotifierProvider.autoDispose<DropdownButtonMemberNotifier, Member>(
+        (_) {
   return DropdownButtonMemberNotifier();
 });
 
 /// 1人目の対戦相手の [Member] の状態を保持する Provider。
 final dropdownButtonFirstOpponentMemberProvider =
     StateNotifierProvider.autoDispose<DropdownButtonMemberNotifier, Member>(
-        (ref) {
+        (_) {
   return DropdownButtonMemberNotifier();
 });
 
 /// 2人目の対戦相手の [Member] の状態を保持する Provider。
 final dropdownButtonSecondOpponentMemberProvider =
     StateNotifierProvider.autoDispose<DropdownButtonMemberNotifier, Member>(
-        (ref) {
+        (_) {
   return DropdownButtonMemberNotifier();
 });
 

@@ -4,7 +4,7 @@ abstract class AuthRepository {
   User? get currentUser;
   Stream<User?> authStateChanges();
 
-  Future<void> signUp({
+  Future<String?> signUp({
     required String email,
     required String password,
   });

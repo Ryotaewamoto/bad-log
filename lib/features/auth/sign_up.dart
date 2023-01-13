@@ -4,9 +4,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../../repositories/auth_repository_impl.dart';
+import '../../models/app_user.dart';
+import '../../repositories/app_user/app_user_repository_impl.dart';
+import '../../repositories/auth/auth_repository_impl.dart';
 import '../../utils/exceptions/app_exception.dart';
-import '../../utils/extensions/firebase.dart';
+import '../../utils/extensions/firebase_auth_exception.dart';
+import '../../utils/json_converters/union_timestamp.dart';
 
 final signUpControllerProvider =
     AutoDisposeAsyncNotifierProvider<SignUpController, void>(
@@ -26,6 +29,7 @@ class SignUpController extends AutoDisposeAsyncNotifier<void> {
     required String password,
   }) async {
     final authRepository = ref.read(authRepositoryImplProvider);
+    final appUserRepository = ref.read(appUserRepositoryImplProvider);
     // ログイン結果をローディング中にする
     state = const AsyncLoading();
 
@@ -38,10 +42,29 @@ class SignUpController extends AutoDisposeAsyncNotifier<void> {
           );
           throw exception;
         }
-        await authRepository.signUp(
+
+        final userId = await authRepository.signUp(
           email: email,
           password: password,
         );
+
+        if (userId != null) {
+          final appUser = AppUser(
+            userId: userId,
+            userName: userName,
+            createdAt: UnionTimestamp.dateTime(DateTime.now()),
+          );
+
+          await appUserRepository.create(
+            userId: userId,
+            appUser: appUser,
+          );
+        } else {
+          const exception = AppException(
+            message: 'アカウントの作成に失敗しました。別のメールアドレスでお試しください。',
+          );
+          throw exception;
+        }
       } on FirebaseAuthException catch (e) {
         final exception = AppException(
           code: e.code,
