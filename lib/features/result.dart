@@ -33,10 +33,10 @@ class CreateResultController extends AutoDisposeAsyncNotifier<void> {
     // ログイン処理を実行する
     state = await AsyncValue.guard(() async {
       try {
-        // TODO: validation
+        // TODO(ryotaiwamoto): validation
         // 同じメンバーのドキュメントが存在する場合はそのドキュメントのIDをとってきて Score を追加する。
         // その場合には 以下の resultId は使用しない。
-        // TODO: List<Result> の中からパートナーと対戦相手が一致するものを探す関数を作成する。
+        // TODO(ryotaiwamoto): List<Result> の中からパートナーと対戦相手が一致するものを探す関数を作成する。
         final resultId = await resultRepository.create(
           userId: userId,
           result: result,

@@ -1,7 +1,8 @@
-import 'package:bad_log/utils/constants/app_colors.dart';
-import 'package:bad_log/utils/constants/measure.dart';
-import 'package:bad_log/utils/text_styles.dart';
 import 'package:flutter/material.dart';
+
+import '../utils/constants/app_colors.dart';
+import '../utils/constants/measure.dart';
+import '../utils/text_styles.dart';
 
 class PrimaryRoundedButton extends StatelessWidget {
   const PrimaryRoundedButton({

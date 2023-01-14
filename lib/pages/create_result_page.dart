@@ -122,7 +122,8 @@ class CreateResultPage extends HookConsumerWidget {
                               .watch(selectTypesProvider.notifier)
                               .changeSelectType(index);
                         },
-                        borderRadius: const BorderRadius.all(Radius.circular(8)),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(8)),
                         borderColor: AppColors.secondary,
                         selectedColor: AppColors.baseWhite,
                         fillColor: AppColors.secondary,
@@ -158,10 +159,12 @@ class CreateResultPage extends HookConsumerWidget {
                               padding: Measure.p_h8,
                               child: DropdownMemberSelectButton(
                                 membersList: members,
-                                selectedSecondOpponentMember: selectedPartnerMember,
+                                selectedSecondOpponentMember:
+                                    selectedPartnerMember,
                                 onChanged: (value) => ref
                                     .read(
-                                      dropdownButtonPartnerMemberProvider.notifier,
+                                      dropdownButtonPartnerMemberProvider
+                                          .notifier,
                                     )
                                     .selectedMember(value),
                               ),
@@ -238,10 +241,13 @@ class CreateResultPage extends HookConsumerWidget {
                               Radio(
                                 activeColor: AppColors.secondary,
                                 value: '1game',
-                                groupValue: ref.watch(is1gameRadioButtonProvider),
+                                groupValue:
+                                    ref.watch(is1gameRadioButtonProvider),
                                 onChanged: (value) {
                                   ref
-                                      .watch(is1gameRadioButtonProvider.notifier)
+                                      .watch(
+                                        is1gameRadioButtonProvider.notifier,
+                                      )
                                       .update((state) => value);
                                 },
                               ),
@@ -253,10 +259,13 @@ class CreateResultPage extends HookConsumerWidget {
                               Radio(
                                 activeColor: AppColors.secondary,
                                 value: '3games',
-                                groupValue: ref.watch(is1gameRadioButtonProvider),
+                                groupValue:
+                                    ref.watch(is1gameRadioButtonProvider),
                                 onChanged: (value) {
                                   ref
-                                      .watch(is1gameRadioButtonProvider.notifier)
+                                      .watch(
+                                        is1gameRadioButtonProvider.notifier,
+                                      )
                                       .update((state) => value);
                                 },
                               ),
@@ -308,7 +317,9 @@ class CreateResultPage extends HookConsumerWidget {
                                 const SizedBox(
                                   width: 80,
                                 ),
-                                ScoreSelectCard(state: opponents2gameNumberState),
+                                ScoreSelectCard(
+                                  state: opponents2gameNumberState,
+                                ),
                               ],
                             ),
                             Measure.g_12,
@@ -324,7 +335,9 @@ class CreateResultPage extends HookConsumerWidget {
                                 const SizedBox(
                                   width: 80,
                                 ),
-                                ScoreSelectCard(state: opponents3gameNumberState),
+                                ScoreSelectCard(
+                                  state: opponents3gameNumberState,
+                                ),
                               ],
                             ),
                             Measure.g_12,
@@ -344,8 +357,8 @@ class CreateResultPage extends HookConsumerWidget {
                           );
 
                           final score = Score(
-                            yours: [21,21],
-                            opponents: [19,19],
+                            yours: [21, 21],
+                            opponents: [19, 19],
                             isWinner: true,
                             createdAt: UnionTimestamp.dateTime(DateTime.now()),
                             updatedAt: UnionTimestamp.dateTime(DateTime.now()),

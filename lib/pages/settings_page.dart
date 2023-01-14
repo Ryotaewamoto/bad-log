@@ -115,7 +115,7 @@ class SettingsPage extends HookConsumerWidget {
                   height: 64,
                   child: ListTile(
                     title: Text(
-                      'Terms',
+                      'Terms of Service',
                       style: TextStyles.h4(),
                     ),
                   ),
