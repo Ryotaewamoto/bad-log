@@ -1,7 +1,9 @@
-import 'package:bad_log/models/member.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../models/app_user.dart';
+import '../models/member.dart';
+import '../models/result.dart';
+import '../models/score.dart';
 
 final _db = FirebaseFirestore.instance;
 
@@ -32,6 +34,42 @@ DocumentReference<Member> memberRef({
   required String memberId,
 }) =>
     membersRef(userId: userId).doc(memberId);
+
+/// results コレクションの参照。
+CollectionReference<Result> resultsRef({
+  required String userId,
+}) =>
+    appUserRef(userId: userId).collection('results').withConverter(
+          fromFirestore: (ds, _) => Result.fromDocumentSnapshot(ds),
+          toFirestore: (obj, _) => obj.toJson(),
+        );
+
+/// result ドキュメントの参照。
+DocumentReference<Result> resultRef({
+  required String userId,
+  required String resultId,
+}) =>
+    resultsRef(userId: userId).doc(resultId);
+
+/// scores コレクションの参照。
+CollectionReference<Score> scoresRef({
+  required String userId,
+  required String resultId,
+}) =>
+    resultRef(userId: userId, resultId: resultId)
+        .collection('scores')
+        .withConverter(
+          fromFirestore: (ds, _) => Score.fromDocumentSnapshot(ds),
+          toFirestore: (obj, _) => obj.toJson(),
+        );
+
+/// score ドキュメントの参照。
+DocumentReference<Score> scoreRef({
+  required String userId,
+  required String resultId,
+  required String scoreId,
+}) =>
+    scoresRef(userId: userId, resultId: resultId).doc(scoreId);
 
 // /// rooms コレクションの参照。
 // final roomsRef = db.collection('rooms').withConverter(
@@ -102,25 +140,7 @@ DocumentReference<Member> memberRef({
 //     completeVotingRequestsRef(roomId: roomId, votingEventId: votingEventId)
 //         .doc(votingEventId);
 
-// /// votes コレクションの参照。
-// CollectionReference<Vote> votesRef({
-//   required String roomId,
-//   required String votingEventId,
-// }) =>
-//     votingEventRef(roomId: roomId, votingEventId: votingEventId)
-//         .collection('votes')
-//         .withConverter(
-//           fromFirestore: (ds, _) => Vote.fromDocumentSnapshot(ds),
-//           toFirestore: (obj, _) => obj.toJson(),
-//         );
 
-// /// vote ドキュメントの参照。
-// DocumentReference<Vote> voteRef({
-//   required String roomId,
-//   required String votingEventId,
-//   required String voteId,
-// }) =>
-//     votesRef(roomId: roomId, votingEventId: votingEventId).doc(voteId);
 
 // /// testNotificationRequest コレクションの参照。
 // final testNotificationRequestsRef =
