@@ -43,8 +43,12 @@ class HomePage extends StatelessWidget {
             ),
           ],
         ),
-        body: const Center(
-          child: Text('home'),
+        body: ListView.builder(
+          padding: Measure.p_a16,
+          itemCount: 10,
+          itemBuilder: (BuildContext context, int index) {
+            return MatchResultCard();
+          },
         ),
         floatingActionButton: FloatingActionButton(
           backgroundColor: AppColors.secondary,
