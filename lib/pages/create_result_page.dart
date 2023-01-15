@@ -10,7 +10,6 @@ import '../features/result.dart';
 import '../features/toggle_button.dart';
 import '../models/member.dart';
 import '../models/result.dart';
-import '../models/score.dart';
 import '../repositories/auth/auth_repository_impl.dart';
 import '../utils/async_value_error_dialog.dart';
 import '../utils/constants/app_colors.dart';
@@ -352,25 +351,20 @@ class CreateResultPage extends HookConsumerWidget {
                                 ? 'singles'
                                 : 'doubles',
                             opponents: [selectedFirstOpponentMember.memberId],
-                            createdAt: UnionTimestamp.dateTime(DateTime.now()),
-                            updatedAt: UnionTimestamp.dateTime(DateTime.now()),
-                          );
-
-                          final score = Score(
-                            yours: [21, 21],
-                            opponents: [19, 19],
+                            yourScore: [21, 21],
+                            opponentsScore: [19, 19],
                             isWinner: true,
                             createdAt: UnionTimestamp.dateTime(DateTime.now()),
                             updatedAt: UnionTimestamp.dateTime(DateTime.now()),
                           );
 
                           if (userId != null) {
+                            // TODO：修正
                             await ref
                                 .read(createResultControllerProvider.notifier)
                                 .createResultAndScore(
                                   userId: userId,
                                   result: result,
-                                  score: score,
                                 );
                           }
                         },

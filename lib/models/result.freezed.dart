@@ -24,6 +24,10 @@ mixin _$Result {
   String get type => throw _privateConstructorUsedError;
   String get partner => throw _privateConstructorUsedError;
   List<String> get opponents => throw _privateConstructorUsedError;
+  List<int> get yourScore => throw _privateConstructorUsedError;
+  List<int> get opponentsScore => throw _privateConstructorUsedError;
+  bool get isWinner => throw _privateConstructorUsedError;
+  String get comment => throw _privateConstructorUsedError;
   @alwaysUseServerTimestampUnionTimestampConverter
   UnionTimestamp get createdAt => throw _privateConstructorUsedError;
   @alwaysUseServerTimestampUnionTimestampConverter
@@ -44,6 +48,10 @@ abstract class $ResultCopyWith<$Res> {
       String type,
       String partner,
       List<String> opponents,
+      List<int> yourScore,
+      List<int> opponentsScore,
+      bool isWinner,
+      String comment,
       @alwaysUseServerTimestampUnionTimestampConverter
           UnionTimestamp createdAt,
       @alwaysUseServerTimestampUnionTimestampConverter
@@ -70,6 +78,10 @@ class _$ResultCopyWithImpl<$Res, $Val extends Result>
     Object? type = null,
     Object? partner = null,
     Object? opponents = null,
+    Object? yourScore = null,
+    Object? opponentsScore = null,
+    Object? isWinner = null,
+    Object? comment = null,
     Object? createdAt = null,
     Object? updatedAt = null,
   }) {
@@ -90,6 +102,22 @@ class _$ResultCopyWithImpl<$Res, $Val extends Result>
           ? _value.opponents
           : opponents // ignore: cast_nullable_to_non_nullable
               as List<String>,
+      yourScore: null == yourScore
+          ? _value.yourScore
+          : yourScore // ignore: cast_nullable_to_non_nullable
+              as List<int>,
+      opponentsScore: null == opponentsScore
+          ? _value.opponentsScore
+          : opponentsScore // ignore: cast_nullable_to_non_nullable
+              as List<int>,
+      isWinner: null == isWinner
+          ? _value.isWinner
+          : isWinner // ignore: cast_nullable_to_non_nullable
+              as bool,
+      comment: null == comment
+          ? _value.comment
+          : comment // ignore: cast_nullable_to_non_nullable
+              as String,
       createdAt: null == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -129,6 +157,10 @@ abstract class _$$_ResultCopyWith<$Res> implements $ResultCopyWith<$Res> {
       String type,
       String partner,
       List<String> opponents,
+      List<int> yourScore,
+      List<int> opponentsScore,
+      bool isWinner,
+      String comment,
       @alwaysUseServerTimestampUnionTimestampConverter
           UnionTimestamp createdAt,
       @alwaysUseServerTimestampUnionTimestampConverter
@@ -154,6 +186,10 @@ class __$$_ResultCopyWithImpl<$Res>
     Object? type = null,
     Object? partner = null,
     Object? opponents = null,
+    Object? yourScore = null,
+    Object? opponentsScore = null,
+    Object? isWinner = null,
+    Object? comment = null,
     Object? createdAt = null,
     Object? updatedAt = null,
   }) {
@@ -174,6 +210,22 @@ class __$$_ResultCopyWithImpl<$Res>
           ? _value._opponents
           : opponents // ignore: cast_nullable_to_non_nullable
               as List<String>,
+      yourScore: null == yourScore
+          ? _value._yourScore
+          : yourScore // ignore: cast_nullable_to_non_nullable
+              as List<int>,
+      opponentsScore: null == opponentsScore
+          ? _value._opponentsScore
+          : opponentsScore // ignore: cast_nullable_to_non_nullable
+              as List<int>,
+      isWinner: null == isWinner
+          ? _value.isWinner
+          : isWinner // ignore: cast_nullable_to_non_nullable
+              as bool,
+      comment: null == comment
+          ? _value.comment
+          : comment // ignore: cast_nullable_to_non_nullable
+              as String,
       createdAt: null == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -194,9 +246,15 @@ class _$_Result extends _Result {
       this.type = 'singles',
       this.partner = '',
       final List<String> opponents = const <String>[],
+      final List<int> yourScore = const <int>[],
+      final List<int> opponentsScore = const <int>[],
+      this.isWinner = true,
+      this.comment = '',
       @alwaysUseServerTimestampUnionTimestampConverter required this.createdAt,
       @alwaysUseServerTimestampUnionTimestampConverter required this.updatedAt})
       : _opponents = opponents,
+        _yourScore = yourScore,
+        _opponentsScore = opponentsScore,
         super._();
 
   factory _$_Result.fromJson(Map<String, dynamic> json) =>
@@ -220,6 +278,30 @@ class _$_Result extends _Result {
     return EqualUnmodifiableListView(_opponents);
   }
 
+  final List<int> _yourScore;
+  @override
+  @JsonKey()
+  List<int> get yourScore {
+    if (_yourScore is EqualUnmodifiableListView) return _yourScore;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_yourScore);
+  }
+
+  final List<int> _opponentsScore;
+  @override
+  @JsonKey()
+  List<int> get opponentsScore {
+    if (_opponentsScore is EqualUnmodifiableListView) return _opponentsScore;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_opponentsScore);
+  }
+
+  @override
+  @JsonKey()
+  final bool isWinner;
+  @override
+  @JsonKey()
+  final String comment;
   @override
   @alwaysUseServerTimestampUnionTimestampConverter
   final UnionTimestamp createdAt;
@@ -229,7 +311,7 @@ class _$_Result extends _Result {
 
   @override
   String toString() {
-    return 'Result(resultId: $resultId, type: $type, partner: $partner, opponents: $opponents, createdAt: $createdAt, updatedAt: $updatedAt)';
+    return 'Result(resultId: $resultId, type: $type, partner: $partner, opponents: $opponents, yourScore: $yourScore, opponentsScore: $opponentsScore, isWinner: $isWinner, comment: $comment, createdAt: $createdAt, updatedAt: $updatedAt)';
   }
 
   @override
@@ -243,6 +325,13 @@ class _$_Result extends _Result {
             (identical(other.partner, partner) || other.partner == partner) &&
             const DeepCollectionEquality()
                 .equals(other._opponents, _opponents) &&
+            const DeepCollectionEquality()
+                .equals(other._yourScore, _yourScore) &&
+            const DeepCollectionEquality()
+                .equals(other._opponentsScore, _opponentsScore) &&
+            (identical(other.isWinner, isWinner) ||
+                other.isWinner == isWinner) &&
+            (identical(other.comment, comment) || other.comment == comment) &&
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt) &&
             (identical(other.updatedAt, updatedAt) ||
@@ -251,8 +340,18 @@ class _$_Result extends _Result {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, resultId, type, partner,
-      const DeepCollectionEquality().hash(_opponents), createdAt, updatedAt);
+  int get hashCode => Object.hash(
+      runtimeType,
+      resultId,
+      type,
+      partner,
+      const DeepCollectionEquality().hash(_opponents),
+      const DeepCollectionEquality().hash(_yourScore),
+      const DeepCollectionEquality().hash(_opponentsScore),
+      isWinner,
+      comment,
+      createdAt,
+      updatedAt);
 
   @JsonKey(ignore: true)
   @override
@@ -274,6 +373,10 @@ abstract class _Result extends Result {
       final String type,
       final String partner,
       final List<String> opponents,
+      final List<int> yourScore,
+      final List<int> opponentsScore,
+      final bool isWinner,
+      final String comment,
       @alwaysUseServerTimestampUnionTimestampConverter
           required final UnionTimestamp createdAt,
       @alwaysUseServerTimestampUnionTimestampConverter
@@ -290,6 +393,14 @@ abstract class _Result extends Result {
   String get partner;
   @override
   List<String> get opponents;
+  @override
+  List<int> get yourScore;
+  @override
+  List<int> get opponentsScore;
+  @override
+  bool get isWinner;
+  @override
+  String get comment;
   @override
   @alwaysUseServerTimestampUnionTimestampConverter
   UnionTimestamp get createdAt;

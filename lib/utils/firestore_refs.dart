@@ -3,7 +3,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import '../models/app_user.dart';
 import '../models/member.dart';
 import '../models/result.dart';
-import '../models/score.dart';
 
 final _db = FirebaseFirestore.instance;
 
@@ -52,24 +51,6 @@ DocumentReference<Result> resultRef({
     resultsRef(userId: userId).doc(resultId);
 
 /// scores コレクションの参照。
-CollectionReference<Score> scoresRef({
-  required String userId,
-  required String resultId,
-}) =>
-    resultRef(userId: userId, resultId: resultId)
-        .collection('scores')
-        .withConverter(
-          fromFirestore: (ds, _) => Score.fromDocumentSnapshot(ds),
-          toFirestore: (obj, _) => obj.toJson(),
-        );
-
-/// score ドキュメントの参照。
-DocumentReference<Score> scoreRef({
-  required String userId,
-  required String resultId,
-  required String scoreId,
-}) =>
-    scoresRef(userId: userId, resultId: resultId).doc(scoreId);
 
 // /// rooms コレクションの参照。
 // final roomsRef = db.collection('rooms').withConverter(

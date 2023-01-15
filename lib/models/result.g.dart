@@ -14,6 +14,16 @@ _$_Result _$$_ResultFromJson(Map<String, dynamic> json) => _$_Result(
               ?.map((e) => e as String)
               .toList() ??
           const <String>[],
+      yourScore: (json['yourScore'] as List<dynamic>?)
+              ?.map((e) => e as int)
+              .toList() ??
+          const <int>[],
+      opponentsScore: (json['opponentsScore'] as List<dynamic>?)
+              ?.map((e) => e as int)
+              .toList() ??
+          const <int>[],
+      isWinner: json['isWinner'] as bool? ?? true,
+      comment: json['comment'] as String? ?? '',
       createdAt: alwaysUseServerTimestampUnionTimestampConverter
           .fromJson(json['createdAt'] as Object),
       updatedAt: alwaysUseServerTimestampUnionTimestampConverter
@@ -25,6 +35,10 @@ Map<String, dynamic> _$$_ResultToJson(_$_Result instance) => <String, dynamic>{
       'type': instance.type,
       'partner': instance.partner,
       'opponents': instance.opponents,
+      'yourScore': instance.yourScore,
+      'opponentsScore': instance.opponentsScore,
+      'isWinner': instance.isWinner,
+      'comment': instance.comment,
       'createdAt': alwaysUseServerTimestampUnionTimestampConverter
           .toJson(instance.createdAt),
       'updatedAt': alwaysUseServerTimestampUnionTimestampConverter

@@ -11,14 +11,14 @@ final resultRepositoryImplProvider = Provider<ResultRepositoryImpl>(
 
 class ResultRepositoryImpl implements ResultRepository {
   @override
-  Future<String> create({
+  Future<void> create({
     required String userId,
     required Result result,
   }) async {
-    final resultDr = await resultsRef(userId: userId).add(
-      result,
+    final resultId = resultsRef(userId: userId).doc().id;
+    await resultsRef(userId: userId).doc(resultId).set(
+      result.copyWith(resultId: resultId),
     );
-    return resultDr.id;
   }
 
   /// 指定した Result を取得する。
@@ -57,7 +57,7 @@ class ResultRepositoryImpl implements ResultRepository {
 }
 
 abstract class ResultRepository {
-  Future<String> create({
+  Future<void> create({
     required String userId,
     required Result result,
   });

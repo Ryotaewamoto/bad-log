@@ -19,16 +19,16 @@ class SignInController extends AutoDisposeAsyncNotifier<void> {
     // FutureOr<void> より、初期の処理の必要がないため何もしない。
   }
 
-  /// 新規登録する
+  /// サインインする
   Future<void> signIn({
     required String email,
     required String password,
   }) async {
     final authRepository = ref.read(authRepositoryImplProvider);
-    // ログイン結果をローディング中にする
+    // サインイン結果をローディング中にする
     state = const AsyncLoading();
 
-    // ログイン処理を実行する
+    // サインイン処理を実行する
     state = await AsyncValue.guard(() async {
       try {
         if (email.isEmpty || password.isEmpty) {
