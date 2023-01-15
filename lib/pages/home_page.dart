@@ -12,6 +12,8 @@ import 'create_result_page.dart';
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
+  // TODO(kokorinosoba): 表示用のデータをどのように取得するかわからない
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -76,7 +78,7 @@ class MatchResultCard extends StatelessWidget {
       color: AppColors.baseLight,
       child: InkWell(
         onTap: () {
-          // ここにタップ時の処理を記述
+          // TODO(kokorinosoba): ここにタップ時の処理を記述
           print('Card Tapped');
         },
         child: SizedBox(
@@ -89,6 +91,7 @@ class MatchResultCard extends StatelessWidget {
                   // 対戦メンバーのコンテナー
                   width: double.infinity,
                   decoration: const BoxDecoration(
+                    // TODO(kokorinosoba): Boxのサイズが横長でグラデーションの開始ラインがほぼ直角になってしまうので修正したい
                     gradient: LinearGradient(
                       begin: FractionalOffset.topLeft,
                       end: FractionalOffset.bottomRight,
@@ -107,6 +110,7 @@ class MatchResultCard extends StatelessWidget {
                     child: Column(
                       children: [
                         Row(
+                          // 自分/自チーム
                           children: const [
                             Icon(Icons.circle,
                                 size: 20, color: AppColors.accent),
@@ -114,9 +118,10 @@ class MatchResultCard extends StatelessWidget {
                             Text('Jonatan Christie'),
                           ],
                         ),
-                        // ******* Gap(2)を定数化する *******
+                        // TODO(kokorinosoba): Gap(2)を定数化する
                         const Gap(2),
                         Row(
+                          // 対戦相手/チーム
                           children: const [
                             Icon(Icons.circle,
                                 size: 20, color: AppColors.accent),
@@ -128,13 +133,15 @@ class MatchResultCard extends StatelessWidget {
                     ),
                   ),
                 ),
+                // TODO(kokorinosoba): うまく位置調整ができなかったので、Paddingの中にPaddingを入れるという苦肉の策
                 Padding(
                   padding: Measure.p_v4,
                   child: Padding(
                     padding: Measure.p_h8,
                     child: Row(
+                      // 対戦した日付の表示(アイコン+日付)
                       children: [
-                        // ******* 色がおかしい *******
+                        // TODO(kokorinosoba): 合う色がなさそうなので、AppColorsに色を追加する(?)
                         const Icon(Icons.watch_later,
                             size: 18, color: AppColors.textColor),
                         Measure.g_8,
