@@ -13,6 +13,10 @@ class Result with _$Result {
     @Default('singles') String type,
     @Default('') String partner,
     @Default(<String>[]) List<String> opponents,
+    @Default(<int>[]) List<int> yourScore,
+    @Default(<int>[]) List<int> opponentsScore,
+    @Default(true) bool isWinner,
+    @Default('') String comment,
     @alwaysUseServerTimestampUnionTimestampConverter
         required UnionTimestamp createdAt,
     @alwaysUseServerTimestampUnionTimestampConverter

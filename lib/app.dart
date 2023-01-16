@@ -1,9 +1,9 @@
-import 'package:bad_log/gen/fonts.gen.dart';
-import 'package:bad_log/utils/constants/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+import 'gen/fonts.gen.dart';
 import 'pages/auth_page.dart';
+import 'utils/constants/app_colors.dart';
 import 'utils/global_key.dart';
 import 'utils/scaffold_messenger_service.dart';
 

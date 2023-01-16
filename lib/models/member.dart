@@ -9,8 +9,8 @@ part 'member.g.dart';
 @freezed
 class Member with _$Member {
   const factory Member({
-    required String memberId,
-    required String memberName,
+    @Default('') String memberId,
+    @Default('') String memberName,
     @alwaysUseServerTimestampUnionTimestampConverter
         required UnionTimestamp createdAt,
     @alwaysUseServerTimestampUnionTimestampConverter

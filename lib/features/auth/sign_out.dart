@@ -19,13 +19,13 @@ class SignOutController extends AutoDisposeAsyncNotifier<void> {
     // FutureOr<void> より、初期の処理の必要がないため何もしない。
   }
 
-  /// 新規登録する
+  /// サインアウトする
   Future<void> signOut() async {
     final authRepository = ref.read(authRepositoryImplProvider);
-    // ログイン結果をローディング中にする
+    // サインアウト結果をローディング中にする
     state = const AsyncLoading();
 
-    // ログイン処理を実行する
+    // サインアウト処理を実行する
     state = await AsyncValue.guard(() async {
       try {
         await authRepository.signOut();
