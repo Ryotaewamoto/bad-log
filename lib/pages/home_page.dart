@@ -85,7 +85,6 @@ class MatchResultCard extends StatelessWidget {
         child: InkWell(
           onTap: () {
             // TODO(kokorinosoba): ここにタップ時の処理を記述
-            print('Card Tapped');
           },
           child: SizedBox(
             width: double.infinity,
