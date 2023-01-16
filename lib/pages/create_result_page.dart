@@ -17,6 +17,7 @@ import '../utils/constants/measure.dart';
 import '../utils/fakes/member.dart';
 import '../utils/json_converters/union_timestamp.dart';
 import '../utils/loading.dart';
+import '../utils/result_format.dart';
 import '../utils/scaffold_messenger_service.dart';
 import '../utils/text_styles.dart';
 import '../widgets/number_picker/numberpicker.dart';
@@ -72,6 +73,7 @@ class CreateResultPage extends HookConsumerWidget {
             initMember,
           ],
         );
+
     final userId = ref.watch(authRepositoryImplProvider).currentUser?.uid;
 
     final selectedPartnerMember = ref.watch(
@@ -156,7 +158,7 @@ class CreateResultPage extends HookConsumerWidget {
                             Measure.g_4,
                             Padding(
                               padding: Measure.p_h8,
-                              child: DropdownMemberSelectButton(
+                              child: _DropdownMemberSelectButton(
                                 membersList: members,
                                 selectedSecondOpponentMember:
                                     selectedPartnerMember,
@@ -183,7 +185,7 @@ class CreateResultPage extends HookConsumerWidget {
                           Measure.g_4,
                           Padding(
                             padding: Measure.p_h8,
-                            child: DropdownMemberSelectButton(
+                            child: _DropdownMemberSelectButton(
                               membersList: members,
                               selectedSecondOpponentMember:
                                   selectedFirstOpponentMember,
@@ -211,7 +213,7 @@ class CreateResultPage extends HookConsumerWidget {
                             Measure.g_4,
                             Padding(
                               padding: Measure.p_h8,
-                              child: DropdownMemberSelectButton(
+                              child: _DropdownMemberSelectButton(
                                 membersList: members,
                                 selectedSecondOpponentMember:
                                     selectedSecondOpponentMember,
@@ -296,11 +298,13 @@ class CreateResultPage extends HookConsumerWidget {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              ScoreSelectCard(state: yours1gameNumberState),
+                              _ScoreSelectCard(state: yours1gameNumberState),
                               const SizedBox(
                                 width: 80,
                               ),
-                              ScoreSelectCard(state: opponents1gameNumberState),
+                              _ScoreSelectCard(
+                                state: opponents1gameNumberState,
+                              ),
                             ],
                           ),
                           Measure.g_12,
@@ -312,11 +316,11 @@ class CreateResultPage extends HookConsumerWidget {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                ScoreSelectCard(state: yours2gameNumberState),
+                                _ScoreSelectCard(state: yours2gameNumberState),
                                 const SizedBox(
                                   width: 80,
                                 ),
-                                ScoreSelectCard(
+                                _ScoreSelectCard(
                                   state: opponents2gameNumberState,
                                 ),
                               ],
@@ -330,11 +334,11 @@ class CreateResultPage extends HookConsumerWidget {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                ScoreSelectCard(state: yours3gameNumberState),
+                                _ScoreSelectCard(state: yours3gameNumberState),
                                 const SizedBox(
                                   width: 80,
                                 ),
-                                ScoreSelectCard(
+                                _ScoreSelectCard(
                                   state: opponents3gameNumberState,
                                 ),
                               ],
@@ -346,23 +350,68 @@ class CreateResultPage extends HookConsumerWidget {
                       PrimaryRoundedButton(
                         text: 'Save new result',
                         onTap: () async {
+                          // 二重の処理を防ぐために先にローディングの状態にしておく。
+
+                          ref
+                              .watch(overlayLoadingProvider.notifier)
+                              .update((state) => true);
+                          // 点数のバリデーション
+                          final is1game =
+                              ref.watch(is1gameRadioButtonProvider) == '1game';
+                          final scores = scoreFormat(
+                            is1game: is1game,
+                            yours1gameNumber: yours1gameNumberState.value,
+                            yours2gameNumber: yours2gameNumberState.value,
+                            yours3gameNumber: yours3gameNumberState.value,
+                            opponents1gameNumber:
+                                opponents1gameNumberState.value,
+                            opponents2gameNumber:
+                                opponents2gameNumberState.value,
+                            opponents3gameNumber:
+                                opponents3gameNumberState.value,
+                          );
+                          final yourScore = scores[0];
+                          final opponentsScore = scores[1];
+
+                          // 勝者のバリデーション
+                          final isWinner = isWinnerValidation(
+                            is1game: is1game,
+                            yourScore: yourScore,
+                            opponentsScore: opponentsScore,
+                          );
+
+                          // メンバーのバリデーション
+                          final isSingles =
+                              ref.watch(selectTypesProvider).first == true;
+                          final partner = partnerFormat(
+                            isSingles: isSingles,
+                            partnerId: selectedPartnerMember.memberId,
+                          );
+                          final opponents = opponentsFormat(
+                            isSingles: isSingles,
+                            firstOpponentId:
+                                selectedFirstOpponentMember.memberId,
+                            secondOpponentId:
+                                selectedSecondOpponentMember.memberId,
+                          );
+
                           final result = Result(
                             type: ref.watch(selectTypesProvider).first == true
                                 ? 'singles'
                                 : 'doubles',
-                            opponents: [selectedFirstOpponentMember.memberId],
-                            yourScore: [21, 21],
-                            opponentsScore: [19, 19],
-                            isWinner: true,
+                            partner: partner,
+                            opponents: opponents,
+                            yourScore: yourScore,
+                            opponentsScore: opponentsScore,
+                            isWinner: isWinner,
                             createdAt: UnionTimestamp.dateTime(DateTime.now()),
                             updatedAt: UnionTimestamp.dateTime(DateTime.now()),
                           );
 
                           if (userId != null) {
-                            // TODO：修正
                             await ref
                                 .read(createResultControllerProvider.notifier)
-                                .createResultAndScore(
+                                .createResult(
                                   userId: userId,
                                   result: result,
                                 );
@@ -383,9 +432,8 @@ class CreateResultPage extends HookConsumerWidget {
   }
 }
 
-class ScoreSelectCard extends StatelessWidget {
-  const ScoreSelectCard({
-    super.key,
+class _ScoreSelectCard extends StatelessWidget {
+  const _ScoreSelectCard({
     required this.state,
   });
 
@@ -429,9 +477,8 @@ class ScoreSelectCard extends StatelessWidget {
   }
 }
 
-class DropdownMemberSelectButton extends HookWidget {
-  const DropdownMemberSelectButton({
-    super.key,
+class _DropdownMemberSelectButton extends HookWidget {
+  const _DropdownMemberSelectButton({
     required this.selectedSecondOpponentMember,
     required this.onChanged,
     required this.membersList,

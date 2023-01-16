@@ -15,9 +15,8 @@ class ResultRepositoryImpl implements ResultRepository {
     required String userId,
     required Result result,
   }) async {
-    final resultId = resultsRef(userId: userId).doc().id;
-    await resultsRef(userId: userId).doc(resultId).set(
-      result.copyWith(resultId: resultId),
+    await resultsRef(userId: userId).add(
+      result,
     );
   }
 

@@ -18,7 +18,7 @@ class CreateResultController extends AutoDisposeAsyncNotifier<void> {
   }
 
   /// 試合結果を追加する
-  Future<void> createResultAndScore({
+  Future<void> createResult({
     required String userId,
     required Result result,
   }) async {
@@ -30,9 +30,52 @@ class CreateResultController extends AutoDisposeAsyncNotifier<void> {
     state = await AsyncValue.guard(() async {
       try {
         // TODO(ryotaiwamoto): validation
-        // 同じメンバーのドキュメントが存在する場合はそのドキュメントのIDをとってきて Score を追加する。
-        // その場合には 以下の resultId は使用しない。
-        // TODO(ryotaiwamoto): List<Result> の中からパートナーと対戦相手が一致するものを探す関数を作成する。
+        if (result.type == 'singles') {
+          if (result.opponents.first == 'id-unselected') {
+            throw const AppException(message: '対戦相手を選択してください。');
+          }
+        }
+
+        if (result.type == 'doubles') {
+          if (result.opponents.first == 'id-unselected' ||
+              result.opponents[1] == 'id-unselected' ||
+              result.partner == 'id-unselected') {
+            throw const AppException(message: 'パートナーもしくは対戦相手を選択してください。');
+          }
+          if (result.opponents.first == result.opponents[1] ||
+              result.opponents.first == result.partner ||
+              result.opponents[1] == result.partner) {
+            throw const AppException(message: 'パートナーもしくは対戦相手が重複しています。');
+          }
+        }
+
+        if (result.yourScore[0] == 0 && result.opponentsScore[0] == 0) {
+          throw const AppException(message: '点数を入力してください。');
+        }
+
+        if (result.yourScore.length == 1) {
+          throw const AppException(
+            message: '点数が同点になっています。どちらかの値が大きくなるように入力してください。',
+          );
+        }
+
+        if (result.yourScore.length == 3) {
+          if (result.yourScore[1] == 0 && result.opponentsScore[1] == 0) {
+            throw const AppException(message: '2ゲーム目の点数を入力してください。');
+          }
+
+          if (result.yourScore[2] == 0 && result.opponentsScore[2] == 0) {
+            throw const AppException(message: '3ゲーム目の点数を入力してください。');
+          }
+
+          if (result.yourScore[0] == result.opponentsScore[0] ||
+              result.yourScore[1] == result.opponentsScore[1] ||
+              result.yourScore[2] == result.opponentsScore[2]) {
+            throw const AppException(
+              message: '点数が同点になっています。どちらかの値が大きくなるように入力してください。',
+            );
+          }
+        }
         await resultRepository.create(
           userId: userId,
           result: result,
