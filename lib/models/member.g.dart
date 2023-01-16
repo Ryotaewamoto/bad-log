@@ -7,8 +7,8 @@ part of 'member.dart';
 // **************************************************************************
 
 _$_Member _$$_MemberFromJson(Map<String, dynamic> json) => _$_Member(
-      memberId: json['memberId'] as String,
-      memberName: json['memberName'] as String,
+      memberId: json['memberId'] as String? ?? '',
+      memberName: json['memberName'] as String? ?? '',
       createdAt: alwaysUseServerTimestampUnionTimestampConverter
           .fromJson(json['createdAt'] as Object),
       updatedAt: alwaysUseServerTimestampUnionTimestampConverter

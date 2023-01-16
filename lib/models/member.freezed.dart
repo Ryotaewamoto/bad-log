@@ -164,8 +164,8 @@ class __$$_MemberCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_Member extends _Member {
   const _$_Member(
-      {required this.memberId,
-      required this.memberName,
+      {this.memberId = '',
+      this.memberName = '',
       @alwaysUseServerTimestampUnionTimestampConverter required this.createdAt,
       @alwaysUseServerTimestampUnionTimestampConverter required this.updatedAt})
       : super._();
@@ -174,8 +174,10 @@ class _$_Member extends _Member {
       _$$_MemberFromJson(json);
 
   @override
+  @JsonKey()
   final String memberId;
   @override
+  @JsonKey()
   final String memberName;
   @override
   @alwaysUseServerTimestampUnionTimestampConverter
@@ -225,8 +227,8 @@ class _$_Member extends _Member {
 
 abstract class _Member extends Member {
   const factory _Member(
-      {required final String memberId,
-      required final String memberName,
+      {final String memberId,
+      final String memberName,
       @alwaysUseServerTimestampUnionTimestampConverter
           required final UnionTimestamp createdAt,
       @alwaysUseServerTimestampUnionTimestampConverter

@@ -6,7 +6,9 @@ analyzer:
     implicit-dynamic: false
 
   exclude:
-    - lib/firebase_options.dart
+    - lib/utils/settings.dart
+    - lib/firebase_options_dev.dart
+    - lib/firebase_options_prod.dart
     - 'lib/**/*.g.dart'
     - 'lib/**/*.freezed.dart'
 
@@ -18,3 +20,7 @@ errors:
     invalid_annotation_target: ignore
     lines_longer_than_80_chars: ignore
     flutter_style_todos: ignore
+
+linter:
+  rules:
+    prefer_relative_imports: true

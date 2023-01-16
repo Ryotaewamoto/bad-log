@@ -27,14 +27,16 @@ class AuthRepositoryImpl implements AuthRepository {
 
   /// ユーザー作成
   @override
-  Future<void> signUp({
+  Future<String?> signUp({
     required String email,
     required String password,
   }) async {
-    await _auth.createUserWithEmailAndPassword(
+    final userCredential = await _auth.createUserWithEmailAndPassword(
       email: email,
       password: password,
     );
+
+    return userCredential.user?.uid;
   }
 
   /// ログイン
@@ -50,7 +52,7 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  Future<void> signOut() {
-    return _auth.signOut();
+  Future<void> signOut() async {
+    await _auth.signOut();
   }
 }

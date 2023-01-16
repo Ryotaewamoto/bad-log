@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../repositories/auth_repository_impl.dart';
+import '../repositories/auth/auth_repository_impl.dart';
 import '../utils/extensions/widget_ref.dart';
 import '../utils/loading.dart';
 import 'error_page.dart';

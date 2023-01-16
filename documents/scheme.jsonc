@@ -1,60 +1,38 @@
 {
-    "collection:  appUsers": {
-        "document: {appUserId}": {
-            "appUserId": "{appUserId}",
-            "name": "Ryota Iwamoto",
-            "createdAt": "2022-11-19 00:00:00"
-        },
-        "collection: logs": {
-            "document: {logId}": {
-                "logId": "{logId}",
-                "resultId": "{resultId}",
-                "scoreId": "{scoreId}",
-                "createdAt": "2022-11-19 00:00:00"
-            }
-        },
-        "collection: members": {
-            "document: {memberId}": {
-                "memberId": "{memberId}",
-                "name": "Kazuma Igarashi",
-                "lastPlayedAt": "2022-11-19 00:00:00"
-            }
-        },
-        "collection: results": {
-            "document: {resultId(1)}": {
-                "resultId": "{resultId(1)}",
-                "type": "singles", // or doubles
-                "partner": "",
-                "opponents": [
-                    "Kazuma Igarashi"
-                ],
-                "createdAt": "2022-11-19 00:00:00"
-            },
-            //   "document: {resultId(2)}": {
-            //     "resultId": "{resultId(2)}",
-            //     "type": "doubles", // or doubles
-            //     "partner": "Kazuma Igarashi",
-            //     "opponents": ["Zinto Sato", "Masaki Shimizu"],
-            //     "createdAt": "2022-11-19 00:00:00"
-            //   }
-            "collection: scores": {
-                "document: {scoreId}": {
-                    "scoreId": "{scoreId}",
-                    "ours": [
-                        19,
-                        21,
-                        19
-                    ],
-                    "opponents": [
-                        21,
-                        19,
-                        21
-                    ],
-                    "winner": "opponents",
-                    "comment": "長いラリーであまり点数を取れなかった。サーブミスがなかったのは良い。",
-                    "createdAt": "2022-11-19 00:00:00"
-                }
-            }
-        }
+  "collection:  appUsers": {
+    "document: {appUserId}": {
+      "appUserId": "{appUserId}",
+      "name": "Ryota Iwamoto",
+      "createdAt": "2022-11-19 00:00:00"
+    },
+    "collection: members": {
+      "document: {memberId}": {
+        "memberId": "{memberId}",
+        "name": "Kazuma Igarashi",
+        "createdAt": "2022-11-19 00:00:00",
+        "updatedAt": "2022-11-19 00:00:00"
+      }
+    },
+    "collection: results": {
+      "document: {resultId}": {
+        "resultId": "{resultId}",
+        "type": "singles", // or doubles
+        "partner": "",
+        "opponents": ["{memberId}"],
+        "yourScore": [19, 21, 19],
+        "opponentsScore": [21, 19, 21],
+        "isWinner": false,
+        "comment": "長いラリーであまり点数を取れなかった。サーブミスがなかったのは良い。",
+        "createdAt": "2022-11-19 00:00:00",
+        "updatedAt": "2022-11-19 00:00:00"
+      }
+      //   "document: {resultId(2)}": {
+      //     "resultId": "{resultId(2)}",
+      //     "type": "doubles", // or doubles
+      //     "partner": "Kazuma Igarashi",
+      //     "opponents": ["Zinto Sato", "Masaki Shimizu"],
+      //     "createdAt": "2022-11-19 00:00:00"
+      //   }
     }
+  }
 }
