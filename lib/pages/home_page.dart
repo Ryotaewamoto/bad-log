@@ -3,21 +3,33 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gap/gap.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+import '../features/app_user.dart';
+import '../features/member.dart';
+import '../features/result.dart';
+import '../models/member.dart';
+import '../models/result.dart';
 import '../utils/constants/app_colors.dart';
 import '../utils/constants/measure.dart';
 import '../utils/extensions/date_time.dart';
+import '../utils/text_styles.dart';
 import '../widgets/white_app_bar.dart';
 import 'account_page.dart';
 import 'create_result_page.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends HookConsumerWidget {
   const HomePage({super.key});
 
-  // TODO(kokorinosoba): 表示用のデータをどのように取得するかわからない
-
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final results = ref.watch(resultsProvider).maybeWhen<List<Result>>(
+          data: (data) {
+            return data;
+          },
+          orElse: () => [],
+        );
+
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
@@ -40,21 +52,30 @@ class HomePage extends StatelessWidget {
             ),
           ],
         ),
-        body: ListView.builder(
-          padding: Measure.p_h16,
-          itemCount: 10,
-          itemBuilder: (BuildContext context, int index) {
-            return const MatchResultCard();
-          },
+        body: Column(
+          children: [
+            const Gap(4),
+            Flexible(
+              child: ListView.builder(
+                padding: Measure.p_h16,
+                itemCount: results.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return _MatchResultCard(
+                    result: results[index],
+                  );
+                },
+              ),
+            ),
+          ],
         ),
         floatingActionButton: FloatingActionButton(
           backgroundColor: AppColors.secondary,
           child: const FaIcon(Icons.add),
           onPressed: () {
-            Navigator.push(
+            Navigator.push<dynamic>(
               context,
-              MaterialPageRoute<bool>(
-                builder: (_) => const CreateResultPage(),
+              _slideAnimationBuilder(
+                widget: const CreateResultPage(),
               ),
             );
           },
@@ -64,11 +85,51 @@ class HomePage extends StatelessWidget {
   }
 }
 
-class MatchResultCard extends StatelessWidget {
-  const MatchResultCard({super.key});
+PageRouteBuilder<dynamic> _slideAnimationBuilder({required Widget widget}) {
+  return PageRouteBuilder<dynamic>(
+    transitionDuration: const Duration(milliseconds: 200),
+    reverseTransitionDuration: const Duration(milliseconds: 200),
+    fullscreenDialog: true,
+    pageBuilder: (context, animation, secondaryAnimation) {
+      // 表示する画面のWidget
+      return widget;
+    },
+    transitionsBuilder: (context, animation, secondaryAnimation, child) {
+      const begin = Offset(0, 1); // 下から上
+      // final Offset begin = Offset(0.0, -1.0); // 上から下
+      const end = Offset.zero;
+      final tween = Tween(begin: begin, end: end)
+          .chain(CurveTween(curve: Curves.easeInOut));
+      final offsetAnimation = animation.drive(tween);
+      return SlideTransition(
+        position: offsetAnimation,
+        child: child,
+      );
+    },
+  );
+}
+
+class _MatchResultCard extends HookConsumerWidget {
+  const _MatchResultCard({
+    required this.result,
+  });
+
+  final Result result;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    // Provider
+    final appUserName = ref.watch(appUserFutureProvider).maybeWhen<String?>(
+          data: (data) => data?.userName,
+          orElse: () => null,
+        );
+    final members = ref.watch(membersProvider).maybeWhen<List<Member>>(
+          data: (data) {
+            return data;
+          },
+          orElse: () => [],
+        );
+
     return Padding(
       padding: Measure.p_v4,
       child: DecoratedBox(
@@ -95,48 +156,108 @@ class MatchResultCard extends StatelessWidget {
                   Container(
                     // 対戦メンバーのコンテナー
                     width: double.infinity,
-                    decoration: const BoxDecoration(
-                      gradient: LinearGradient(
-                        stops: [
-                          0.75,
-                          1.0,
-                        ],
-                        colors: [
-                          AppColors.baseWhite,
-                          AppColors.accent,
-                        ],
-                        transform: GradientRotation(math.pi / 4),
-                      ),
-                    ),
+                    decoration: result.isWinner
+                        ? const BoxDecoration(
+                            gradient: LinearGradient(
+                              stops: [
+                                0.6,
+                                1.0,
+                              ],
+                              colors: [
+                                AppColors.baseWhite,
+                                AppColors.accent,
+                              ],
+                              transform: GradientRotation(math.pi / 3),
+                            ),
+                          )
+                        : const BoxDecoration(
+                            color: AppColors.baseWhite,
+                          ),
                     child: Padding(
                       padding: Measure.p_a8,
                       child: Column(
                         children: [
                           Row(
                             // 自分/自チーム
-                            children: const [
-                              Icon(
-                                Icons.circle,
-                                size: 20,
-                                color: AppColors.accent,
+                            children: [
+                              Text(
+                                appUserName ?? '',
+                                style: result.isWinner
+                                    ? TextStyles.p1Bold()
+                                    : TextStyles.p1(),
                               ),
-                              Measure.g_8,
-                              Text('Jonatan Christie'),
                             ],
                           ),
-                          const Gap(2),
+                          if (result.type == 'doubles')
+                            Column(
+                              children: [
+                                const Gap(4),
+                                Row(
+                                  // 自分/自チーム
+                                  children: [
+                                    Text(
+                                      members.isNotEmpty
+                                          ? members
+                                              .firstWhere(
+                                                (element) =>
+                                                    element.memberId ==
+                                                    result.partner,
+                                              )
+                                              .memberName
+                                          : '',
+                                      style: result.isWinner
+                                          ? TextStyles.p1Bold()
+                                          : TextStyles.p1(),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          const Gap(8),
                           Row(
                             // 対戦相手/チーム
-                            children: const [
-                              Icon(
-                                Icons.circle,
-                                size: 20,
-                                color: AppColors.accent,
+                            children: [
+                              Text(
+                                members.isNotEmpty
+                                    ? members
+                                        .firstWhere(
+                                          (element) =>
+                                              element.memberId ==
+                                              result.opponents[0],
+                                        )
+                                        .memberName
+                                    : '',
+                                style: !result.isWinner
+                                    ? TextStyles.p1Bold()
+                                    : TextStyles.p1(),
                               ),
-                              Measure.g_8,
-                              Text('Thomas Rouxel'),
                             ],
                           ),
+                          if (result.type == 'doubles')
+                            Column(
+                              children: [
+                                const Gap(4),
+                                Row(
+                                  // 自分/自チーム
+                                  children: [
+                                    Text(
+                                      members.isNotEmpty
+                                          ? members
+                                              .firstWhere(
+                                                (element) =>
+                                                    element.memberId ==
+                                                    result.opponents[1],
+                                              )
+                                              .memberName
+                                          : '',
+                                      style: !result.isWinner
+                                          ? TextStyles.p1Bold()
+                                          : TextStyles.p1(),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
                         ],
                       ),
                     ),
@@ -153,11 +274,12 @@ class MatchResultCard extends StatelessWidget {
                         const Icon(
                           Icons.watch_later,
                           size: 18,
-                          color: AppColors.textColor,
+                          color: AppColors.baseDark,
                         ),
                         Measure.g_8,
                         Text(
-                          DateTime.now().toYYYYMMDD(withJapaneseWeekDay: false),
+                          result.createdAt.dateTime!
+                              .toYYYYMMDDHHMM(withJapaneseWeekDay: false),
                         ),
                       ],
                     ),
