@@ -21,7 +21,7 @@ class App extends HookConsumerWidget {
         GlobalCupertinoLocalizations.delegate,
       ],
       supportedLocales: const [
-        Locale("ja", "JP"),
+        Locale('ja', 'JP'),
       ],
       theme: ThemeData(
         fontFamily: FontFamily.helvetica,
