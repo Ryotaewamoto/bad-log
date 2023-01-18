@@ -13,7 +13,6 @@ import '../utils/constants/app_colors.dart';
 import '../utils/constants/measure.dart';
 import '../utils/extensions/date_time.dart';
 import '../utils/loading.dart';
-import '../utils/resylt_types.dart';
 import '../utils/text_styles.dart';
 import '../widgets/app_over_scroll_indicator.dart';
 import '../widgets/white_app_bar.dart';
@@ -29,103 +28,7 @@ class AccountPage extends HookConsumerWidget {
           data: (data) => data?.userName,
           orElse: () => null,
         );
-    final results = ref
-        .watch(resultsProvider)
-        .maybeWhen<List<List<List<Result>>>>(
-          data: (data) {
-            // メンバーごとに分類されたリストを返す
-            final rawResults = data;
-            final rawSinglesResults = <Result>[];
-            final rawDoublesResults = <Result>[];
-
-            for (final result in rawResults) {
-              if (result.type == ResultTypes.singles.name) {
-                rawSinglesResults.add(result);
-              } else {
-                rawDoublesResults.add(result);
-              }
-            }
-            debugPrint('/// 全試合結果をシングルスの二次元配列とダブルスの二次元配列に変換 ///');
-
-            debugPrint('///// 元の配列の要素数');
-            debugPrint('シングルス: ${rawSinglesResults.length}');
-            debugPrint('ダブルス: ${rawDoublesResults.length}');
-            debugPrint('');
-
-            /// シングルス: 対戦相手で分類した二次元配列
-            final singlesResults = <List<Result>>[];
-
-            for (final result in rawSinglesResults) {
-              if (rawSinglesResults.indexOf(result) == 0) {
-                singlesResults.add([result]);
-              } else {
-                if (singlesResults.any(
-                  (element) =>
-                      element.any((e) => e.opponents[0] == result.opponents[0]),
-                )) {
-                  singlesResults
-                      .firstWhere(
-                        (element) => element
-                            .any((e) => e.opponents[0] == result.opponents[0]),
-                      )
-                      .add(result);
-                } else {
-                  singlesResults.add([result]);
-                }
-              }
-            }
-
-            debugPrint('///// シングルス(二次元配列の要素数): ${singlesResults.length}');
-            for (final element in singlesResults) {
-              debugPrint(
-                '${singlesResults.indexOf(element)}番目の要素数: ${element.length}',
-              );
-            }
-            debugPrint('');
-
-            /// ダブルス: パートナーと対戦相手で分類した二次元配列
-            final doublesResults = <List<Result>>[];
-
-            for (final result in rawDoublesResults) {
-              if (rawDoublesResults.indexOf(result) == 0) {
-                doublesResults.add([result]);
-              } else {
-                if (doublesResults.any(
-                  (element) => element.any(
-                    (e) =>
-                        e.partner == result.partner &&
-                        e.opponents[0] == result.opponents[0] &&
-                        e.opponents[1] == result.opponents[1],
-                  ),
-                )) {
-                  doublesResults
-                      .firstWhere(
-                        (element) => element.any(
-                          (e) =>
-                              e.partner == result.partner &&
-                              e.opponents[0] == result.opponents[0] &&
-                              e.opponents[1] == result.opponents[1],
-                        ),
-                      )
-                      .add(result);
-                } else {
-                  doublesResults.add([result]);
-                }
-              }
-            }
-
-            debugPrint('///// ダブルス(二次元配列の要素数): ${doublesResults.length}');
-            for (final element in doublesResults) {
-              debugPrint(
-                '${doublesResults.indexOf(element)}番目の要素数: ${element.length}',
-              );
-            }
-            debugPrint('');
-
-            return [singlesResults, doublesResults];
-          },
-          orElse: () => [],
-        );
+    final results = ref.watch(typesSeparatedResultsProvider);
 
     return Stack(
       children: [

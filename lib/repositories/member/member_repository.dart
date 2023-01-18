@@ -13,4 +13,9 @@ abstract class MemberRepository {
     Query<Member>? Function(Query<Member> query)? queryBuilder,
     int Function(Member lhs, Member rhs)? compare,
   });
+
+  Future<void> create({
+    required String userId,
+    required Member member,
+  });
 }

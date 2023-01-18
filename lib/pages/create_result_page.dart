@@ -18,7 +18,7 @@ import '../utils/fakes/member.dart';
 import '../utils/json_converters/union_timestamp.dart';
 import '../utils/loading.dart';
 import '../utils/result_format.dart';
-import '../utils/resylt_types.dart';
+import '../utils/result_types.dart';
 import '../utils/scaffold_messenger_service.dart';
 import '../utils/text_styles.dart';
 import '../widgets/number_picker/numberpicker.dart';

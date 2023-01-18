@@ -44,4 +44,14 @@ class MemberRepositoryImpl implements MemberRepository {
       return result;
     });
   }
+
+  @override
+  Future<void> create({
+    required String userId,
+    required Member member,
+  }) async {
+    await membersRef(userId: userId).add(
+      member,
+    );
+  }
 }
