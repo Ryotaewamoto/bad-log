@@ -12,33 +12,33 @@ final membersProvider = StreamProvider.autoDispose<List<Member>>((ref) {
   final userId = ref.watch(authRepositoryImplProvider).currentUser!.uid;
   final members = ref.read(memberRepositoryImplProvider).subscribeMembers(
         userId: userId,
-        queryBuilder: (q) => q.orderBy('updatedAt', descending: true),
+        queryBuilder: (q) => q.orderBy('createdAt', descending: true),
       );
   return members;
 });
 
 /// Firestore に [Member] を追加する [AsyncNotifierProvider]。
-final createMemberControllerProvider =
-    AutoDisposeAsyncNotifierProvider<CreateMemberController, void>(
-  CreateMemberController.new,
+final memberControllerProvider =
+    AutoDisposeAsyncNotifierProvider<MemberController, void>(
+  MemberController.new,
 );
 
-class CreateMemberController extends AutoDisposeAsyncNotifier<void> {
+class MemberController extends AutoDisposeAsyncNotifier<void> {
   @override
   FutureOr<void> build() {
     // FutureOr<void> より、初期の処理の必要がないため何もしない。
   }
 
-  /// 試合結果を追加する
+  /// メンバーを追加する
   Future<void> createMember({
     required String userId,
     required Member member,
   }) async {
     final memberRepository = ref.read(memberRepositoryImplProvider);
-    // 試合結果の追加をローディング中にする
+    // メンバーの追加をローディング中にする
     state = const AsyncLoading();
 
-    // 試合結果の追加を実行する
+    // メンバーの追加を実行する
     state = await AsyncValue.guard(() async {
       try {
         if (member.memberName.isEmpty) {
@@ -53,6 +53,64 @@ class CreateMemberController extends AutoDisposeAsyncNotifier<void> {
         }
         await memberRepository.create(
           userId: userId,
+          member: member,
+        );
+      } on AppException {
+        rethrow;
+      }
+    });
+  }
+
+  /// メンバー情報を更新する
+  Future<void> updateMember({
+    required String userId,
+    required String memberId,
+    required Member member,
+  }) async {
+    final memberRepository = ref.read(memberRepositoryImplProvider);
+    // メンバー情報の更新をローディング中にする
+    state = const AsyncLoading();
+
+    // メンバー情報の更新を実行する
+    state = await AsyncValue.guard(() async {
+      try {
+        if (member.memberName.isEmpty) {
+          throw const AppException(
+            message: '名前を入力してください。',
+          );
+        }
+        if (member.memberName.length > 20) {
+          throw const AppException(
+            message: '名前は20文字以内にしてください。',
+          );
+        }
+        await memberRepository.update(
+          userId: userId,
+          memberId: memberId,
+          member: member,
+        );
+      } on AppException {
+        rethrow;
+      }
+    });
+  }
+
+  /// メンバーを削除する
+  Future<void> deleteMember({
+    required String userId,
+    required String memberId,
+    required Member member,
+  }) async {
+    final memberRepository = ref.read(memberRepositoryImplProvider);
+    // メンバーの削除をローディング中にする
+    state = const AsyncLoading();
+
+    // メンバーの削除を実行する
+    state = await AsyncValue.guard(() async {
+      try {
+        await memberRepository.delete(
+          userId: userId,
+          memberId: memberId,
           member: member,
         );
       } on AppException {

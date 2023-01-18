@@ -66,37 +66,42 @@ Future<void> addMemberDialog(
     context: context,
     builder: (context) {
       return AlertDialog(
+        insetPadding: Measure.p_a16,
         title: Text(
           'メンバーを追加',
           style: TextStyles.h3(),
         ),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            const Icon(
-              Icons.account_circle_rounded,
-              size: 48,
-              color: AppColors.primary,
-            ),
-            const TextFormHeader(title: '名前（20文字以内）'),
-            Measure.g_4,
-            TextFormField(
-              controller: controller,
-              decoration: const InputDecoration(
-                focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(
-                    color: AppColors.secondaryPale,
-                    width: 2,
+        content: SizedBox(
+          width: 280,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Icon(
+                Icons.account_circle_rounded,
+                size: 48,
+                color: AppColors.primary,
+              ),
+              const TextFormHeader(title: '名前'),
+              Measure.g_4,
+              TextFormField(
+                maxLength: 20,
+                controller: controller,
+                decoration: const InputDecoration(
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: AppColors.secondaryPale,
+                      width: 2,
+                    ),
                   ),
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(
-                    color: AppColors.baseLight,
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: AppColors.baseLight,
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
         actions: <Widget>[
           TextButton(
@@ -114,6 +119,79 @@ Future<void> addMemberDialog(
             onPressed: onPressed,
             child: Text(
               '追加',
+              style: TextStyles.p1(
+                color: AppColors.secondary,
+              ),
+            ),
+          ),
+        ],
+      );
+    },
+  );
+}
+
+Future<void> editMemberDialog(
+  BuildContext context,
+  TextEditingController controller, {
+  required VoidCallback onPressed,
+}) async {
+  return showDialog(
+    context: context,
+    builder: (context) {
+      return AlertDialog(
+        insetPadding: Measure.p_a16,
+        title: Text(
+          'メンバー名の変更',
+          style: TextStyles.h3(),
+        ),
+        content: SizedBox(
+          width: 280,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Icon(
+                Icons.account_circle_rounded,
+                size: 48,
+                color: AppColors.primary,
+              ),
+              const TextFormHeader(title: '名前'),
+              Measure.g_4,
+              TextFormField(
+                maxLength: 20,
+                controller: controller,
+                decoration: const InputDecoration(
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: AppColors.secondaryPale,
+                      width: 2,
+                    ),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: AppColors.baseLight,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            child: Text(
+              'キャンセル',
+              style: TextStyles.p1(
+                color: AppColors.baseDark,
+              ),
+            ),
+          ),
+          TextButton(
+            onPressed: onPressed,
+            child: Text(
+              '変更',
               style: TextStyles.p1(
                 color: AppColors.secondary,
               ),

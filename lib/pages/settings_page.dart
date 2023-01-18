@@ -23,7 +23,10 @@ class SettingsPage extends HookConsumerWidget {
     final userEmail = ref.watch(authRepositoryImplProvider).currentUser?.email;
     final members = ref.watch(membersProvider).maybeWhen<int>(
           data: (data) {
-            return data.length;
+            return data
+                .where((element) => element.active == true)
+                .toList()
+                .length;
           },
           orElse: () => 0,
         );

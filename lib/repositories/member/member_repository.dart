@@ -18,4 +18,16 @@ abstract class MemberRepository {
     required String userId,
     required Member member,
   });
+
+  Future<void> update({
+    required String userId,
+    required String memberId,
+    required Member member,
+  });
+
+  Future<void> delete({
+    required String userId,
+    required String memberId,
+    required Member member,
+  });
 }

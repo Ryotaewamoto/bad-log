@@ -22,7 +22,8 @@ Member _$MemberFromJson(Map<String, dynamic> json) {
 mixin _$Member {
   String get memberId => throw _privateConstructorUsedError;
   String get memberName => throw _privateConstructorUsedError;
-  @alwaysUseServerTimestampUnionTimestampConverter
+  bool get active => throw _privateConstructorUsedError;
+  @unionTimestampConverter
   UnionTimestamp get createdAt => throw _privateConstructorUsedError;
   @alwaysUseServerTimestampUnionTimestampConverter
   UnionTimestamp get updatedAt => throw _privateConstructorUsedError;
@@ -40,7 +41,8 @@ abstract class $MemberCopyWith<$Res> {
   $Res call(
       {String memberId,
       String memberName,
-      @alwaysUseServerTimestampUnionTimestampConverter
+      bool active,
+      @unionTimestampConverter
           UnionTimestamp createdAt,
       @alwaysUseServerTimestampUnionTimestampConverter
           UnionTimestamp updatedAt});
@@ -64,6 +66,7 @@ class _$MemberCopyWithImpl<$Res, $Val extends Member>
   $Res call({
     Object? memberId = null,
     Object? memberName = null,
+    Object? active = null,
     Object? createdAt = null,
     Object? updatedAt = null,
   }) {
@@ -76,6 +79,10 @@ class _$MemberCopyWithImpl<$Res, $Val extends Member>
           ? _value.memberName
           : memberName // ignore: cast_nullable_to_non_nullable
               as String,
+      active: null == active
+          ? _value.active
+          : active // ignore: cast_nullable_to_non_nullable
+              as bool,
       createdAt: null == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -113,7 +120,8 @@ abstract class _$$_MemberCopyWith<$Res> implements $MemberCopyWith<$Res> {
   $Res call(
       {String memberId,
       String memberName,
-      @alwaysUseServerTimestampUnionTimestampConverter
+      bool active,
+      @unionTimestampConverter
           UnionTimestamp createdAt,
       @alwaysUseServerTimestampUnionTimestampConverter
           UnionTimestamp updatedAt});
@@ -136,6 +144,7 @@ class __$$_MemberCopyWithImpl<$Res>
   $Res call({
     Object? memberId = null,
     Object? memberName = null,
+    Object? active = null,
     Object? createdAt = null,
     Object? updatedAt = null,
   }) {
@@ -148,6 +157,10 @@ class __$$_MemberCopyWithImpl<$Res>
           ? _value.memberName
           : memberName // ignore: cast_nullable_to_non_nullable
               as String,
+      active: null == active
+          ? _value.active
+          : active // ignore: cast_nullable_to_non_nullable
+              as bool,
       createdAt: null == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -166,7 +179,8 @@ class _$_Member extends _Member {
   const _$_Member(
       {this.memberId = '',
       this.memberName = '',
-      @alwaysUseServerTimestampUnionTimestampConverter required this.createdAt,
+      this.active = true,
+      @unionTimestampConverter required this.createdAt,
       @alwaysUseServerTimestampUnionTimestampConverter required this.updatedAt})
       : super._();
 
@@ -180,7 +194,10 @@ class _$_Member extends _Member {
   @JsonKey()
   final String memberName;
   @override
-  @alwaysUseServerTimestampUnionTimestampConverter
+  @JsonKey()
+  final bool active;
+  @override
+  @unionTimestampConverter
   final UnionTimestamp createdAt;
   @override
   @alwaysUseServerTimestampUnionTimestampConverter
@@ -188,7 +205,7 @@ class _$_Member extends _Member {
 
   @override
   String toString() {
-    return 'Member(memberId: $memberId, memberName: $memberName, createdAt: $createdAt, updatedAt: $updatedAt)';
+    return 'Member(memberId: $memberId, memberName: $memberName, active: $active, createdAt: $createdAt, updatedAt: $updatedAt)';
   }
 
   @override
@@ -200,6 +217,7 @@ class _$_Member extends _Member {
                 other.memberId == memberId) &&
             (identical(other.memberName, memberName) ||
                 other.memberName == memberName) &&
+            (identical(other.active, active) || other.active == active) &&
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt) &&
             (identical(other.updatedAt, updatedAt) ||
@@ -208,8 +226,8 @@ class _$_Member extends _Member {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, memberId, memberName, createdAt, updatedAt);
+  int get hashCode => Object.hash(
+      runtimeType, memberId, memberName, active, createdAt, updatedAt);
 
   @JsonKey(ignore: true)
   @override
@@ -229,7 +247,8 @@ abstract class _Member extends Member {
   const factory _Member(
       {final String memberId,
       final String memberName,
-      @alwaysUseServerTimestampUnionTimestampConverter
+      final bool active,
+      @unionTimestampConverter
           required final UnionTimestamp createdAt,
       @alwaysUseServerTimestampUnionTimestampConverter
           required final UnionTimestamp updatedAt}) = _$_Member;
@@ -242,7 +261,9 @@ abstract class _Member extends Member {
   @override
   String get memberName;
   @override
-  @alwaysUseServerTimestampUnionTimestampConverter
+  bool get active;
+  @override
+  @unionTimestampConverter
   UnionTimestamp get createdAt;
   @override
   @alwaysUseServerTimestampUnionTimestampConverter

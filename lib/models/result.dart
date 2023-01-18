@@ -17,7 +17,7 @@ class Result with _$Result {
     @Default(<int>[]) List<int> opponentsScore,
     @Default(true) bool isWinner,
     @Default('') String comment,
-    @alwaysUseServerTimestampUnionTimestampConverter
+    @unionTimestampConverter
         required UnionTimestamp createdAt,
     @alwaysUseServerTimestampUnionTimestampConverter
         required UnionTimestamp updatedAt,

@@ -69,7 +69,9 @@ class CreateResultPage extends HookConsumerWidget {
     // Provider
     final members = ref.watch(membersProvider).maybeWhen<List<Member>>(
           data: (data) {
-            return [initMember, ...data];
+            final members =
+                data.where((element) => element.active == true).toList();
+            return [initMember, ...members];
           },
           orElse: () => [
             initMember,
@@ -106,67 +108,95 @@ class CreateResultPage extends HookConsumerWidget {
             automaticallyImplyLeading: true,
           ),
           body: AppOverScrollIndicator(
-              child: SingleChildScrollView(
-                child: Padding(
-                  padding: Measure.p_h16,
-                  child: Column(
-                    children: [
-                      const Gap(24),
-                      ToggleButtons(
-                        onPressed: (int index) {
-                          ref
-                              .watch(selectTypesProvider.notifier)
-                              .changeSelectType(index);
-                        },
-                        borderRadius: Measure.br_8,
-                        borderColor: AppColors.secondary,
-                        selectedColor: AppColors.baseWhite,
-                        fillColor: AppColors.secondary,
-                        color: AppColors.secondary,
-                        highlightColor: AppColors.secondaryPale,
-                        splashColor: AppColors.secondaryPale,
-                        constraints: const BoxConstraints(
-                          minHeight: 50,
-                          minWidth: 130,
-                        ),
-                        isSelected: ref.watch(selectTypesProvider),
-                        children: types,
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: Measure.p_h16,
+                child: Column(
+                  children: [
+                    const Gap(24),
+                    ToggleButtons(
+                      onPressed: (int index) {
+                        ref
+                            .watch(selectTypesProvider.notifier)
+                            .changeSelectType(index);
+                      },
+                      borderRadius: Measure.br_8,
+                      borderColor: AppColors.secondary,
+                      selectedColor: AppColors.baseWhite,
+                      fillColor: AppColors.secondary,
+                      color: AppColors.secondary,
+                      highlightColor: AppColors.secondaryPale,
+                      splashColor: AppColors.secondaryPale,
+                      constraints: const BoxConstraints(
+                        minHeight: 50,
+                        minWidth: 130,
                       ),
-                      const Gap(32),
-                      Row(
+                      isSelected: ref.watch(selectTypesProvider),
+                      children: types,
+                    ),
+                    const Gap(32),
+                    Row(
+                      children: [
+                        Text('Members', style: TextStyles.h2()),
+                      ],
+                    ),
+                    Measure.g_16,
+                    if (!(ref.watch(selectTypesProvider).first == true))
+                      Column(
                         children: [
-                          Text('Members', style: TextStyles.h2()),
+                          Align(
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              'Partner',
+                              style: TextStyles.p1Bold(),
+                            ),
+                          ),
+                          Measure.g_4,
+                          Padding(
+                            padding: Measure.p_h8,
+                            child: _DropdownMemberSelectButton(
+                              membersList: members,
+                              selectedSecondOpponentMember:
+                                  selectedPartnerMember,
+                              onChanged: (value) => ref
+                                  .read(
+                                    dropdownButtonPartnerMemberProvider
+                                        .notifier,
+                                  )
+                                  .selectedMember(value),
+                            ),
+                          ),
+                          Measure.g_12,
                         ],
                       ),
-                      Measure.g_16,
-                      if (!(ref.watch(selectTypesProvider).first == true))
-                        Column(
-                          children: [
-                            Align(
-                              alignment: Alignment.centerLeft,
-                              child: Text(
-                                'Partner',
-                                style: TextStyles.p1Bold(),
-                              ),
-                            ),
-                            Measure.g_4,
-                            Padding(
-                              padding: Measure.p_h8,
-                              child: _DropdownMemberSelectButton(
-                                membersList: members,
-                                selectedSecondOpponentMember:
-                                    selectedPartnerMember,
-                                onChanged: (value) => ref
-                                    .read(
-                                      dropdownButtonPartnerMemberProvider
-                                          .notifier,
-                                    )
-                                    .selectedMember(value),
-                              ),
-                            ),
-                            Measure.g_12,
-                          ],
+                    Column(
+                      children: [
+                        Align(
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            'Opponent',
+                            style: TextStyles.p1Bold(),
+                          ),
                         ),
+                        Measure.g_4,
+                        Padding(
+                          padding: Measure.p_h8,
+                          child: _DropdownMemberSelectButton(
+                            membersList: members,
+                            selectedSecondOpponentMember:
+                                selectedFirstOpponentMember,
+                            onChanged: (value) => ref
+                                .read(
+                                  dropdownButtonFirstOpponentMemberProvider
+                                      .notifier,
+                                )
+                                .selectedMember(value),
+                          ),
+                        ),
+                        Measure.g_12,
+                      ],
+                    ),
+                    if (!(ref.watch(selectTypesProvider).first == true))
                       Column(
                         children: [
                           Align(
@@ -182,10 +212,10 @@ class CreateResultPage extends HookConsumerWidget {
                             child: _DropdownMemberSelectButton(
                               membersList: members,
                               selectedSecondOpponentMember:
-                                  selectedFirstOpponentMember,
+                                  selectedSecondOpponentMember,
                               onChanged: (value) => ref
                                   .read(
-                                    dropdownButtonFirstOpponentMemberProvider
+                                    dropdownButtonSecondOpponentMemberProvider
                                         .notifier,
                                   )
                                   .selectedMember(value),
@@ -194,230 +224,196 @@ class CreateResultPage extends HookConsumerWidget {
                           Measure.g_12,
                         ],
                       ),
-                      if (!(ref.watch(selectTypesProvider).first == true))
-                        Column(
-                          children: [
-                            Align(
-                              alignment: Alignment.centerLeft,
-                              child: Text(
-                                'Opponent',
-                                style: TextStyles.p1Bold(),
-                              ),
-                            ),
-                            Measure.g_4,
-                            Padding(
-                              padding: Measure.p_h8,
-                              child: _DropdownMemberSelectButton(
-                                membersList: members,
-                                selectedSecondOpponentMember:
-                                    selectedSecondOpponentMember,
-                                onChanged: (value) => ref
-                                    .read(
-                                      dropdownButtonSecondOpponentMemberProvider
-                                          .notifier,
+                    Measure.g_12,
+                    Row(
+                      children: [
+                        Text('Scores', style: TextStyles.h2()),
+                      ],
+                    ),
+                    Measure.g_16,
+                    Row(
+                      children: [
+                        Row(
+                          children: <Widget>[
+                            Radio(
+                              activeColor: AppColors.secondary,
+                              value: '1game',
+                              groupValue: ref.watch(is1gameRadioButtonProvider),
+                              onChanged: (value) {
+                                ref
+                                    .watch(
+                                      is1gameRadioButtonProvider.notifier,
                                     )
-                                    .selectedMember(value),
-                              ),
+                                    .update((state) => value);
+                              },
                             ),
-                            Measure.g_12,
+                            const Text('1 Game'),
                           ],
                         ),
-                      Measure.g_12,
-                      Row(
-                        children: [
-                          Text('Scores', style: TextStyles.h2()),
-                        ],
-                      ),
-                      Measure.g_16,
-                      Row(
-                        children: [
-                          Row(
-                            children: <Widget>[
-                              Radio(
-                                activeColor: AppColors.secondary,
-                                value: '1game',
-                                groupValue:
-                                    ref.watch(is1gameRadioButtonProvider),
-                                onChanged: (value) {
-                                  ref
-                                      .watch(
-                                        is1gameRadioButtonProvider.notifier,
-                                      )
-                                      .update((state) => value);
-                                },
-                              ),
-                              const Text('1 Game'),
-                            ],
-                          ),
-                          Row(
-                            children: <Widget>[
-                              Radio(
-                                activeColor: AppColors.secondary,
-                                value: '3games',
-                                groupValue:
-                                    ref.watch(is1gameRadioButtonProvider),
-                                onChanged: (value) {
-                                  ref
-                                      .watch(
-                                        is1gameRadioButtonProvider.notifier,
-                                      )
-                                      .update((state) => value);
-                                },
-                              ),
-                              const Text('3 Games'),
-                            ],
-                          ),
-                        ],
-                      ),
-                      Measure.g_24,
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: const [
-                          SizedBox(
-                            width: 80,
-                            child: Center(child: Text('Yours')),
-                          ),
-                          SizedBox(
-                            width: 80,
-                          ),
-                          SizedBox(
-                            width: 80,
-                            child: Center(child: Text('Opponents')),
-                          ),
-                        ],
-                      ),
-                      Measure.g_12,
+                        Row(
+                          children: <Widget>[
+                            Radio(
+                              activeColor: AppColors.secondary,
+                              value: '3games',
+                              groupValue: ref.watch(is1gameRadioButtonProvider),
+                              onChanged: (value) {
+                                ref
+                                    .watch(
+                                      is1gameRadioButtonProvider.notifier,
+                                    )
+                                    .update((state) => value);
+                              },
+                            ),
+                            const Text('3 Games'),
+                          ],
+                        ),
+                      ],
+                    ),
+                    Measure.g_24,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: const [
+                        SizedBox(
+                          width: 80,
+                          child: Center(child: Text('Yours')),
+                        ),
+                        SizedBox(
+                          width: 80,
+                        ),
+                        SizedBox(
+                          width: 80,
+                          child: Center(child: Text('Opponents')),
+                        ),
+                      ],
+                    ),
+                    Measure.g_12,
+                    Column(
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            _ScoreSelectCard(state: yours1gameNumberState),
+                            const SizedBox(
+                              width: 80,
+                            ),
+                            _ScoreSelectCard(
+                              state: opponents1gameNumberState,
+                            ),
+                          ],
+                        ),
+                        Measure.g_12,
+                      ],
+                    ),
+                    if (ref.watch(is1gameRadioButtonProvider) == '3games')
                       Column(
                         children: [
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              _ScoreSelectCard(state: yours1gameNumberState),
+                              _ScoreSelectCard(state: yours2gameNumberState),
                               const SizedBox(
                                 width: 80,
                               ),
                               _ScoreSelectCard(
-                                state: opponents1gameNumberState,
+                                state: opponents2gameNumberState,
                               ),
                             ],
                           ),
                           Measure.g_12,
                         ],
                       ),
-                      if (ref.watch(is1gameRadioButtonProvider) == '3games')
-                        Column(
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                _ScoreSelectCard(state: yours2gameNumberState),
-                                const SizedBox(
-                                  width: 80,
-                                ),
-                                _ScoreSelectCard(
-                                  state: opponents2gameNumberState,
-                                ),
-                              ],
-                            ),
-                            Measure.g_12,
-                          ],
-                        ),
-                      if (ref.watch(is1gameRadioButtonProvider) == '3games')
-                        Column(
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                _ScoreSelectCard(state: yours3gameNumberState),
-                                const SizedBox(
-                                  width: 80,
-                                ),
-                                _ScoreSelectCard(
-                                  state: opponents3gameNumberState,
-                                ),
-                              ],
-                            ),
-                            Measure.g_12,
-                          ],
-                        ),
-                      Measure.g_24,
-                      PrimaryRoundedButton(
-                        text: 'Save new result',
-                        onTap: () async {
-                          // 二重の処理を防ぐために先にローディングの状態にしておく。
-
-                          ref
-                              .watch(overlayLoadingProvider.notifier)
-                              .update((state) => true);
-                          // 点数のバリデーション
-                          final is1game =
-                              ref.watch(is1gameRadioButtonProvider) == '1game';
-                          final scores = scoreFormat(
-                            is1game: is1game,
-                            yours1gameNumber: yours1gameNumberState.value,
-                            yours2gameNumber: yours2gameNumberState.value,
-                            yours3gameNumber: yours3gameNumberState.value,
-                            opponents1gameNumber:
-                                opponents1gameNumberState.value,
-                            opponents2gameNumber:
-                                opponents2gameNumberState.value,
-                            opponents3gameNumber:
-                                opponents3gameNumberState.value,
-                          );
-                          final yourScore = scores[0];
-                          final opponentsScore = scores[1];
-
-                          // 勝者のバリデーション
-                          final isWinner = isWinnerValidation(
-                            is1game: is1game,
-                            yourScore: yourScore,
-                            opponentsScore: opponentsScore,
-                          );
-
-                          // メンバーのバリデーション
-                          final isSingles =
-                              ref.watch(selectTypesProvider).first == true;
-                          final partner = partnerFormat(
-                            isSingles: isSingles,
-                            partnerId: selectedPartnerMember.memberId,
-                          );
-                          final opponents = opponentsFormat(
-                            isSingles: isSingles,
-                            firstOpponentId:
-                                selectedFirstOpponentMember.memberId,
-                            secondOpponentId:
-                                selectedSecondOpponentMember.memberId,
-                          );
-
-                          final result = Result(
-                            type: ref.watch(selectTypesProvider).first == true
-                                ? ResultTypes.singles.name
-                                : ResultTypes.doubles.name,
-                            partner: partner,
-                            opponents: opponents,
-                            yourScore: yourScore,
-                            opponentsScore: opponentsScore,
-                            isWinner: isWinner,
-                            createdAt: UnionTimestamp.dateTime(DateTime.now()),
-                            updatedAt: UnionTimestamp.dateTime(DateTime.now()),
-                          );
-
-                          if (userId != null) {
-                            await ref
-                                .read(createResultControllerProvider.notifier)
-                                .createResult(
-                                  userId: userId,
-                                  result: result,
-                                );
-                          }
-                        },
+                    if (ref.watch(is1gameRadioButtonProvider) == '3games')
+                      Column(
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              _ScoreSelectCard(state: yours3gameNumberState),
+                              const SizedBox(
+                                width: 80,
+                              ),
+                              _ScoreSelectCard(
+                                state: opponents3gameNumberState,
+                              ),
+                            ],
+                          ),
+                          Measure.g_12,
+                        ],
                       ),
-                      const Gap(40),
-                    ],
-                  ),
+                    Measure.g_24,
+                    PrimaryRoundedButton(
+                      text: 'Save new result',
+                      onTap: () async {
+                        // 二重の処理を防ぐために先にローディングの状態にしておく。
+
+                        ref
+                            .watch(overlayLoadingProvider.notifier)
+                            .update((state) => true);
+                        // 点数のバリデーション
+                        final is1game =
+                            ref.watch(is1gameRadioButtonProvider) == '1game';
+                        final scores = scoreFormat(
+                          is1game: is1game,
+                          yours1gameNumber: yours1gameNumberState.value,
+                          yours2gameNumber: yours2gameNumberState.value,
+                          yours3gameNumber: yours3gameNumberState.value,
+                          opponents1gameNumber: opponents1gameNumberState.value,
+                          opponents2gameNumber: opponents2gameNumberState.value,
+                          opponents3gameNumber: opponents3gameNumberState.value,
+                        );
+                        final yourScore = scores[0];
+                        final opponentsScore = scores[1];
+
+                        // 勝者のバリデーション
+                        final isWinner = isWinnerValidation(
+                          is1game: is1game,
+                          yourScore: yourScore,
+                          opponentsScore: opponentsScore,
+                        );
+
+                        // メンバーのバリデーション
+                        final isSingles =
+                            ref.watch(selectTypesProvider).first == true;
+                        final partner = partnerFormat(
+                          isSingles: isSingles,
+                          partnerId: selectedPartnerMember.memberId,
+                        );
+                        final opponents = opponentsFormat(
+                          isSingles: isSingles,
+                          firstOpponentId: selectedFirstOpponentMember.memberId,
+                          secondOpponentId:
+                              selectedSecondOpponentMember.memberId,
+                        );
+
+                        final result = Result(
+                          type: ref.watch(selectTypesProvider).first == true
+                              ? ResultTypes.singles.name
+                              : ResultTypes.doubles.name,
+                          partner: partner,
+                          opponents: opponents,
+                          yourScore: yourScore,
+                          opponentsScore: opponentsScore,
+                          isWinner: isWinner,
+                          createdAt: UnionTimestamp.dateTime(DateTime.now()),
+                          updatedAt: UnionTimestamp.dateTime(DateTime.now()),
+                        );
+
+                        if (userId != null) {
+                          await ref
+                              .read(createResultControllerProvider.notifier)
+                              .createResult(
+                                userId: userId,
+                                result: result,
+                              );
+                        }
+                      },
+                    ),
+                    const Gap(40),
+                  ],
                 ),
               ),
             ),
+          ),
         ),
         if (ref.watch(overlayLoadingProvider)) const OverlayLoadingWidget(),
       ],

@@ -23,7 +23,7 @@ class MemberListPage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     ref.listen<AsyncValue<void>>(
-      createMemberControllerProvider,
+      memberControllerProvider,
       (_, state) async {
         if (state.isLoading) {
           ref.watch(overlayLoadingProvider.notifier).update((state) => true);
@@ -59,7 +59,7 @@ class MemberListPage extends HookConsumerWidget {
 
     final members = ref.watch(membersProvider).maybeWhen<List<Member>>(
           data: (data) {
-            return data;
+            return data.where((element) => element.active == true).toList();
           },
           orElse: () => [],
         );
@@ -67,6 +67,7 @@ class MemberListPage extends HookConsumerWidget {
     final userId = ref.watch(authRepositoryImplProvider).currentUser?.uid;
 
     final useMemberNameController = useTextEditingController();
+    final useReNameController = useTextEditingController();
 
     return Scaffold(
       appBar: WhiteAppBar(
@@ -74,20 +75,21 @@ class MemberListPage extends HookConsumerWidget {
         automaticallyImplyLeading: true,
         actions: [
           IconButton(
-            onPressed: () {
-              addMemberDialog(
+            onPressed: () async {
+              await addMemberDialog(
                 context,
                 useMemberNameController,
                 onPressed: () async {
                   final member = Member(
                     memberName: useMemberNameController.value.text,
+                    active: true,
                     createdAt: UnionTimestamp.dateTime(DateTime.now()),
                     updatedAt: UnionTimestamp.dateTime(DateTime.now()),
                   );
 
                   if (userId != null) {
                     await ref
-                        .read(createMemberControllerProvider.notifier)
+                        .read(memberControllerProvider.notifier)
                         .createMember(
                           userId: userId,
                           member: member,
@@ -112,16 +114,55 @@ class MemberListPage extends HookConsumerWidget {
                   motion: const BehindMotion(),
                   children: [
                     SlidableAction(
-                      onPressed: (context) {},
+                      onPressed: (context) async {
+                        await showActionDialog(
+                          context: context,
+                          title: 'メンバーの削除',
+                          content:
+                              '''${e.memberName} を削除します。\n\n削除した場合、このメンバーを含む試合結果は残ります。しかし、以後同名の人物を追加した場合でも、その試合結果は新しい試合結果としてまとめられます。これを踏まえた上でメンバーを削除しますか？''',
+                          onPressed: () async {
+                            if (userId != null) {
+                              await ref
+                                  .read(memberControllerProvider.notifier)
+                                  .deleteMember(
+                                    userId: userId,
+                                    memberId: e.memberId,
+                                    member: e,
+                                  );
+                            }
+                          },
+                        );
+                      },
                       backgroundColor: AppColors.primary,
-                      foregroundColor: Colors.white,
+                      foregroundColor: AppColors.baseWhite,
                       icon: Icons.delete_forever,
                       label: '削除',
                     ),
                     SlidableAction(
-                      onPressed: (context) {},
+                      onPressed: (context) async {
+                        useReNameController.text = e.memberName;
+                        await editMemberDialog(
+                          context,
+                          useReNameController,
+                          onPressed: () async {
+                            final member = e.copyWith(
+                              memberName: useReNameController.value.text,
+                            );
+
+                            if (userId != null) {
+                              await ref
+                                  .read(memberControllerProvider.notifier)
+                                  .updateMember(
+                                    userId: userId,
+                                    memberId: e.memberId,
+                                    member: member,
+                                  );
+                            }
+                          },
+                        );
+                      },
                       backgroundColor: AppColors.secondary,
-                      foregroundColor: Colors.white,
+                      foregroundColor: AppColors.baseWhite,
                       icon: Icons.edit,
                       label: '編集',
                     ),
