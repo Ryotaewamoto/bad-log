@@ -42,13 +42,13 @@ class CreateResultController extends AutoDisposeAsyncNotifier<void> {
     state = await AsyncValue.guard(() async {
       try {
         // TODO(ryotaiwamoto): validation
-        if (result.type == ResultTypes.singles.toString()) {
+        if (result.type == ResultTypes.singles.name) {
           if (result.opponents.first == 'id-unselected') {
             throw const AppException(message: '対戦相手を選択してください。');
           }
         }
 
-        if (result.type == ResultTypes.doubles.toString()) {
+        if (result.type == ResultTypes.doubles.name) {
           if (result.opponents.first == 'id-unselected' ||
               result.opponents[1] == 'id-unselected' ||
               result.partner == 'id-unselected') {
