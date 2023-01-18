@@ -342,7 +342,9 @@ class _RateSinglesResultCard extends HookConsumerWidget {
                 child: Align(
                   alignment: Alignment.bottomLeft,
                   child: Text(
-                    'Latest: ${result.createdAt.dateTime!.toYYYYMMDD(withJapaneseWeekDay: false)}',
+                    '''
+Latest: ${result.createdAt.dateTime!.toYYYYMMDD(withJapaneseWeekDay: false)}
+''',
                     style: TextStyles.p3(),
                   ),
                 ),
@@ -499,7 +501,9 @@ class _RateDoublesResultCard extends HookConsumerWidget {
                 child: Align(
                   alignment: Alignment.bottomLeft,
                   child: Text(
-                    'Latest: ${result.createdAt.dateTime!.toYYYYMMDD(withJapaneseWeekDay: false)}',
+                    '''
+Latest: ${result.createdAt.dateTime!.toYYYYMMDD(withJapaneseWeekDay: false)}
+''',
                     style: TextStyles.p3(),
                   ),
                 ),
