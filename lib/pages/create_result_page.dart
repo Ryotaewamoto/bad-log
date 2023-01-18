@@ -21,6 +21,7 @@ import '../utils/result_format.dart';
 import '../utils/result_types.dart';
 import '../utils/scaffold_messenger_service.dart';
 import '../utils/text_styles.dart';
+import '../widgets/app_over_scroll_indicator.dart';
 import '../widgets/number_picker/numberpicker.dart';
 import '../widgets/rounded_button.dart';
 import '../widgets/white_app_bar.dart';
@@ -104,14 +105,7 @@ class CreateResultPage extends HookConsumerWidget {
             title: 'New',
             automaticallyImplyLeading: true,
           ),
-          body: GlowingOverscrollIndicator(
-            axisDirection: AxisDirection.down,
-            color: AppColors.secondary,
-            child: NotificationListener<OverscrollIndicatorNotification>(
-              onNotification: (OverscrollIndicatorNotification notification) {
-                notification.disallowIndicator(); // disallowGlow()を呼ぶ
-                return false;
-              },
+          body: AppOverScrollIndicator(
               child: SingleChildScrollView(
                 child: Padding(
                   padding: Measure.p_h16,
@@ -424,7 +418,6 @@ class CreateResultPage extends HookConsumerWidget {
                 ),
               ),
             ),
-          ),
         ),
         if (ref.watch(overlayLoadingProvider)) const OverlayLoadingWidget(),
       ],

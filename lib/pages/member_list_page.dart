@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -106,37 +107,59 @@ class MemberListPage extends HookConsumerWidget {
       body: Column(
         children: members
             .map(
-              (e) => DecoratedBox(
-                decoration: const BoxDecoration(
-                  border:
-                      Border(bottom: BorderSide(color: AppColors.baseLight)),
+              (e) => Slidable(
+                startActionPane: ActionPane(
+                  motion: const BehindMotion(),
+                  children: [
+                    SlidableAction(
+                      onPressed: (context) {},
+                      backgroundColor: AppColors.primary,
+                      foregroundColor: Colors.white,
+                      icon: Icons.delete_forever,
+                      label: '削除',
+                    ),
+                    SlidableAction(
+                      onPressed: (context) {},
+                      backgroundColor: AppColors.secondary,
+                      foregroundColor: Colors.white,
+                      icon: Icons.edit,
+                      label: '編集',
+                    ),
+                  ],
                 ),
-                child: SizedBox(
-                  width: double.infinity,
-                  child: Padding(
-                    padding: Measure.p_h16,
+                key: ValueKey(members.indexOf(e)),
+                child: DecoratedBox(
+                  decoration: const BoxDecoration(
+                    border:
+                        Border(bottom: BorderSide(color: AppColors.baseLight)),
+                  ),
+                  child: SizedBox(
+                    width: double.infinity,
                     child: Padding(
-                      padding: Measure.p_v4,
-                      child: Row(
-                        children: [
-                          const Icon(
-                            Icons.account_circle_rounded,
-                            size: 32,
-                            color: AppColors.primary,
-                          ),
-                          const SizedBox(
-                            width: 8,
-                          ),
-                          SizedBox(
-                            height: 40,
-                            child: Center(
-                              child: Text(
-                                e.memberName,
-                                style: TextStyles.p1(),
+                      padding: Measure.p_h16,
+                      child: Padding(
+                        padding: Measure.p_v4,
+                        child: Row(
+                          children: [
+                            const Icon(
+                              Icons.account_circle_rounded,
+                              size: 32,
+                              color: AppColors.primary,
+                            ),
+                            const SizedBox(
+                              width: 8,
+                            ),
+                            SizedBox(
+                              height: 40,
+                              child: Center(
+                                child: Text(
+                                  e.memberName,
+                                  style: TextStyles.p1(),
+                                ),
                               ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                   ),
