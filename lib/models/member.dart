@@ -12,8 +12,7 @@ class Member with _$Member {
     @Default('') String memberId,
     @Default('') String memberName,
     @Default(true) bool active,
-    @unionTimestampConverter
-        required UnionTimestamp createdAt,
+    @unionTimestampConverter required UnionTimestamp createdAt,
     @alwaysUseServerTimestampUnionTimestampConverter
         required UnionTimestamp updatedAt,
   }) = _Member;
