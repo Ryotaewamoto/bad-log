@@ -18,6 +18,7 @@ import '../utils/fakes/member.dart';
 import '../utils/json_converters/union_timestamp.dart';
 import '../utils/loading.dart';
 import '../utils/result_format.dart';
+import '../utils/resylt_types.dart';
 import '../utils/scaffold_messenger_service.dart';
 import '../utils/text_styles.dart';
 import '../widgets/number_picker/numberpicker.dart';
@@ -123,8 +124,7 @@ class CreateResultPage extends HookConsumerWidget {
                               .watch(selectTypesProvider.notifier)
                               .changeSelectType(index);
                         },
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(8)),
+                        borderRadius: Measure.br_8,
                         borderColor: AppColors.secondary,
                         selectedColor: AppColors.baseWhite,
                         fillColor: AppColors.secondary,
@@ -397,8 +397,8 @@ class CreateResultPage extends HookConsumerWidget {
 
                           final result = Result(
                             type: ref.watch(selectTypesProvider).first == true
-                                ? 'singles'
-                                : 'doubles',
+                                ? ResultTypes.singles.name
+                                : ResultTypes.doubles.name,
                             partner: partner,
                             opponents: opponents,
                             yourScore: yourScore,
