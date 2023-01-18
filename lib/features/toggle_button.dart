@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-const List<Widget> types = <Widget>[
-  Text('Singles'),
-  Text('Doubles'),
-];
+import '../utils/resylt_types.dart';
+
+/// 表記のみ日本語
+final List<Widget> types =
+    ResultTypes.values.map((type) => Text(type.jpName)).toList();
 
 const List<bool> initTypes = [true, false];
 

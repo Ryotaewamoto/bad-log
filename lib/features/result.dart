@@ -6,6 +6,7 @@ import '../models/result.dart';
 import '../repositories/auth/auth_repository_impl.dart';
 import '../repositories/result/result_repository_impl.dart';
 import '../utils/exceptions/app_exception.dart';
+import '../utils/resylt_types.dart';
 
 /// ユーザーの results コレクションを購読する StreamProvider。
 final resultsProvider = StreamProvider.autoDispose<List<Result>>((ref) {
@@ -41,13 +42,13 @@ class CreateResultController extends AutoDisposeAsyncNotifier<void> {
     state = await AsyncValue.guard(() async {
       try {
         // TODO(ryotaiwamoto): validation
-        if (result.type == 'singles') {
+        if (result.type == ResultTypes.singles.toString()) {
           if (result.opponents.first == 'id-unselected') {
             throw const AppException(message: '対戦相手を選択してください。');
           }
         }
 
-        if (result.type == 'doubles') {
+        if (result.type == ResultTypes.doubles.toString()) {
           if (result.opponents.first == 'id-unselected' ||
               result.opponents[1] == 'id-unselected' ||
               result.partner == 'id-unselected') {

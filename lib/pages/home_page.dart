@@ -14,6 +14,7 @@ import '../utils/constants/app_colors.dart';
 import '../utils/constants/measure.dart';
 import '../utils/extensions/date_time.dart';
 import '../utils/text_styles.dart';
+import '../widgets/app_over_scroll_indicator.dart';
 import '../widgets/white_app_bar.dart';
 import 'account_page.dart';
 import 'create_result_page.dart';
@@ -52,21 +53,27 @@ class HomePage extends HookConsumerWidget {
             ),
           ],
         ),
-        body: Column(
-          children: [
-            const Gap(4),
-            Flexible(
-              child: ListView.builder(
-                padding: Measure.p_h16,
-                itemCount: results.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return _MatchResultCard(
-                    result: results[index],
-                  );
-                },
+        body: AppOverScrollIndicator(
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: Measure.p_h16,
+              child: Column(
+                children: [
+                  const Gap(8),
+                  Column(
+                    children: results
+                        .map(
+                          (result) => _MatchResultCard(
+                            result: result,
+                          ),
+                        )
+                        .toList(),
+                  ),
+                  const Gap(8),
+                ],
               ),
             ),
-          ],
+          ),
         ),
         floatingActionButton: FloatingActionButton(
           backgroundColor: AppColors.secondary,
