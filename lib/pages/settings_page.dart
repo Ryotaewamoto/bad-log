@@ -12,6 +12,7 @@ import '../utils/loading.dart';
 import '../utils/text_styles.dart';
 import '../widgets/white_app_bar.dart';
 import 'auth_page.dart';
+import 'member_list_page.dart';
 
 class SettingsPage extends HookConsumerWidget {
   const SettingsPage({super.key});
@@ -22,7 +23,10 @@ class SettingsPage extends HookConsumerWidget {
     final userEmail = ref.watch(authRepositoryImplProvider).currentUser?.email;
     final members = ref.watch(membersProvider).maybeWhen<int>(
           data: (data) {
-            return data.length;
+            return data
+                .where((element) => element.active == true)
+                .toList()
+                .length;
           },
           orElse: () => 0,
         );
@@ -60,7 +64,15 @@ class SettingsPage extends HookConsumerWidget {
                 color: AppColors.baseLight,
               ),
               InkWell(
-                onTap: () {},
+                onTap: () {
+                  // TODO(ryotaiwamoto): スライドインアニメーション
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute<bool>(
+                      builder: (_) => const MemberListPage(),
+                    ),
+                  );
+                },
                 highlightColor: AppColors.secondaryPale,
                 splashColor: AppColors.secondaryPale,
                 child: SizedBox(

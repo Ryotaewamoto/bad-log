@@ -161,7 +161,6 @@ class _MatchResultCard extends HookConsumerWidget {
               child: Column(
                 children: [
                   Container(
-                    // 対戦メンバーのコンテナー
                     width: double.infinity,
                     decoration: result.isWinner
                         ? const BoxDecoration(

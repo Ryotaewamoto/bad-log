@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../utils/resylt_types.dart';
+import '../utils/result_types.dart';
 
-/// 表記のみ日本語
+/// アプリの表記のみ日本語。英語に対応する際は [.enName] を使用する。
 final List<Widget> types =
     ResultTypes.values.map((type) => Text(type.jpName)).toList();
 
 const List<bool> initTypes = [true, false];
 
-/// singles か doubles かを [ToggleButtons] で選択するための Provider。
+/// singles か doubles かを [ToggleButtons] で選択するための [Provider]。
 ///
-///　選択状態を保持していて欲しいので [.autoDispose] は使用しない。
+/// [ToggleButtons] の形式上、bool 型の [List] を使用している。
+///
+/// 選択状態を保持していて欲しいので [.autoDispose] は使用しない。
 final selectTypesProvider =
     StateNotifierProvider<SelectTypesNotifier, List<bool>>(
   (ref) => SelectTypesNotifier(),

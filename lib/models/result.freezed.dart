@@ -28,7 +28,7 @@ mixin _$Result {
   List<int> get opponentsScore => throw _privateConstructorUsedError;
   bool get isWinner => throw _privateConstructorUsedError;
   String get comment => throw _privateConstructorUsedError;
-  @alwaysUseServerTimestampUnionTimestampConverter
+  @unionTimestampConverter
   UnionTimestamp get createdAt => throw _privateConstructorUsedError;
   @alwaysUseServerTimestampUnionTimestampConverter
   UnionTimestamp get updatedAt => throw _privateConstructorUsedError;
@@ -52,7 +52,7 @@ abstract class $ResultCopyWith<$Res> {
       List<int> opponentsScore,
       bool isWinner,
       String comment,
-      @alwaysUseServerTimestampUnionTimestampConverter
+      @unionTimestampConverter
           UnionTimestamp createdAt,
       @alwaysUseServerTimestampUnionTimestampConverter
           UnionTimestamp updatedAt});
@@ -161,7 +161,7 @@ abstract class _$$_ResultCopyWith<$Res> implements $ResultCopyWith<$Res> {
       List<int> opponentsScore,
       bool isWinner,
       String comment,
-      @alwaysUseServerTimestampUnionTimestampConverter
+      @unionTimestampConverter
           UnionTimestamp createdAt,
       @alwaysUseServerTimestampUnionTimestampConverter
           UnionTimestamp updatedAt});
@@ -250,7 +250,7 @@ class _$_Result extends _Result {
       final List<int> opponentsScore = const <int>[],
       this.isWinner = true,
       this.comment = '',
-      @alwaysUseServerTimestampUnionTimestampConverter required this.createdAt,
+      @unionTimestampConverter required this.createdAt,
       @alwaysUseServerTimestampUnionTimestampConverter required this.updatedAt})
       : _opponents = opponents,
         _yourScore = yourScore,
@@ -303,7 +303,7 @@ class _$_Result extends _Result {
   @JsonKey()
   final String comment;
   @override
-  @alwaysUseServerTimestampUnionTimestampConverter
+  @unionTimestampConverter
   final UnionTimestamp createdAt;
   @override
   @alwaysUseServerTimestampUnionTimestampConverter
@@ -377,7 +377,7 @@ abstract class _Result extends Result {
       final List<int> opponentsScore,
       final bool isWinner,
       final String comment,
-      @alwaysUseServerTimestampUnionTimestampConverter
+      @unionTimestampConverter
           required final UnionTimestamp createdAt,
       @alwaysUseServerTimestampUnionTimestampConverter
           required final UnionTimestamp updatedAt}) = _$_Result;
@@ -402,7 +402,7 @@ abstract class _Result extends Result {
   @override
   String get comment;
   @override
-  @alwaysUseServerTimestampUnionTimestampConverter
+  @unionTimestampConverter
   UnionTimestamp get createdAt;
   @override
   @alwaysUseServerTimestampUnionTimestampConverter

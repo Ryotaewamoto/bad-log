@@ -8,6 +8,7 @@ import '../../repositories/auth/auth_repository_impl.dart';
 import '../../utils/exceptions/app_exception.dart';
 import '../../utils/extensions/firebase_auth_exception.dart';
 
+/// Firebase Auth を用いてサインアウトをする [AsyncNotifierProvider]。
 final signOutControllerProvider =
     AutoDisposeAsyncNotifierProvider<SignOutController, void>(
   SignOutController.new,

@@ -3,21 +3,21 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../models/member.dart';
 import '../utils/fakes/member.dart';
 
-/// 味方の [Member] の状態を保持する Provider。
+/// 味方の [Member] の状態を保持する [StateNotifierProvider]。
 final dropdownButtonPartnerMemberProvider =
     StateNotifierProvider.autoDispose<DropdownButtonMemberNotifier, Member>(
         (_) {
   return DropdownButtonMemberNotifier();
 });
 
-/// 1人目の対戦相手の [Member] の状態を保持する Provider。
+/// 1人目の対戦相手の [Member] の状態を保持する [StateNotifierProvider]。
 final dropdownButtonFirstOpponentMemberProvider =
     StateNotifierProvider.autoDispose<DropdownButtonMemberNotifier, Member>(
         (_) {
   return DropdownButtonMemberNotifier();
 });
 
-/// 2人目の対戦相手の [Member] の状態を保持する Provider。
+/// 2人目の対戦相手の [Member] の状態を保持する [StateNotifierProvider]。
 final dropdownButtonSecondOpponentMemberProvider =
     StateNotifierProvider.autoDispose<DropdownButtonMemberNotifier, Member>(
         (_) {

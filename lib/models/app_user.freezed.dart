@@ -23,7 +23,7 @@ mixin _$AppUser {
   @Assert('userName.length <= 20')
   String get userId => throw _privateConstructorUsedError;
   String get userName => throw _privateConstructorUsedError;
-  @alwaysUseServerTimestampUnionTimestampConverter
+  @unionTimestampConverter
   UnionTimestamp get createdAt => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -37,11 +37,9 @@ abstract class $AppUserCopyWith<$Res> {
       _$AppUserCopyWithImpl<$Res, AppUser>;
   @useResult
   $Res call(
-      {@Assert('userName.length <= 20')
-          String userId,
+      {@Assert('userName.length <= 20') String userId,
       String userName,
-      @alwaysUseServerTimestampUnionTimestampConverter
-          UnionTimestamp createdAt});
+      @unionTimestampConverter UnionTimestamp createdAt});
 
   $UnionTimestampCopyWith<$Res> get createdAt;
 }
@@ -96,11 +94,9 @@ abstract class _$$_AppUserCopyWith<$Res> implements $AppUserCopyWith<$Res> {
   @override
   @useResult
   $Res call(
-      {@Assert('userName.length <= 20')
-          String userId,
+      {@Assert('userName.length <= 20') String userId,
       String userName,
-      @alwaysUseServerTimestampUnionTimestampConverter
-          UnionTimestamp createdAt});
+      @unionTimestampConverter UnionTimestamp createdAt});
 
   @override
   $UnionTimestampCopyWith<$Res> get createdAt;
@@ -143,7 +139,7 @@ class _$_AppUser extends _AppUser {
   const _$_AppUser(
       {@Assert('userName.length <= 20') this.userId = '',
       this.userName = '',
-      @alwaysUseServerTimestampUnionTimestampConverter required this.createdAt})
+      @unionTimestampConverter required this.createdAt})
       : super._();
 
   factory _$_AppUser.fromJson(Map<String, dynamic> json) =>
@@ -157,7 +153,7 @@ class _$_AppUser extends _AppUser {
   @JsonKey()
   final String userName;
   @override
-  @alwaysUseServerTimestampUnionTimestampConverter
+  @unionTimestampConverter
   final UnionTimestamp createdAt;
 
   @override
@@ -197,11 +193,10 @@ class _$_AppUser extends _AppUser {
 
 abstract class _AppUser extends AppUser {
   const factory _AppUser(
-      {@Assert('userName.length <= 20')
-          final String userId,
-      final String userName,
-      @alwaysUseServerTimestampUnionTimestampConverter
-          required final UnionTimestamp createdAt}) = _$_AppUser;
+          {@Assert('userName.length <= 20') final String userId,
+          final String userName,
+          @unionTimestampConverter required final UnionTimestamp createdAt}) =
+      _$_AppUser;
   const _AppUser._() : super._();
 
   factory _AppUser.fromJson(Map<String, dynamic> json) = _$_AppUser.fromJson;
@@ -212,7 +207,7 @@ abstract class _AppUser extends AppUser {
   @override
   String get userName;
   @override
-  @alwaysUseServerTimestampUnionTimestampConverter
+  @unionTimestampConverter
   UnionTimestamp get createdAt;
   @override
   @JsonKey(ignore: true)

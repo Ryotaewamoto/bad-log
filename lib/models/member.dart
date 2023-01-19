@@ -11,8 +11,8 @@ class Member with _$Member {
   const factory Member({
     @Default('') String memberId,
     @Default('') String memberName,
-    @alwaysUseServerTimestampUnionTimestampConverter
-        required UnionTimestamp createdAt,
+    @Default(true) bool active,
+    @unionTimestampConverter required UnionTimestamp createdAt,
     @alwaysUseServerTimestampUnionTimestampConverter
         required UnionTimestamp updatedAt,
   }) = _Member;

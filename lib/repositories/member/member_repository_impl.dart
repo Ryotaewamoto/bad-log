@@ -44,4 +44,38 @@ class MemberRepositoryImpl implements MemberRepository {
       return result;
     });
   }
+
+  @override
+  Future<void> create({
+    required String userId,
+    required Member member,
+  }) async {
+    await membersRef(userId: userId).add(
+      member,
+    );
+  }
+
+  @override
+  Future<void> update({
+    required String userId,
+    required String memberId,
+    required Member member,
+  }) async {
+    await membersRef(userId: userId).doc(memberId).set(
+          member,
+          SetOptions(merge: true),
+        );
+  }
+
+  @override
+  Future<void> delete({
+    required String userId,
+    required String memberId,
+    required Member member,
+  }) async {
+    await membersRef(userId: userId).doc(memberId).set(
+          member.copyWith(active: false),
+          SetOptions(merge: true),
+        );
+  }
 }

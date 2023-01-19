@@ -24,8 +24,7 @@ _$_Result _$$_ResultFromJson(Map<String, dynamic> json) => _$_Result(
           const <int>[],
       isWinner: json['isWinner'] as bool? ?? true,
       comment: json['comment'] as String? ?? '',
-      createdAt: alwaysUseServerTimestampUnionTimestampConverter
-          .fromJson(json['createdAt'] as Object),
+      createdAt: unionTimestampConverter.fromJson(json['createdAt'] as Object),
       updatedAt: alwaysUseServerTimestampUnionTimestampConverter
           .fromJson(json['updatedAt'] as Object),
     );
@@ -39,8 +38,7 @@ Map<String, dynamic> _$$_ResultToJson(_$_Result instance) => <String, dynamic>{
       'opponentsScore': instance.opponentsScore,
       'isWinner': instance.isWinner,
       'comment': instance.comment,
-      'createdAt': alwaysUseServerTimestampUnionTimestampConverter
-          .toJson(instance.createdAt),
+      'createdAt': unionTimestampConverter.toJson(instance.createdAt),
       'updatedAt': alwaysUseServerTimestampUnionTimestampConverter
           .toJson(instance.updatedAt),
     };

@@ -11,6 +11,7 @@ import '../../utils/exceptions/app_exception.dart';
 import '../../utils/extensions/firebase_auth_exception.dart';
 import '../../utils/json_converters/union_timestamp.dart';
 
+/// Firebase Auth を用いてサインアップをする [AsyncNotifierProvider]。
 final signUpControllerProvider =
     AutoDisposeAsyncNotifierProvider<SignUpController, void>(
   SignUpController.new,
