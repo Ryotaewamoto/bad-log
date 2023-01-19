@@ -17,7 +17,7 @@ final membersProvider = StreamProvider.autoDispose<List<Member>>((ref) {
   return members;
 });
 
-/// Firestore に [Member] を追加する [AsyncNotifierProvider]。
+/// [Member] に関して Firestore の操作を行う [AsyncNotifierProvider]。
 final memberControllerProvider =
     AutoDisposeAsyncNotifierProvider<MemberController, void>(
   MemberController.new,

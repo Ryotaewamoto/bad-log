@@ -13,7 +13,7 @@ const List<bool> initTypes = [true, false];
 ///
 /// [ToggleButtons] の形式上、bool 型の [List] を使用している。
 ///
-///　選択状態を保持していて欲しいので [.autoDispose] は使用しない。
+/// 選択状態を保持していて欲しいので [.autoDispose] は使用しない。
 final selectTypesProvider =
     StateNotifierProvider<SelectTypesNotifier, List<bool>>(
   (ref) => SelectTypesNotifier(),
