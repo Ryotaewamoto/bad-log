@@ -58,4 +58,20 @@ class ScaffoldMessengerService {
       ),
     );
   }
+
+    /// showModalBottomSheet で指定したビルダー関数を返す。
+  Future<T?> showModalBottomSheetByBuilder<T>({
+    required Widget Function(BuildContext) builder,
+  }) async {
+    return showModalBottomSheet<T>(
+      context: scaffoldMessengerKey.currentContext!,
+      builder: builder,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(4),
+          topRight: Radius.circular(4),
+        ),
+      ),
+    );
+  }
 }
