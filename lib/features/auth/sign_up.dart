@@ -44,6 +44,8 @@ class SignUpController extends AutoDisposeAsyncNotifier<void> {
           throw exception;
         }
 
+        // TODO(ryotaiwamoto): ユーザ名の文字数に関してのバリデーション
+
         final userId = await authRepository.signUp(
           email: email,
           password: password,
