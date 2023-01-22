@@ -7,8 +7,9 @@
     },
     "collection: members": {
       "document: {memberId}": {
+        "active": true,
         "memberId": "{memberId}",
-        "name": "Kazuma Igarashi",
+        "name": "Kazuma Igarashi", // 20文字以内
         "createdAt": "2022-11-19 00:00:00",
         "updatedAt": "2022-11-19 00:00:00"
       }

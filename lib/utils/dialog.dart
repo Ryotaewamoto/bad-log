@@ -36,7 +36,7 @@ Future<bool?> showActionDialog({
   required BuildContext context,
   required String title,
   required String content,
-  required VoidCallback onPressed,
+  required VoidCallback? onPressed,
 }) async {
   return showDialog(
     context: context,

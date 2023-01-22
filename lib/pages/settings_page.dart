@@ -2,13 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../features/auth/sign_out.dart';
 import '../features/member.dart';
 import '../repositories/auth/auth_repository_impl.dart';
+import '../utils/async_value_error_dialog.dart';
 import '../utils/constants/app_colors.dart';
 import '../utils/constants/string.dart';
 import '../utils/dialog.dart';
 import '../utils/exceptions/app_exception.dart';
 import '../utils/loading.dart';
+import '../utils/scaffold_messenger_service.dart';
 import '../utils/text_styles.dart';
 import '../widgets/white_app_bar.dart';
 import 'auth_page.dart';
@@ -19,7 +22,49 @@ class SettingsPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    ref.listen<AsyncValue<void>>(
+      signOutControllerProvider,
+      (_, state) async {
+        if (state.isLoading) {
+          ref.watch(overlayLoadingProvider.notifier).update((state) => true);
+          return;
+        }
+
+        await state.when(
+          data: (_) async {
+            // ローディングを非表示にする
+            ref.watch(overlayLoadingProvider.notifier).update((state) => false);
+
+            // ログインできたらスナックバーでメッセージを表示してホーム画面に遷移する
+            ref
+                .read(scaffoldMessengerServiceProvider)
+                .showSnackBar('You are logged out !');
+
+            await Navigator.pushAndRemoveUntil<dynamic>(
+              context,
+              MaterialPageRoute<dynamic>(
+                builder: (_) => const AuthPage(),
+              ),
+              (_) => false,
+            );
+          },
+          error: (e, s) async {
+            // ローディングを非表示にする
+            ref.watch(overlayLoadingProvider.notifier).update((state) => false);
+
+            // エラーが発生したらエラーダイアログを表示する
+            state.showAlertDialogOnError(context);
+          },
+          loading: () {
+            // ローディングを表示する
+            ref.watch(overlayLoadingProvider.notifier).update((state) => true);
+          },
+        );
+      },
+    );
+
     // Provider
+    final state = ref.watch(signOutControllerProvider);
     final userEmail = ref.watch(authRepositoryImplProvider).currentUser?.email;
     final members = ref.watch(membersProvider).maybeWhen<int>(
           data: (data) {
@@ -188,21 +233,13 @@ class SettingsPage extends HookConsumerWidget {
                       context: context,
                       title: 'Log Out',
                       content: 'Do you want to log out ?',
-                      onPressed: () async {
-                        // ログアウト
-                        await ref.watch(authRepositoryImplProvider).signOut();
-
-                        // https://twitter.com/riscait/status/1607587400271921152
-                        // context.mounted が可能になった時に置き換える
-                        // ignore: use_build_context_synchronously
-                        await Navigator.pushAndRemoveUntil<dynamic>(
-                          context,
-                          MaterialPageRoute<dynamic>(
-                            builder: (_) => const AuthPage(),
-                          ),
-                          (_) => false,
-                        );
-                      },
+                      onPressed: state.isLoading
+                          ? null
+                          : () async {
+                              await ref
+                                  .read(signOutControllerProvider.notifier)
+                                  .signOut();
+                            },
                     );
                   },
                   child: Text(
