@@ -1,0 +1,95 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isUserAuthenticated(userId) {
+      return isAuthenticated() && userId == request.auth.uid;
+    }
+
+    // ユーザーデータのスキーマ検証
+    function isValidUser(user) {
+      return user.size() == 3
+      && 'userId' in user && user.userId is string;
+      && 'userName' in user && user.userName is string;
+      && 'createdAt' in user && user.createdAt is timestamp;
+    }
+
+    // メンバーデータのスキーマ検証
+    function isValidMember(member) {
+      return member.size() == 5
+      && 'memberId' in member && member.memberId is string;
+      && 'memberName' in user && member.memberName is string;
+      && 'active' in member && member.active is bool;
+      && 'createdAt' in user && member.createdAt is timestamp;
+      && 'updatedAt' in user && member.updatedAt is timestamp;
+    }
+
+    // 試合結果データのスキーマ検証
+    function isValidResult(result) {
+      return result.size() == 10
+      && 'resultId' in result && result.resultId is string;
+      && 'type' in result && result.type is string;
+      && 'partner' in result && result.partner is string;
+      && 'comment' in result && result.comment is string;
+      && 'opponents' in result && result.opponents is list;
+      && 'yourScore' in result && result.yourScore is list;
+      && 'opponentsScore' in result && result.opponents is list;
+      && 'isWinner' in result && result.isWinner is bool;
+      && 'createdAt' in user && result.createdAt is timestamp;
+      && 'updatedAt' in user && result.updatedAt is timestamp;
+    }
+
+    // ルールの記述
+    match /users/{userId} {
+      // ユーザー情報の取得のルール
+      allow get: if isUserAuthenticated(userId);
+
+      // ユーザー情報の作成のルール
+      allow create: if isUserAuthenticated(userId)
+      // スキーマ検証
+      && isValidUser(request.resource.data)
+      // データのバリデーション
+      && (request.resource.data.createdAt == request.time
+      && request.resource.data.userId == userId;
+      && request.resource.data.userName.size() >= 0
+      && request.resource.data.userName.size() <= 20
+      );
+
+      // results コレクションのルールはここに記述する
+      match /results/{resultId} {
+        // ユーザー情報の取得のルール
+        allow get: if isUserAuthenticated(userId);
+
+        // ユーザー情報の作成のルール
+        allow create: if isUserAuthenticated(userId)
+        // スキーマ検証
+        && isValidMember(request.resource.data);
+
+      }
+
+      // members コレクションのルールはここに記述する
+      match /members/{memberId} {
+        // ユーザー情報の取得のルール
+        allow get: if isUserAuthenticated(userId);
+
+        // ユーザー情報の作成のルール
+        allow create: if isUserAuthenticated(userId)
+        // スキーマ検証
+        && isValidMember(request.resource.data)
+        // データのバリデーション
+        && (request.resource.data.memberId == memberId || request.resource.data.memberId == '';
+        && request.resource.data.memberName.size() >= 0
+        && request.resource.data.memberName.size() <= 20
+        && request.resource.data.createdAt == request.time
+        );
+
+        allow update: if isUserAuthenticated(userId)
+        && isValidMember(request.resource.data);
+      }
+    }
+  }
+}

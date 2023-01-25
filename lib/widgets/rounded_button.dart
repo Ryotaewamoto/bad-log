@@ -59,6 +59,7 @@ class SecondaryRoundedButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
+      borderRadius: Measure.br_8,
       color: Colors.white,
       child: InkWell(
         borderRadius: Measure.br_8,

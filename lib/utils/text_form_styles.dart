@@ -6,16 +6,18 @@ import 'text_styles.dart';
 class TextFormHeader extends StatelessWidget {
   const TextFormHeader({
     required this.title,
+    this.color = AppColors.baseBlack,
     super.key,
   });
 
   final String title;
+  final Color color;
 
   @override
   Widget build(BuildContext context) {
     return Align(
       alignment: Alignment.centerLeft,
-      child: Text(title, style: TextStyles.h4()),
+      child: Text(title, style: TextStyles.h4(color: color)),
     );
   }
 }
@@ -23,12 +25,15 @@ class TextFormHeader extends StatelessWidget {
 class AppTextFormStyles {
   AppTextFormStyles();
 
-  static InputDecoration onGeneral({required IconData iconData}) =>
+  static InputDecoration onGeneral({
+    required IconData iconData,
+    Color color = AppColors.baseLight,
+  }) =>
       InputDecoration(
         contentPadding: EdgeInsets.zero,
         prefixIcon: Icon(
           iconData,
-          color: AppColors.baseLight,
+          color: color,
         ),
         focusedBorder: const OutlineInputBorder(
           borderSide: BorderSide(
@@ -36,9 +41,9 @@ class AppTextFormStyles {
             width: 2,
           ),
         ),
-        enabledBorder: const OutlineInputBorder(
+        enabledBorder: OutlineInputBorder(
           borderSide: BorderSide(
-            color: AppColors.baseLight,
+            color: color,
           ),
         ),
       );
