@@ -42,10 +42,15 @@ class ResultPage extends HookConsumerWidget {
         child: Column(
           children: [
             Measure.g_16,
+            // 自分/自チーム
             Row(
-              // 自分/自チーム
               children: [
-                const Icon(Icons.circle, size: 20, color: AppColors.accent),
+                Icon(
+                  Icons.circle,
+                  size: 20,
+                  color:
+                      result.isWinner ? AppColors.accent : AppColors.baseWhite,
+                ),
                 Measure.g_16,
                 Text(
                   appUserName ?? '',
@@ -61,12 +66,13 @@ class ResultPage extends HookConsumerWidget {
                 children: [
                   Measure.g_8,
                   Row(
-                    // 自分/自チーム
                     children: [
-                      const Icon(
+                      Icon(
                         Icons.circle,
                         size: 20,
-                        color: AppColors.accent,
+                        color: result.isWinner
+                            ? AppColors.accent
+                            : AppColors.baseWhite,
                       ),
                       Measure.g_16,
                       Text(
@@ -92,10 +98,15 @@ class ResultPage extends HookConsumerWidget {
               result: result,
             ),
             Measure.g_16,
+            // 対戦相手/チーム
             Row(
-              // 対戦相手/チーム
               children: [
-                const Icon(Icons.circle, size: 20, color: AppColors.accent),
+                Icon(
+                  Icons.circle,
+                  size: 20,
+                  color:
+                      !result.isWinner ? AppColors.accent : AppColors.baseWhite,
+                ),
                 Measure.g_16,
                 Text(
                   members.isNotEmpty
@@ -120,10 +131,12 @@ class ResultPage extends HookConsumerWidget {
                   Row(
                     // 対戦相手/チーム
                     children: [
-                      const Icon(
+                      Icon(
                         Icons.circle,
                         size: 20,
-                        color: AppColors.accent,
+                        color: !result.isWinner
+                            ? AppColors.accent
+                            : AppColors.baseWhite,
                       ),
                       Measure.g_16,
                       Flexible(
@@ -175,7 +188,7 @@ class ResultPage extends HookConsumerWidget {
             Align(
               alignment: Alignment.centerLeft,
               child: Text(
-                result.comment.isNotEmpty ? result.comment : 'コメントを書いておこう！',
+                result.comment.isNotEmpty ? result.comment : '（コメントを書いておこう！）',
               ),
             ),
           ],
