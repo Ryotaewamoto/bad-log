@@ -67,7 +67,17 @@ service cloud.firestore {
         // ユーザー情報の作成のルール
         allow create: if isUserAuthenticated(userId)
         // スキーマ検証
-        && isValidMember(request.resource.data);
+        && isValidResult(request.resource.data)
+        // データのバリデーション
+        && (request.resource.data.resultId == resultId || request.resource.data.resultId == '';
+        && request.resource.data.type == 'singles' || request.resource.data.type == 'doubles'
+        && request.resource.data.comment.size() >= 0
+        && request.resource.data.comment.size() <= 200
+        && request.resource.data.opponents.size >= 1
+        && request.resource.data.opponents.size <= 2
+        && request.resource.data.yourScore.size() == request.resource.data.opponentsScore.size()
+        && request.resource.data.createdAt == request.time
+        );
 
       }
 
