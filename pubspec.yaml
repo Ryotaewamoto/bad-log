@@ -40,7 +40,7 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   json_serializable: ^6.5.4
-  pedantic_mono: ^1.21.1
+  pedantic_mono: ^1.20.1
 
 flutter_native_splash:
   color: "#FFFFFF"
