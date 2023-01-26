@@ -161,6 +161,7 @@ class _RateSinglesResultCard extends HookConsumerWidget {
       child: Container(
         decoration: const BoxDecoration(
           color: AppColors.baseLight,
+          borderRadius: Measure.br_4,
           boxShadow: [
             BoxShadow(
               offset: Offset(1, 1),
@@ -287,6 +288,7 @@ class _RateDoublesResultCard extends HookConsumerWidget {
       padding: Measure.p_v4,
       child: Container(
         decoration: const BoxDecoration(
+          borderRadius: Measure.br_4,
           color: AppColors.baseLight,
           boxShadow: [
             BoxShadow(
