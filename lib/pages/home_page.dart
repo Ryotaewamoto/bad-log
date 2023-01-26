@@ -18,6 +18,7 @@ import '../widgets/app_over_scroll_indicator.dart';
 import '../widgets/white_app_bar.dart';
 import 'account_page.dart';
 import 'create_result_page.dart';
+import 'result_page.dart';
 
 class HomePage extends HookConsumerWidget {
   const HomePage({super.key});
@@ -152,7 +153,14 @@ class _MatchResultCard extends HookConsumerWidget {
         ),
         child: InkWell(
           onTap: () {
-            // TODO(kokorinosoba): ここにタップ時の処理を記述
+            Navigator.push(
+              context,
+              MaterialPageRoute<bool>(
+                builder: (_) => ResultPage(
+                  result: result,
+                ),
+              ),
+            );
           },
           child: SizedBox(
             width: double.infinity,

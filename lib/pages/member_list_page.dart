@@ -76,27 +76,37 @@ class MemberListPage extends HookConsumerWidget {
         actions: [
           IconButton(
             onPressed: () async {
-              await addMemberDialog(
-                context,
-                useMemberNameController,
-                onPressed: () async {
-                  final member = Member(
-                    memberName: useMemberNameController.value.text,
-                    active: true,
-                    createdAt: UnionTimestamp.dateTime(DateTime.now()),
-                    updatedAt: UnionTimestamp.dateTime(DateTime.now()),
-                  );
+              if (members.length < 20) {
+                await addMemberDialog(
+                  context,
+                  useMemberNameController,
+                  onPressed: () async {
+                    final member = Member(
+                      memberName: useMemberNameController.value.text,
+                      active: true,
+                      createdAt: UnionTimestamp.dateTime(DateTime.now()),
+                      updatedAt: UnionTimestamp.dateTime(DateTime.now()),
+                    );
 
-                  if (userId != null) {
-                    await ref
-                        .read(memberControllerProvider.notifier)
-                        .createMember(
-                          userId: userId,
-                          member: member,
-                        );
-                  }
-                },
-              );
+                    if (userId != null) {
+                      await ref
+                          .read(memberControllerProvider.notifier)
+                          .createMember(
+                            userId: userId,
+                            member: member,
+                          );
+                    }
+                  },
+                );
+              } else {
+                await showAlertDialog(
+                  context: context,
+                  title: 'メンバーの上限',
+                  defaultActionText: 'OK',
+                  content:
+                      '''メンバーの数が上限の20人に達しています。\n今後のアップデートにより人数を増やすことのできる仕様にする予定です。''',
+                );
+              }
             },
             icon: const FaIcon(
               Icons.add,
