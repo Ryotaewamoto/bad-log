@@ -197,9 +197,9 @@ class _NumberPickerState extends State<NumberPicker> {
 
   Widget _itemBuilder(BuildContext context, int index) {
     final themeData = Theme.of(context);
-    final defaultStyle = widget.textStyle ?? themeData.textTheme.bodyText2;
+    final defaultStyle = widget.textStyle ?? themeData.textTheme.bodyMedium;
     final selectedStyle = widget.selectedTextStyle ??
-        themeData.textTheme.headline5
+        themeData.textTheme.headlineSmall
             ?.copyWith(color: themeData.colorScheme.secondary);
 
     final value = _intValueFromIndex(index % itemCount);
