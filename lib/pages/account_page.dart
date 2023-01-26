@@ -249,8 +249,7 @@ class _RateSinglesResultCard extends HookConsumerWidget {
                                             .length /
                                         sameMemberResults.length *
                                         100)
-                                    .toStringAsFixed(1)
-                                    .toString(),
+                                    .toStringAsFixed(1),
                                 style: TextStyles.h1(),
                               ),
                               Align(
@@ -433,8 +432,7 @@ class _RateDoublesResultCard extends HookConsumerWidget {
                                             .length /
                                         sameMemberResults.length *
                                         100)
-                                    .toStringAsFixed(1)
-                                    .toString(),
+                                    .toStringAsFixed(1),
                                 style: TextStyles.h1(),
                               ),
                               Align(
