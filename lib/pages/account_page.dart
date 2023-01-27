@@ -16,6 +16,7 @@ import '../utils/loading.dart';
 import '../utils/text_styles.dart';
 import '../widgets/app_over_scroll_indicator.dart';
 import '../widgets/white_app_bar.dart';
+import 'same_member_result_page.dart';
 import 'settings_page.dart';
 
 class AccountPage extends HookConsumerWidget {
@@ -133,6 +134,7 @@ class AccountPage extends HookConsumerWidget {
   }
 }
 
+/// シングルス用のカード
 class _RateSinglesResultCard extends HookConsumerWidget {
   const _RateSinglesResultCard({
     required this.results,
@@ -156,104 +158,127 @@ class _RateSinglesResultCard extends HookConsumerWidget {
         );
 
     final result = results[index][0];
-    return Padding(
-      padding: Measure.p_v4,
-      child: Container(
-        decoration: const BoxDecoration(
-          color: AppColors.baseLight,
-          borderRadius: Measure.br_4,
-          boxShadow: [
-            BoxShadow(
-              offset: Offset(1, 1),
-              blurRadius: 2,
-            )
-          ],
-        ),
-        width: double.infinity,
-        child: Padding(
-          padding: Measure.p_a8,
-          child: Column(
-            children: [
-              Container(
-                width: double.infinity,
-                color: AppColors.baseWhite,
-                child: Padding(
-                  padding: Measure.p_a8,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Expanded(
-                        child: Column(
-                          children: [
-                            Align(
-                              alignment: Alignment.centerLeft,
-                              child: Text(
-                                appUserName ?? '',
-                                style: TextStyles.p2(),
-                              ),
-                            ),
-                            Measure.g_4,
-                            const Divider(
-                              height: 0,
-                              thickness: 2,
-                            ),
-                            Measure.g_4,
-                            Align(
-                              alignment: Alignment.centerLeft,
-                              child: Text(
-                                members.isNotEmpty
-                                    ? members
-                                        .firstWhere(
-                                          (element) =>
-                                              element.memberId ==
-                                              result.opponents[0],
-                                        )
-                                        .memberName
-                                    : '',
-                                style: TextStyles.p2(),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      const SizedBox(
-                        width: 8,
-                      ),
-                      Center(
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.baseline,
-                          textBaseline: TextBaseline.alphabetic,
-                          children: [
-                            Text(
-                              '54',
-                              style: TextStyles.h1(),
-                            ),
-                            Align(
-                              child: Text(
-                                '%',
-                                style: TextStyles.h2(),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left: 8, top: 8),
-                child: Align(
-                  alignment: Alignment.bottomLeft,
-                  child: Text(
-                    'Latest: ${result.createdAt.dateTime!.toYYYYMMDD(
-                      withJapaneseWeekDay: false,
-                    )}',
-                    style: TextStyles.p3(),
-                  ),
-                ),
-              ),
+    final sameMemberResults = results[index];
+
+    return GestureDetector(
+      behavior: HitTestBehavior.opaque,
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute<bool>(
+            builder: (_) => SameMemberResultPage(
+              results: sameMemberResults,
+            ),
+          ),
+        );
+      },
+      child: Padding(
+        padding: Measure.p_v4,
+        child: Container(
+          decoration: const BoxDecoration(
+            color: AppColors.baseLight,
+            borderRadius: Measure.br_4,
+            boxShadow: [
+              BoxShadow(
+                offset: Offset(1, 1),
+                blurRadius: 2,
+              )
             ],
+          ),
+          width: double.infinity,
+          child: Padding(
+            padding: Measure.p_a8,
+            child: Column(
+              children: [
+                Container(
+                  width: double.infinity,
+                  color: AppColors.baseWhite,
+                  child: Padding(
+                    padding: Measure.p_a8,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          child: Column(
+                            children: [
+                              Align(
+                                alignment: Alignment.centerLeft,
+                                child: Text(
+                                  appUserName ?? '',
+                                  style: TextStyles.p2(),
+                                ),
+                              ),
+                              Measure.g_4,
+                              const Divider(
+                                height: 0,
+                                thickness: 2,
+                              ),
+                              Measure.g_4,
+                              Align(
+                                alignment: Alignment.centerLeft,
+                                child: Text(
+                                  members.isNotEmpty
+                                      ? members
+                                          .firstWhere(
+                                            (element) =>
+                                                element.memberId ==
+                                                result.opponents[0],
+                                          )
+                                          .memberName
+                                      : '',
+                                  style: TextStyles.p2(),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        const SizedBox(
+                          width: 8,
+                        ),
+                        Center(
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.baseline,
+                            textBaseline: TextBaseline.alphabetic,
+                            children: [
+                              Text(
+                                (sameMemberResults
+                                            .where(
+                                              (element) =>
+                                                  element.isWinner == true,
+                                            )
+                                            .length /
+                                        sameMemberResults.length *
+                                        100)
+                                    .toStringAsFixed(1),
+                                style: TextStyles.h1(),
+                              ),
+                              Align(
+                                child: Text(
+                                  '%',
+                                  style: TextStyles.h2(),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 8, top: 8),
+                  child: Align(
+                    alignment: Alignment.bottomLeft,
+                    child: Text(
+                      'Latest: ${result.createdAt.dateTime!.toYYYYMMDD(
+                        withJapaneseWeekDay: false,
+                      )}',
+                      style: TextStyles.p3(),
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -261,6 +286,7 @@ class _RateSinglesResultCard extends HookConsumerWidget {
   }
 }
 
+/// ダブルス用のカード
 class _RateDoublesResultCard extends HookConsumerWidget {
   const _RateDoublesResultCard({
     required this.results,
@@ -284,136 +310,158 @@ class _RateDoublesResultCard extends HookConsumerWidget {
         );
 
     final result = results[index][0];
-    return Padding(
-      padding: Measure.p_v4,
-      child: Container(
-        decoration: const BoxDecoration(
-          borderRadius: Measure.br_4,
-          color: AppColors.baseLight,
-          boxShadow: [
-            BoxShadow(
-              offset: Offset(1, 1),
-              blurRadius: 2,
-            )
-          ],
-        ),
-        width: double.infinity,
-        child: Padding(
-          padding: Measure.p_a8,
-          child: Column(
-            children: [
-              Container(
-                width: double.infinity,
-                color: AppColors.baseWhite,
-                child: Padding(
-                  padding: Measure.p_a8,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Expanded(
-                        child: Column(
-                          children: [
-                            Align(
-                              alignment: Alignment.centerLeft,
-                              child: Text(
-                                appUserName ?? '',
-                                style: TextStyles.p2(),
-                              ),
-                            ),
-                            const Gap(2),
-                            Align(
-                              alignment: Alignment.centerLeft,
-                              child: Text(
-                                members.isNotEmpty
-                                    ? members
-                                        .firstWhere(
-                                          (element) =>
-                                              element.memberId ==
-                                              result.partner,
-                                        )
-                                        .memberName
-                                    : '',
-                                style: TextStyles.p2(),
-                              ),
-                            ),
-                            Measure.g_4,
-                            const Divider(
-                              height: 0,
-                              thickness: 2,
-                            ),
-                            Measure.g_4,
-                            Align(
-                              alignment: Alignment.centerLeft,
-                              child: Text(
-                                members.isNotEmpty
-                                    ? members
-                                        .firstWhere(
-                                          (element) =>
-                                              element.memberId ==
-                                              result.opponents[0],
-                                        )
-                                        .memberName
-                                    : '',
-                                style: TextStyles.p2(),
-                              ),
-                            ),
-                            const Gap(2),
-                            Align(
-                              alignment: Alignment.centerLeft,
-                              child: Text(
-                                members.isNotEmpty
-                                    ? members
-                                        .firstWhere(
-                                          (element) =>
-                                              element.memberId ==
-                                              result.opponents[1],
-                                        )
-                                        .memberName
-                                    : '',
-                                style: TextStyles.p2(),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      const SizedBox(
-                        width: 8,
-                      ),
-                      Center(
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.baseline,
-                          textBaseline: TextBaseline.alphabetic,
-                          children: [
-                            Text(
-                              '54',
-                              style: TextStyles.h1(),
-                            ),
-                            Align(
-                              child: Text(
-                                '%',
-                                style: TextStyles.h2(),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left: 8, top: 8),
-                child: Align(
-                  alignment: Alignment.bottomLeft,
-                  child: Text(
-                    'Latest: ${result.createdAt.dateTime!.toYYYYMMDD(
-                      withJapaneseWeekDay: false,
-                    )}',
-                    style: TextStyles.p3(),
-                  ),
-                ),
-              ),
+    final sameMemberResults = results[index];
+    return GestureDetector(
+      behavior: HitTestBehavior.opaque,
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute<bool>(
+            builder: (_) => SameMemberResultPage(
+              results: sameMemberResults,
+            ),
+          ),
+        );
+      },
+      child: Padding(
+        padding: Measure.p_v4,
+        child: Container(
+          decoration: const BoxDecoration(
+            borderRadius: Measure.br_4,
+            color: AppColors.baseLight,
+            boxShadow: [
+              BoxShadow(
+                offset: Offset(1, 1),
+                blurRadius: 2,
+              )
             ],
+          ),
+          width: double.infinity,
+          child: Padding(
+            padding: Measure.p_a8,
+            child: Column(
+              children: [
+                Container(
+                  width: double.infinity,
+                  color: AppColors.baseWhite,
+                  child: Padding(
+                    padding: Measure.p_a8,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          child: Column(
+                            children: [
+                              Align(
+                                alignment: Alignment.centerLeft,
+                                child: Text(
+                                  appUserName ?? '',
+                                  style: TextStyles.p2(),
+                                ),
+                              ),
+                              const Gap(2),
+                              Align(
+                                alignment: Alignment.centerLeft,
+                                child: Text(
+                                  members.isNotEmpty
+                                      ? members
+                                          .firstWhere(
+                                            (element) =>
+                                                element.memberId ==
+                                                result.partner,
+                                          )
+                                          .memberName
+                                      : '',
+                                  style: TextStyles.p2(),
+                                ),
+                              ),
+                              Measure.g_4,
+                              const Divider(
+                                height: 0,
+                                thickness: 2,
+                              ),
+                              Measure.g_4,
+                              Align(
+                                alignment: Alignment.centerLeft,
+                                child: Text(
+                                  members.isNotEmpty
+                                      ? members
+                                          .firstWhere(
+                                            (element) =>
+                                                element.memberId ==
+                                                result.opponents[0],
+                                          )
+                                          .memberName
+                                      : '',
+                                  style: TextStyles.p2(),
+                                ),
+                              ),
+                              const Gap(2),
+                              Align(
+                                alignment: Alignment.centerLeft,
+                                child: Text(
+                                  members.isNotEmpty
+                                      ? members
+                                          .firstWhere(
+                                            (element) =>
+                                                element.memberId ==
+                                                result.opponents[1],
+                                          )
+                                          .memberName
+                                      : '',
+                                  style: TextStyles.p2(),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        const SizedBox(
+                          width: 8,
+                        ),
+                        Center(
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.baseline,
+                            textBaseline: TextBaseline.alphabetic,
+                            children: [
+                              Text(
+                                (sameMemberResults
+                                            .where(
+                                              (element) =>
+                                                  element.isWinner == true,
+                                            )
+                                            .length /
+                                        sameMemberResults.length *
+                                        100)
+                                    .toStringAsFixed(1),
+                                style: TextStyles.h1(),
+                              ),
+                              Align(
+                                child: Text(
+                                  '%',
+                                  style: TextStyles.h2(),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 8, top: 8),
+                  child: Align(
+                    alignment: Alignment.bottomLeft,
+                    child: Text(
+                      'Latest: ${result.createdAt.dateTime!.toYYYYMMDD(
+                        withJapaneseWeekDay: false,
+                      )}',
+                      style: TextStyles.p3(),
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
