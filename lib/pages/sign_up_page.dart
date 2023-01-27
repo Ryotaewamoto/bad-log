@@ -252,6 +252,7 @@ Could not launch $privacyPolicyLink .
                           onTap: state.isLoading
                               ? null
                               : () async {
+                                  FocusManager.instance.primaryFocus?.unfocus();
                                   await ref
                                       .read(signUpControllerProvider.notifier)
                                       .signUp(

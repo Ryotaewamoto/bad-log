@@ -16,8 +16,15 @@ class $AssetsImagesGen {
   AssetGenImage get badLogIcon =>
       const AssetGenImage('assets/images/bad-log-icon.png');
 
+  /// File path: assets/images/splash.png
+  AssetGenImage get splash => const AssetGenImage('assets/images/splash.png');
+
+  /// File path: assets/images/splash_android12.png
+  AssetGenImage get splashAndroid12 =>
+      const AssetGenImage('assets/images/splash_android12.png');
+
   /// List of all assets
-  List<AssetGenImage> get values => [badLogIcon];
+  List<AssetGenImage> get values => [badLogIcon, splash, splashAndroid12];
 }
 
 class Assets {
