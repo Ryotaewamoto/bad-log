@@ -1,23 +1,41 @@
 import * as admin from 'firebase-admin'
-import * as serviceAccountKey from '../../keys/service_account_key.json'
+import * as serviceAccountKeyDev from '../../keys/service_account_key_dev.json'
+import * as serviceAccountKeyProd from '../../keys/service_account_key_prod.json'
+
+export const getIsProd = () => {
+    console.log(`環境: `, process.env[`GCLOUD_PROJECT`])
+    return process.env[`GCLOUD_PROJECT`] === `bad-log-2-prod`
+}
 
 // サービスアカウントを環境変数から取得
-const serviceAccount = {
-    type: serviceAccountKey.type,
-    projectId: serviceAccountKey.project_id,
-    privateKeyId: serviceAccountKey.private_key_id,
-    privateKey: serviceAccountKey.private_key.replace(/\\n/g, `\n`),
-    clientEmail: serviceAccountKey.client_email,
-    clientId: serviceAccountKey.client_id,
-    authUri: serviceAccountKey.auth_uri,
-    tokenUri: serviceAccountKey.token_uri,
-    authProviderX509CertUrl: serviceAccountKey.auth_provider_x509_cert_url,
-    clientC509CertUrl: serviceAccountKey.client_x509_cert_url
-}
+const serviceAccount = getIsProd()
+    ? {
+        type: serviceAccountKeyProd.type,
+        projectId: serviceAccountKeyProd.project_id,
+        privateKeyId: serviceAccountKeyProd.private_key_id,
+        privateKey: serviceAccountKeyProd.private_key.replace(/\\n/g, `\n`),
+        clientEmail: serviceAccountKeyProd.client_email,
+        clientId: serviceAccountKeyProd.client_id,
+        authUri: serviceAccountKeyProd.auth_uri,
+        tokenUri: serviceAccountKeyProd.token_uri,
+        authProviderX509CertUrl: serviceAccountKeyProd.auth_provider_x509_cert_url,
+        clientC509CertUrl: serviceAccountKeyProd.client_x509_cert_url
+    }
+    : {
+        type: serviceAccountKeyDev.type,
+        projectId: serviceAccountKeyDev.project_id,
+        privateKeyId: serviceAccountKeyDev.private_key_id,
+        privateKey: serviceAccountKeyDev.private_key.replace(/\\n/g, `\n`),
+        clientEmail: serviceAccountKeyDev.client_email,
+        clientId: serviceAccountKeyDev.client_id,
+        authUri: serviceAccountKeyDev.auth_uri,
+        tokenUri: serviceAccountKeyDev.token_uri,
+        authProviderX509CertUrl: serviceAccountKeyDev.auth_provider_x509_cert_url,
+        clientC509CertUrl: serviceAccountKeyDev.client_x509_cert_url
+    }
 
 // Firebase Admin SDK の初期化
 // https://firebase.google.com/docs/functions/config-env?hl=ja
-
 admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),
     databaseURL: `https://${serviceAccount.projectId}.firebaseio.com`
@@ -29,5 +47,5 @@ admin.initializeApp({
  *  */
 import { onCreateDeleteUser } from '../src/app_user'
 
-
+/** index.ts で import してデプロイする関数一覧  */
 export { onCreateDeleteUser }
