@@ -1,6 +1,5 @@
 import 'dart:math' as math;
 
-
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -18,7 +17,6 @@ class MatchResultCard extends HookConsumerWidget {
   const MatchResultCard({
     required this.result,
     super.key,
-
   });
 
   final Result result;
@@ -126,7 +124,7 @@ class MatchResultCard extends HookConsumerWidget {
                                 ),
                               ],
                             ),
-                         Measure.g_4,
+                          Measure.g_4,
                           Row(
                             // 対戦相手/チーム
                             children: [
