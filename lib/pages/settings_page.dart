@@ -15,6 +15,7 @@ import '../utils/scaffold_messenger_service.dart';
 import '../utils/text_styles.dart';
 import '../widgets/white_app_bar.dart';
 import 'auth_page.dart';
+import 'delete_account_page.dart';
 import 'member_list_page.dart';
 
 class SettingsPage extends HookConsumerWidget {
@@ -80,7 +81,7 @@ class SettingsPage extends HookConsumerWidget {
       children: [
         Scaffold(
           appBar: const WhiteAppBar(
-            title: 'Settings',
+            title: '設定',
             automaticallyImplyLeading: true,
           ),
           body: Column(
@@ -92,10 +93,11 @@ class SettingsPage extends HookConsumerWidget {
                 child: SizedBox(
                   height: 64,
                   child: ListTile(
+                    leading: const Icon(Icons.mail),
                     horizontalTitleGap: 0,
                     title: Text(
-                      'Account',
-                      style: TextStyles.h4(),
+                      'メールアドレス',
+                      style: TextStyles.p1(),
                     ),
                     subtitle: Text(
                       userEmail ?? '',
@@ -123,14 +125,41 @@ class SettingsPage extends HookConsumerWidget {
                 child: SizedBox(
                   height: 64,
                   child: ListTile(
+                    leading: const Icon(Icons.people),
+                    horizontalTitleGap: 0,
                     title: Text(
-                      'Members',
-                      style: TextStyles.h4(),
+                      'メンバー',
+                      style: TextStyles.p1(),
                     ),
                     subtitle: Text(
                       '$members / 20',
                       style: TextStyles.p2(),
                     ),
+                  ),
+                ),
+              ),
+              const Divider(
+                height: 0,
+                color: AppColors.baseLight,
+              ),
+              InkWell(
+                onTap: () {
+                  // TODO(ryotaiwamoto): スライドインアニメーション
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute<bool>(
+                      builder: (_) => const DeleteAccountPage(),
+                    ),
+                  );
+                },
+                highlightColor: AppColors.secondaryPale,
+                splashColor: AppColors.secondaryPale,
+                child: ListTile(
+                  leading: const Icon(Icons.delete_forever_sharp),
+                  horizontalTitleGap: 0,
+                  title: Text(
+                    'アカウントの削除',
+                    style: TextStyles.p1(),
                   ),
                 ),
               ),
@@ -168,14 +197,12 @@ class SettingsPage extends HookConsumerWidget {
                 },
                 highlightColor: AppColors.secondaryPale,
                 splashColor: AppColors.secondaryPale,
-                child: SizedBox(
-                  height: 64,
-                  child: ListTile(
-                    title: Text(
-                      'Terms of Service',
-                      style: TextStyles.h4(),
-                    ),
+                child: ListTile(
+                  title: Text(
+                    '利用規約',
+                    style: TextStyles.p1(),
                   ),
+                  trailing: const Icon(Icons.keyboard_arrow_right),
                 ),
               ),
               const Divider(
@@ -212,14 +239,12 @@ class SettingsPage extends HookConsumerWidget {
                 },
                 highlightColor: AppColors.secondaryPale,
                 splashColor: AppColors.secondaryPale,
-                child: SizedBox(
-                  height: 64,
-                  child: ListTile(
-                    title: Text(
-                      'Privacy Policy',
-                      style: TextStyles.h4(),
-                    ),
+                child: ListTile(
+                  title: Text(
+                    'プライバシーポリシー',
+                    style: TextStyles.p1(),
                   ),
+                  trailing: const Icon(Icons.keyboard_arrow_right),
                 ),
               ),
               const Divider(
@@ -243,7 +268,7 @@ class SettingsPage extends HookConsumerWidget {
                     );
                   },
                   child: Text(
-                    'Log Out',
+                    'ログアウト',
                     style: TextStyles.p2(
                       color: AppColors.primary,
                     ),

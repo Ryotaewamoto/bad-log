@@ -121,6 +121,7 @@ class SignUpPage extends HookConsumerWidget {
                         const TextFormHeader(title: 'User Name'),
                         Measure.g_4,
                         TextFormField(
+                          maxLength: 20,
                           controller: useNameController,
                           decoration: AppTextFormStyles.onGeneral(
                             iconData: Icons.account_circle,
@@ -252,6 +253,7 @@ Could not launch $privacyPolicyLink .
                           onTap: state.isLoading
                               ? null
                               : () async {
+                                  FocusManager.instance.primaryFocus?.unfocus();
                                   await ref
                                       .read(signUpControllerProvider.notifier)
                                       .signUp(

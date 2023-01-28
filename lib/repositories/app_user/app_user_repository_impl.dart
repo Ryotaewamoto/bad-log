@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../models/app_user.dart';
+import '../../models/deleted_user.dart';
 import '../../utils/firestore_refs.dart';
 import '../../utils/logger.dart';
 import 'app_user_repository.dart';
@@ -29,9 +30,12 @@ class AppUserRepositoryImpl implements AppUserRepository {
     return null;
   }
 
+  /// deletedUsers コレクションにドキュメントを作成することで Cloud Functions に
+  /// より onCreate 関数が発火し、Firebase Extension から Firebase Auth のユーザと
+  /// Firestore のユーザが削除される。
   @override
-  Future<void> delete({required String userId}) {
-    throw UnimplementedError();
+  Future<void> delete({required DeletedUser deletedUser}) async {
+    await deletedUsersRef.doc(deletedUser.uid).set(deletedUser);
   }
 
   @override

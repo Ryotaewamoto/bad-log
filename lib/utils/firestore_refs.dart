@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../models/app_user.dart';
+import '../models/deleted_user.dart';
 import '../models/member.dart';
 import '../models/result.dart';
 
@@ -49,3 +50,9 @@ DocumentReference<Result> resultRef({
   required String resultId,
 }) =>
     resultsRef(userId: userId).doc(resultId);
+
+/// deletedUsers コレクションの参照。
+final deletedUsersRef = _db.collection('deletedUsers').withConverter(
+      fromFirestore: (ds, _) => DeletedUser.fromDocumentSnapshot(ds),
+      toFirestore: (obj, _) => obj.toJson(),
+    );

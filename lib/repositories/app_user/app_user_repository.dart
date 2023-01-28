@@ -1,4 +1,5 @@
 import '../../models/app_user.dart';
+import '../../models/deleted_user.dart';
 
 abstract class AppUserRepository {
   Future<void> create({
@@ -13,5 +14,5 @@ abstract class AppUserRepository {
     required AppUser appUser,
   });
 
-  Future<void> delete({required String userId});
+  Future<void> delete({required DeletedUser deletedUser});
 }
