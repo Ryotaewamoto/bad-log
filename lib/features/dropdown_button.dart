@@ -1,7 +1,7 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../models/member.dart';
-import '../utils/fakes/member.dart';
+import '../utils/constants/member.dart';
 
 /// 味方の [Member] の状態を保持する [StateNotifierProvider]。
 final dropdownButtonPartnerMemberProvider =

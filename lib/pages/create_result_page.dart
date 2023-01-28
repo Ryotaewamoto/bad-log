@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gap/gap.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -14,7 +15,8 @@ import '../repositories/auth/auth_repository_impl.dart';
 import '../utils/async_value_error_dialog.dart';
 import '../utils/constants/app_colors.dart';
 import '../utils/constants/measure.dart';
-import '../utils/fakes/member.dart';
+import '../utils/constants/member.dart';
+import '../utils/dialog.dart';
 import '../utils/json_converters/union_timestamp.dart';
 import '../utils/loading.dart';
 import '../utils/result_format.dart';
@@ -31,40 +33,87 @@ class CreateResultPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    ref.listen<AsyncValue<void>>(
-      createResultControllerProvider,
-      (_, state) async {
-        if (state.isLoading) {
-          ref.watch(overlayLoadingProvider.notifier).update((state) => true);
-          return;
-        }
-
-        await state.when(
-          data: (_) async {
-            // ローディングを非表示にする
-            ref.watch(overlayLoadingProvider.notifier).update((state) => false);
-
-            // ログインできたらスナックバーでメッセージを表示してホーム画面に遷移する
-            ref
-                .read(scaffoldMessengerServiceProvider)
-                .showSnackBar('Success !');
-
-            Navigator.of(context).pop();
-          },
-          error: (e, s) async {
-            // ローディングを非表示にする
-            ref.watch(overlayLoadingProvider.notifier).update((state) => false);
-
-            // エラーが発生したらエラーダイアログを表示する
-            state.showAlertDialogOnError(context);
-          },
-          loading: () {
-            // ローディングを表示する
+    ref
+      ..listen<AsyncValue<void>>(
+        createResultControllerProvider,
+        (_, state) async {
+          if (state.isLoading) {
             ref.watch(overlayLoadingProvider.notifier).update((state) => true);
-          },
-        );
-      },
-    );
+            return;
+          }
+
+          await state.when(
+            data: (_) async {
+              // ローディングを非表示にする
+              ref
+                  .watch(overlayLoadingProvider.notifier)
+                  .update((state) => false);
+
+              // ログインできたらスナックバーでメッセージを表示してホーム画面に遷移する
+              ref
+                  .read(scaffoldMessengerServiceProvider)
+                  .showSnackBar('Success !');
+
+              Navigator.of(context).pop();
+            },
+            error: (e, s) async {
+              // ローディングを非表示にする
+              ref
+                  .watch(overlayLoadingProvider.notifier)
+                  .update((state) => false);
+
+              // エラーが発生したらエラーダイアログを表示する
+              state.showAlertDialogOnError(context);
+            },
+            loading: () {
+              // ローディングを表示する
+              ref
+                  .watch(overlayLoadingProvider.notifier)
+                  .update((state) => true);
+            },
+          );
+        },
+      )
+      ..listen<AsyncValue<void>>(
+        memberControllerProvider,
+        (_, state) async {
+          if (state.isLoading) {
+            ref.watch(overlayLoadingProvider.notifier).update((state) => true);
+            return;
+          }
+
+          await state.when(
+            data: (_) async {
+              // ローディングを非表示にする
+              ref
+                  .watch(overlayLoadingProvider.notifier)
+                  .update((state) => false);
+
+              // ログインできたらスナックバーでメッセージを表示してホーム画面に遷移する
+              ref
+                  .read(scaffoldMessengerServiceProvider)
+                  .showSnackBar('メンバーを追加しました！');
+
+              Navigator.of(context).pop();
+            },
+            error: (e, s) async {
+              // ローディングを非表示にする
+              ref
+                  .watch(overlayLoadingProvider.notifier)
+                  .update((state) => false);
+
+              // エラーが発生したらエラーダイアログを表示する
+              state.showAlertDialogOnError(context);
+            },
+            loading: () {
+              // ローディングを表示する
+              ref
+                  .watch(overlayLoadingProvider.notifier)
+                  .update((state) => true);
+            },
+          );
+        },
+      );
 
     // Provider
     final members = ref.watch(membersProvider).maybeWhen<List<Member>>(
@@ -91,6 +140,8 @@ class CreateResultPage extends HookConsumerWidget {
     );
 
     // Hooks
+    final useMemberNameController = useTextEditingController();
+
     final yours1gameNumberState = useState(0);
     final opponents1gameNumberState = useState(0);
 
@@ -104,7 +155,7 @@ class CreateResultPage extends HookConsumerWidget {
       children: [
         Scaffold(
           appBar: const WhiteAppBar(
-            title: 'New',
+            title: '試合結果の追加',
             automaticallyImplyLeading: true,
           ),
           body: AppOverScrollIndicator(
@@ -137,7 +188,63 @@ class CreateResultPage extends HookConsumerWidget {
                     const Gap(32),
                     Row(
                       children: [
-                        Text('Members', style: TextStyles.h2()),
+                        Text('メンバー', style: TextStyles.h2()),
+                        IconButton(
+                          splashRadius: 20,
+                          onPressed: () async {
+                            if (members.length < 20) {
+                              await addMemberDialog(
+                                context,
+                                useMemberNameController,
+                                onPressed: () async {
+                                  final member = Member(
+                                    memberName:
+                                        useMemberNameController.value.text,
+                                    active: true,
+                                    createdAt:
+                                        UnionTimestamp.dateTime(DateTime.now()),
+                                    updatedAt:
+                                        UnionTimestamp.dateTime(DateTime.now()),
+                                  );
+
+                                  if (userId != null) {
+                                    await ref
+                                        .read(memberControllerProvider.notifier)
+                                        .createMember(
+                                          userId: userId,
+                                          member: member,
+                                        );
+                                  }
+
+                                  useMemberNameController.clear();
+                                },
+                              );
+                            } else {
+                              await showAlertDialog(
+                                context: context,
+                                title: 'メンバーの上限',
+                                defaultActionText: 'OK',
+                                content:
+                                    '''メンバーの数が上限の20人に達しています。\n今後のアップデートにより人数を増やすことのできる仕様にする予定です。''',
+                              );
+                            }
+                          },
+                          icon: Container(
+                            width: 24,
+                            height: 24,
+                            decoration: const BoxDecoration(
+                              color: AppColors.secondary,
+                              shape: BoxShape.circle,
+                            ),
+                            child: const Center(
+                              child: FaIcon(
+                                Icons.add,
+                                size: 18,
+                                color: AppColors.baseWhite,
+                              ),
+                            ),
+                          ),
+                        )
                       ],
                     ),
                     Measure.g_16,
@@ -147,7 +254,7 @@ class CreateResultPage extends HookConsumerWidget {
                           Align(
                             alignment: Alignment.centerLeft,
                             child: Text(
-                              'Partner',
+                              'パートナー',
                               style: TextStyles.p1Bold(),
                             ),
                           ),
@@ -174,7 +281,7 @@ class CreateResultPage extends HookConsumerWidget {
                         Align(
                           alignment: Alignment.centerLeft,
                           child: Text(
-                            'Opponent',
+                            '対戦相手',
                             style: TextStyles.p1Bold(),
                           ),
                         ),
@@ -202,7 +309,7 @@ class CreateResultPage extends HookConsumerWidget {
                           Align(
                             alignment: Alignment.centerLeft,
                             child: Text(
-                              'Opponent',
+                              '対戦相手',
                               style: TextStyles.p1Bold(),
                             ),
                           ),
@@ -227,7 +334,7 @@ class CreateResultPage extends HookConsumerWidget {
                     Measure.g_12,
                     Row(
                       children: [
-                        Text('Scores', style: TextStyles.h2()),
+                        Text('得点', style: TextStyles.h2()),
                       ],
                     ),
                     Measure.g_16,
@@ -275,14 +382,14 @@ class CreateResultPage extends HookConsumerWidget {
                       children: const [
                         SizedBox(
                           width: 80,
-                          child: Center(child: Text('Yours')),
+                          child: Center(child: Text('自分')),
                         ),
                         SizedBox(
                           width: 80,
                         ),
                         SizedBox(
                           width: 80,
-                          child: Center(child: Text('Opponents')),
+                          child: Center(child: Text('相手')),
                         ),
                       ],
                     ),
@@ -342,7 +449,7 @@ class CreateResultPage extends HookConsumerWidget {
                       ),
                     Measure.g_24,
                     PrimaryRoundedButton(
-                      text: 'Save new result',
+                      text: '追加',
                       onTap: () async {
                         // 二重の処理を防ぐために先にローディングの状態にしておく。
 

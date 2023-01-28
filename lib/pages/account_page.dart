@@ -76,7 +76,7 @@ class AccountPage extends HookConsumerWidget {
                     Measure.g_24,
                     Align(
                       alignment: Alignment.centerLeft,
-                      child: Text('Rate', style: TextStyles.h2()),
+                      child: Text('試合履歴', style: TextStyles.h2()),
                     ),
                     Measure.g_8,
                     ToggleButtons(
