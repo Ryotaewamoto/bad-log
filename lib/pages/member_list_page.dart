@@ -96,6 +96,8 @@ class MemberListPage extends HookConsumerWidget {
                             member: member,
                           );
                     }
+
+                    useMemberNameController.clear();
                   },
                 );
               } else {
