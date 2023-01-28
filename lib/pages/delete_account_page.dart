@@ -34,7 +34,7 @@ class DeleteAccountPage extends HookConsumerWidget {
             // ログインできたらスナックバーでメッセージを表示してホーム画面に遷移する
             ref
                 .read(scaffoldMessengerServiceProvider)
-                .showSnackBar('You are logged out !');
+                .showSnackBar('アカウントを削除しました。');
 
             await Navigator.pushAndRemoveUntil<dynamic>(
               context,
@@ -90,14 +90,20 @@ class DeleteAccountPage extends HookConsumerWidget {
               ),
             ),
             Measure.g_32,
-            Text(
-              '削除したアカウントでのログインができなくなります。',
-              style: TextStyles.p2(),
+            Align(
+              alignment: Alignment.centerLeft,
+              child: Text(
+                '削除したアカウントでのログインができなくなります。',
+                style: TextStyles.p2(),
+              ),
             ),
             const Divider(),
-            Text(
-              'アプリ内で登録した試合結果やメンバーの情報はすべて削除されます。',
-              style: TextStyles.p2(),
+            Align(
+              alignment: Alignment.centerLeft,
+              child: Text(
+                'アプリ内で登録した試合結果やメンバーの情報はすべて削除されます。',
+                style: TextStyles.p2(),
+              ),
             ),
             const Divider(),
             Measure.g_32,
