@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -32,120 +33,61 @@ class ResultPage extends HookConsumerWidget {
           },
           orElse: () => [],
         );
+
+    final isEditingMode = useState(false);
+    final commentController = useTextEditingController(text: result.comment);
     return Scaffold(
       appBar: WhiteAppBar(
         title: DateTime.now().toYYYYMMDD(withJapaneseWeekDay: false),
         automaticallyImplyLeading: true,
       ),
-      body: Padding(
-        padding: Measure.p_a16,
-        child: Column(
-          children: [
-            Measure.g_16,
-            // 自分/自チーム
-            Row(
-              children: [
-                Icon(
-                  Icons.circle,
-                  size: 20,
-                  color:
-                      result.isWinner ? AppColors.accent : AppColors.baseWhite,
-                ),
-                Measure.g_16,
-                Text(
-                  appUserName ?? '',
-                  maxLines: 1,
-                  style: TextStyles.h3().copyWith(
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                ),
-              ],
-            ),
-            if (result.type == 'doubles')
-              Column(
+      body: SingleChildScrollView(
+        reverse: true,
+        child: Padding(
+          padding: Measure.p_a16,
+          child: Column(
+            children: [
+              Measure.g_16,
+              // 自分/自チーム
+              Row(
                 children: [
-                  Measure.g_8,
-                  Row(
-                    children: [
-                      Icon(
-                        Icons.circle,
-                        size: 20,
-                        color: result.isWinner
-                            ? AppColors.accent
-                            : AppColors.baseWhite,
-                      ),
-                      Measure.g_16,
-                      Text(
-                        members.isNotEmpty
-                            ? members
-                                .firstWhere(
-                                  (element) =>
-                                      element.memberId == result.partner,
-                                )
-                                .memberName
-                            : '',
-                        maxLines: 1,
-                        style: TextStyles.h3().copyWith(
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ),
-                    ],
+                  Icon(
+                    Icons.circle,
+                    size: 20,
+                    color: result.isWinner
+                        ? AppColors.accent
+                        : AppColors.baseWhite,
+                  ),
+                  Measure.g_16,
+                  Text(
+                    appUserName ?? '',
+                    maxLines: 1,
+                    style: TextStyles.h3().copyWith(
+                      overflow: TextOverflow.ellipsis,
+                    ),
                   ),
                 ],
               ),
-            Measure.g_16,
-            _PointsScore(
-              result: result,
-            ),
-            Measure.g_16,
-            // 対戦相手/チーム
-            Row(
-              children: [
-                Icon(
-                  Icons.circle,
-                  size: 20,
-                  color:
-                      !result.isWinner ? AppColors.accent : AppColors.baseWhite,
-                ),
-                Measure.g_16,
-                Text(
-                  members.isNotEmpty
-                      ? members
-                          .firstWhere(
-                            (element) =>
-                                element.memberId == result.opponents[0],
-                          )
-                          .memberName
-                      : '',
-                  maxLines: 1,
-                  style: TextStyles.h3().copyWith(
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                ),
-              ],
-            ),
-            if (result.type == 'doubles')
-              Column(
-                children: [
-                  Measure.g_8,
-                  Row(
-                    // 対戦相手/チーム
-                    children: [
-                      Icon(
-                        Icons.circle,
-                        size: 20,
-                        color: !result.isWinner
-                            ? AppColors.accent
-                            : AppColors.baseWhite,
-                      ),
-                      Measure.g_16,
-                      Flexible(
-                        child: Text(
+              if (result.type == 'doubles')
+                Column(
+                  children: [
+                    Measure.g_8,
+                    Row(
+                      children: [
+                        Icon(
+                          Icons.circle,
+                          size: 20,
+                          color: result.isWinner
+                              ? AppColors.accent
+                              : AppColors.baseWhite,
+                        ),
+                        Measure.g_16,
+                        Text(
                           members.isNotEmpty
                               ? members
                                   .firstWhere(
                                     (element) =>
-                                        element.memberId == result.opponents[1],
+                                        element.memberId == result.partner,
                                   )
                                   .memberName
                               : '',
@@ -154,44 +96,155 @@ class ResultPage extends HookConsumerWidget {
                             overflow: TextOverflow.ellipsis,
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
+                  ],
+                ),
+              Measure.g_16,
+              _PointsScore(
+                result: result,
+              ),
+              Measure.g_16,
+              // 対戦相手/チーム
+              Row(
+                children: [
+                  Icon(
+                    Icons.circle,
+                    size: 20,
+                    color: !result.isWinner
+                        ? AppColors.accent
+                        : AppColors.baseWhite,
+                  ),
+                  Measure.g_16,
+                  Text(
+                    members.isNotEmpty
+                        ? members
+                            .firstWhere(
+                              (element) =>
+                                  element.memberId == result.opponents[0],
+                            )
+                            .memberName
+                        : '',
+                    maxLines: 1,
+                    style: TextStyles.h3().copyWith(
+                      overflow: TextOverflow.ellipsis,
+                    ),
                   ),
                 ],
               ),
-            Measure.g_32,
-            Row(
-              children: [
-                Text(
-                  'Comment',
-                  style: TextStyles.h2(),
+              if (result.type == 'doubles')
+                Column(
+                  children: [
+                    Measure.g_8,
+                    Row(
+                      // 対戦相手/チーム
+                      children: [
+                        Icon(
+                          Icons.circle,
+                          size: 20,
+                          color: !result.isWinner
+                              ? AppColors.accent
+                              : AppColors.baseWhite,
+                        ),
+                        Measure.g_16,
+                        Flexible(
+                          child: Text(
+                            members.isNotEmpty
+                                ? members
+                                    .firstWhere(
+                                      (element) =>
+                                          element.memberId ==
+                                          result.opponents[1],
+                                    )
+                                    .memberName
+                                : '',
+                            maxLines: 1,
+                            style: TextStyles.h3().copyWith(
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
-                Measure.g_8,
-                Container(
-                  width: 24,
-                  height: 24,
-                  decoration: const BoxDecoration(
-                    color: AppColors.secondary,
-                    shape: BoxShape.circle,
+              Measure.g_32,
+              Row(
+                mainAxisAlignment: !isEditingMode.value
+                    ? MainAxisAlignment.start
+                    : MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'コメント',
+                    style: TextStyles.h2(),
                   ),
-                  child: const Center(
-                    child: FaIcon(
-                      Icons.edit,
-                      size: 18,
-                      color: AppColors.baseWhite,
+                  if (!isEditingMode.value)
+                    IconButton(
+                      splashRadius: 20,
+                      onPressed: () {
+                        isEditingMode.value = true;
+                      },
+                      icon: Container(
+                        width: 24,
+                        height: 24,
+                        decoration: const BoxDecoration(
+                          color: AppColors.secondary,
+                          shape: BoxShape.circle,
+                        ),
+                        child: const Center(
+                          child: FaIcon(
+                            Icons.edit,
+                            size: 18,
+                            color: AppColors.baseWhite,
+                          ),
+                        ),
+                      ),
+                    )
+                  else
+                    TextButton(
+                      onPressed: () {
+                        isEditingMode.value = false;
+                      },
+                      child: Text(
+                        '保存',
+                        style: TextStyles.p2(color: AppColors.secondary),
+                      ),
+                    ),
+                ],
+              ),
+              Measure.g_16,
+              if (!isEditingMode.value)
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    result.comment.isNotEmpty
+                        ? result.comment
+                        : '（コメントを書いておこう！）',
+                  ),
+                )
+              else
+                TextFormField(
+                  controller: commentController,
+                  maxLength: 200,
+                  decoration: const InputDecoration(
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: Measure.br_8,
+                      borderSide: BorderSide(
+                        width: 2,
+                        color: AppColors.secondary,
+                      ),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: Measure.br_8,
+                      borderSide: BorderSide(
+                        width: 2,
+                        color: AppColors.secondary,
+                      ),
                     ),
                   ),
                 ),
-              ],
-            ),
-            Measure.g_16,
-            Align(
-              alignment: Alignment.centerLeft,
-              child: Text(
-                result.comment.isNotEmpty ? result.comment : '（コメントを書いておこう！）',
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

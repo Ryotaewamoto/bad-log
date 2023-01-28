@@ -35,7 +35,7 @@ class AccountPage extends HookConsumerWidget {
       children: [
         Scaffold(
           appBar: WhiteAppBar(
-            title: 'Account',
+            title: 'アカウント',
             automaticallyImplyLeading: true,
             actions: [
               IconButton(

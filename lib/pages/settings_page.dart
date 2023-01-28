@@ -86,26 +86,28 @@ class SettingsPage extends HookConsumerWidget {
           ),
           body: Column(
             children: [
-              InkWell(
-                onTap: () {},
-                highlightColor: AppColors.secondaryPale,
-                splashColor: AppColors.secondaryPale,
-                child: SizedBox(
-                  height: 64,
-                  child: ListTile(
-                    leading: const Icon(Icons.mail),
-                    horizontalTitleGap: 0,
-                    title: Text(
-                      'メールアドレス',
-                      style: TextStyles.p1(),
-                    ),
-                    subtitle: Text(
-                      userEmail ?? '',
-                      style: TextStyles.p2(),
-                    ),
+              // TODO(ryotaiwamoto): メールアドレスの変更
+              // InkWell(
+              //   onTap: () {},
+              //   highlightColor: AppColors.secondaryPale,
+              //   splashColor: AppColors.secondaryPale,
+              // child:
+              SizedBox(
+                height: 64,
+                child: ListTile(
+                  leading: const Icon(Icons.mail),
+                  horizontalTitleGap: 0,
+                  title: Text(
+                    'メールアドレス',
+                    style: TextStyles.p1(),
+                  ),
+                  subtitle: Text(
+                    userEmail ?? '',
+                    style: TextStyles.p2(),
                   ),
                 ),
               ),
+              // ),
               const Divider(
                 height: 0,
                 color: AppColors.baseLight,
@@ -135,31 +137,6 @@ class SettingsPage extends HookConsumerWidget {
                       '$members / 20',
                       style: TextStyles.p2(),
                     ),
-                  ),
-                ),
-              ),
-              const Divider(
-                height: 0,
-                color: AppColors.baseLight,
-              ),
-              InkWell(
-                onTap: () {
-                  // TODO(ryotaiwamoto): スライドインアニメーション
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute<bool>(
-                      builder: (_) => const DeleteAccountPage(),
-                    ),
-                  );
-                },
-                highlightColor: AppColors.secondaryPale,
-                splashColor: AppColors.secondaryPale,
-                child: ListTile(
-                  leading: const Icon(Icons.delete_forever_sharp),
-                  horizontalTitleGap: 0,
-                  title: Text(
-                    'アカウントの削除',
-                    style: TextStyles.p1(),
                   ),
                 ),
               ),
@@ -245,6 +222,31 @@ class SettingsPage extends HookConsumerWidget {
                     style: TextStyles.p1(),
                   ),
                   trailing: const Icon(Icons.keyboard_arrow_right),
+                ),
+              ),
+              const Divider(
+                height: 0,
+                color: AppColors.baseLight,
+              ),
+              InkWell(
+                onTap: () {
+                  // TODO(ryotaiwamoto): スライドインアニメーション
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute<bool>(
+                      builder: (_) => const DeleteAccountPage(),
+                    ),
+                  );
+                },
+                highlightColor: AppColors.secondaryPale,
+                splashColor: AppColors.secondaryPale,
+                child: ListTile(
+                  leading: const Icon(Icons.delete_forever_sharp),
+                  horizontalTitleGap: 0,
+                  title: Text(
+                    'アカウントの削除',
+                    style: TextStyles.p1(),
+                  ),
                 ),
               ),
               const Divider(

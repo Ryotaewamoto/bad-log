@@ -38,7 +38,7 @@ class MemberListPage extends HookConsumerWidget {
             // ログインできたらスナックバーでメッセージを表示してホーム画面に遷移する
             ref
                 .read(scaffoldMessengerServiceProvider)
-                .showSnackBar('Success !');
+                .showSnackBar('メンバーを追加しました！');
 
             Navigator.of(context).pop();
           },
@@ -71,7 +71,7 @@ class MemberListPage extends HookConsumerWidget {
 
     return Scaffold(
       appBar: WhiteAppBar(
-        title: 'Members',
+        title: 'メンバー',
         automaticallyImplyLeading: true,
         actions: [
           IconButton(
