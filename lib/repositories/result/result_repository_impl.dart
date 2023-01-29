@@ -4,6 +4,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../models/result.dart';
 import '../../utils/firestore_refs.dart';
 import '../../utils/logger.dart';
+import 'result_repository.dart';
 
 final resultRepositoryImplProvider = Provider<ResultRepositoryImpl>(
   (ref) => ResultRepositoryImpl(),
@@ -34,6 +35,19 @@ class ResultRepositoryImpl implements ResultRepository {
     return ds.data();
   }
 
+  /// 指定した Result を更新する。
+  @override
+  Future<void> update({
+    required String userId,
+    required String resultId,
+    required Result result,
+  }) async {
+    await resultsRef(userId: userId).doc(resultId).set(
+          result,
+          SetOptions(merge: true),
+        );
+  }
+
   /// Result 一覧を購読する。
   @override
   Stream<List<Result>> subscribeResults({
@@ -53,22 +67,4 @@ class ResultRepositoryImpl implements ResultRepository {
       return result;
     });
   }
-}
-
-abstract class ResultRepository {
-  Future<void> create({
-    required String userId,
-    required Result result,
-  });
-
-  Future<Result?> fetchResult({
-    required String userId,
-    required String resultId,
-  });
-
-  Stream<List<Result>> subscribeResults({
-    required String userId,
-    Query<Result>? Function(Query<Result> query)? queryBuilder,
-    int Function(Result lhs, Result rhs)? compare,
-  });
 }

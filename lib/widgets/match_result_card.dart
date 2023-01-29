@@ -26,7 +26,7 @@ class MatchResultCard extends HookConsumerWidget {
     // Provider
     final appUserName = ref.watch(appUserFutureProvider).maybeWhen<String?>(
           data: (data) => data?.userName,
-          orElse: () => null,
+          orElse: () => 'ユーザ名',
         );
     final members = ref.watch(membersProvider).maybeWhen<List<Member>>(
           data: (data) {
