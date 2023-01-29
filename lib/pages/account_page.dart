@@ -35,7 +35,7 @@ class AccountPage extends HookConsumerWidget {
       children: [
         Scaffold(
           appBar: WhiteAppBar(
-            title: 'Account',
+            title: 'アカウント',
             automaticallyImplyLeading: true,
             actions: [
               IconButton(
@@ -102,14 +102,16 @@ class AccountPage extends HookConsumerWidget {
                     Measure.g_16,
                     if (ref.watch(selectTypesProvider).first == true)
                       Column(
-                        children: results[0]
-                            .map(
-                              (e) => _RateSinglesResultCard(
-                                results: results[0],
-                                index: results[0].indexOf(e),
-                              ),
-                            )
-                            .toList(),
+                        children: results.isEmpty
+                            ? []
+                            : results[0]
+                                .map(
+                                  (e) => _RateSinglesResultCard(
+                                    results: results[0],
+                                    index: results[0].indexOf(e),
+                                  ),
+                                )
+                                .toList(),
                       )
                     else
                       Column(

@@ -210,3 +210,45 @@ final typesSeparatedResultsProvider =
     resultsProvider,
   ],
 );
+
+/// [Result] に関して Firestore のデータの更新を行う [AsyncNotifierProvider]。
+final updateResultControllerProvider =
+    AutoDisposeAsyncNotifierProvider<UpdateResultController, void>(
+  UpdateResultController.new,
+);
+
+class UpdateResultController extends AutoDisposeAsyncNotifier<void> {
+  @override
+  FutureOr<void> build() {
+    // FutureOr<void> より、初期の処理の必要がないため何もしない。
+  }
+
+  /// 試合結果情報を更新する
+  Future<void> updateResult({
+    required String userId,
+    required String resultId,
+    required Result result,
+  }) async {
+    final resultRepository = ref.read(resultRepositoryImplProvider);
+    // 試合結果情報をローディング中にする
+    state = const AsyncLoading();
+
+    // 試合結果情報を実行する
+    state = await AsyncValue.guard(() async {
+      try {
+        if (result.comment.length > 200) {
+          throw const AppException(
+            message: '200文字以下にしてください。',
+          );
+        }
+        await resultRepository.update(
+          userId: userId,
+          resultId: resultId,
+          result: result,
+        );
+      } on AppException {
+        rethrow;
+      }
+    });
+  }
+}
