@@ -234,8 +234,7 @@ class CreateResultPage extends HookConsumerWidget {
                                 context: context,
                                 title: 'メンバーの上限',
                                 defaultActionText: 'OK',
-                                content:
-                                    '''メンバーの数が上限の20人に達しています。\n今後の
+                                content: '''メンバーの数が上限の20人に達しています。\n今後の
                                     アップデートにより人数を増やす予定です。''',
                               );
                             }
