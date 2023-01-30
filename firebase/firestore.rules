@@ -52,10 +52,10 @@ service cloud.firestore {
 
     // ルールの記述
     match /appUsers/{userId} {
-      // ユーザー情報の取得のルール
+      // user の取得のルール
       allow get: if isUserAuthenticated(userId);
 
-      // ユーザー情報の作成のルール
+      // user の作成のルール
       allow create: if isUserAuthenticated(userId)
       // スキーマ検証
       && isValidUser(request.resource.data)
@@ -67,11 +67,26 @@ service cloud.firestore {
 
       // results コレクションのルールはここに記述する
       match /results/{resultId} {
-        // ユーザー情報の取得のルール
+        // result の取得のルール
         allow list: if isUserAuthenticated(userId);
 
-        // ユーザー情報の作成のルール
+        // result の作成のルール
         allow create: if isUserAuthenticated(userId)
+        // スキーマ検証
+        && isValidResult(request.resource.data)
+        // データのバリデーション
+        && (request.resource.data.resultId == resultId || request.resource.data.resultId == ''
+        && request.resource.data.type == 'singles' || request.resource.data.type == 'doubles'
+        && request.resource.data.comment.size() >= 0
+        && request.resource.data.comment.size() <= 200
+        && request.resource.data.opponents.size >= 1
+        && request.resource.data.opponents.size <= 2
+        && request.resource.data.yourScore.size() == request.resource.data.opponentsScore.size()
+        && request.resource.data.createdAt == request.time
+        );
+
+        // result の更新のルール
+        allow update: if isUserAuthenticated(userId)
         // スキーマ検証
         && isValidResult(request.resource.data)
         // データのバリデーション
@@ -89,10 +104,10 @@ service cloud.firestore {
 
       // members コレクションのルールはここに記述する
       match /members/{memberId} {
-        // ユーザー情報の取得のルール
+        // member の取得のルール
         allow list: if isUserAuthenticated(userId);
 
-        // ユーザー情報の作成のルール
+        // member の作成のルール
         allow create: if isUserAuthenticated(userId)
         // スキーマ検証
         && isValidMember(request.resource.data)
@@ -109,7 +124,7 @@ service cloud.firestore {
     }
 
     match /deletedUsers/{userId} {
-      // ユーザー情報の作成のルール
+      // deletedUser の作成のルール
       allow create: if isUserAuthenticated(userId)
       // スキーマ検証
       && isValidDeletedUser(request.resource.data)
