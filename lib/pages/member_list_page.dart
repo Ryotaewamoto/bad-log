@@ -84,8 +84,8 @@ class MemberListPage extends HookConsumerWidget {
                     final member = Member(
                       memberName: useMemberNameController.value.text,
                       active: true,
-                      createdAt: UnionTimestamp.dateTime(DateTime.now()),
-                      updatedAt: UnionTimestamp.dateTime(DateTime.now()),
+                      createdAt: const UnionTimestamp.serverTimestamp(),
+                      updatedAt: const UnionTimestamp.serverTimestamp(),
                     );
 
                     if (userId != null) {
@@ -105,8 +105,8 @@ class MemberListPage extends HookConsumerWidget {
                   context: context,
                   title: 'メンバーの上限',
                   defaultActionText: 'OK',
-                  content:
-                      '''メンバーの数が上限の20人に達しています。\n今後のアップデートにより人数を増やすことのできる仕様にする予定です。''',
+                  content: '''メンバーの数が上限の20人に達しています。\n今後の
+                      アップデートにより人数を増やす予定です。''',
                 );
               }
             },

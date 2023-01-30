@@ -31,7 +31,7 @@ class DeleteAccountController extends AutoDisposeAsyncNotifier<void> {
 
     final deletedUser = DeletedUser(
       uid: userId,
-      createdAt: UnionTimestamp.dateTime(DateTime.now()),
+      createdAt: const UnionTimestamp.serverTimestamp(),
     );
 
     // ローディング中にする

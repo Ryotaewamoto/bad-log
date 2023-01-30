@@ -82,7 +82,8 @@ class ResultPage extends HookConsumerWidget {
     final commentController = useTextEditingController(text: result.comment);
     return Scaffold(
       appBar: WhiteAppBar(
-        title: DateTime.now().toYYYYMMDD(withJapaneseWeekDay: false),
+        title:
+            result.createdAt.dateTime!.toYYYYMMDD(withJapaneseWeekDay: false),
         automaticallyImplyLeading: true,
       ),
       body: GestureDetector(

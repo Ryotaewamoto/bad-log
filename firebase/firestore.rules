@@ -13,40 +13,40 @@ service cloud.firestore {
     // ユーザーデータのスキーマ検証
     function isValidUser(appUser) {
       return appUser.size() == 3
-      && 'userId' in appUser && appUser.userId is string;
-      && 'userName' in appUser && appUser.userName is string;
+      && 'userId' in appUser && appUser.userId is string
+      && 'userName' in appUser && appUser.userName is string
       && 'createdAt' in appUser && appUser.createdAt is timestamp;
     }
 
     // 削除されたユーザーデータのスキーマ検証
     function isValidDeletedUser(deletedUser) {
       return deletedUser.size() == 2
-      && 'uid' in deletedUser && deletedUser.uid is string;
+      && 'uid' in deletedUser && deletedUser.uid is string
       && 'createdAt' in deletedUser && deletedUser.createdAt is timestamp;
     }
 
     // メンバーデータのスキーマ検証
     function isValidMember(member) {
       return member.size() == 5
-      && 'memberId' in member && member.memberId is string;
-      && 'memberName' in member && member.memberName is string;
-      && 'active' in member && member.active is bool;
-      && 'createdAt' in member && member.createdAt is timestamp;
+      && 'memberId' in member && member.memberId is string
+      && 'memberName' in member && member.memberName is string
+      && 'active' in member && member.active is bool
+      && 'createdAt' in member && member.createdAt is timestamp
       && 'updatedAt' in member && member.updatedAt is timestamp;
     }
 
     // 試合結果データのスキーマ検証
     function isValidResult(result) {
       return result.size() == 10
-      && 'resultId' in result && result.resultId is string;
-      && 'type' in result && result.type is string;
-      && 'partner' in result && result.partner is string;
-      && 'comment' in result && result.comment is string;
-      && 'opponents' in result && result.opponents is list;
-      && 'yourScore' in result && result.yourScore is list;
-      && 'opponentsScore' in result && result.opponents is list;
-      && 'isWinner' in result && result.isWinner is bool;
-      && 'createdAt' in result && result.createdAt is timestamp;
+      && 'resultId' in result && result.resultId is string
+      && 'type' in result && result.type is string
+      && 'partner' in result && result.partner is string
+      && 'comment' in result && result.comment is string
+      && 'opponents' in result && result.opponents is list
+      && 'yourScore' in result && result.yourScore is list
+      && 'opponentsScore' in result && result.opponents is list
+      && 'isWinner' in result && result.isWinner is bool
+      && 'createdAt' in result && result.createdAt is timestamp
       && 'updatedAt' in result && result.updatedAt is timestamp;
     }
 
@@ -60,16 +60,15 @@ service cloud.firestore {
       // スキーマ検証
       && isValidUser(request.resource.data)
       // データのバリデーション
-      && (request.resource.data.createdAt == request.time
+      && request.resource.data.createdAt == request.time
       && request.resource.data.userId == userId
       && request.resource.data.userName.size() >= 0
-      && request.resource.data.userName.size() <= 20
-      );
+      && request.resource.data.userName.size() <= 20;
 
       // results コレクションのルールはここに記述する
       match /results/{resultId} {
         // ユーザー情報の取得のルール
-        allow get: if isUserAuthenticated(userId);
+        allow list: if isUserAuthenticated(userId);
 
         // ユーザー情報の作成のルール
         allow create: if isUserAuthenticated(userId)
@@ -91,7 +90,7 @@ service cloud.firestore {
       // members コレクションのルールはここに記述する
       match /members/{memberId} {
         // ユーザー情報の取得のルール
-        allow get: if isUserAuthenticated(userId);
+        allow list: if isUserAuthenticated(userId);
 
         // ユーザー情報の作成のルール
         allow create: if isUserAuthenticated(userId)
