@@ -75,7 +75,7 @@ class CreateResultPage extends HookConsumerWidget {
         },
       )
       ..listen<AsyncValue<void>>(
-        memberControllerProvider,
+        memberAddControllerProvider,
         (_, state) async {
           if (state.isLoading) {
             ref.watch(overlayLoadingProvider.notifier).update((state) => true);
@@ -219,7 +219,9 @@ class CreateResultPage extends HookConsumerWidget {
 
                                   if (userId != null) {
                                     await ref
-                                        .read(memberControllerProvider.notifier)
+                                        .read(
+                                          memberAddControllerProvider.notifier,
+                                        )
                                         .createMember(
                                           userId: userId,
                                           member: member,

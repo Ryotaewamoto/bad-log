@@ -119,7 +119,14 @@ service cloud.firestore {
         );
 
         allow update: if isUserAuthenticated(userId)
-        && isValidMember(request.resource.data);
+        // スキーマ検証
+        && isValidMember(request.resource.data)
+        // データのバリデーション
+        && (request.resource.data.memberId == memberId || request.resource.data.memberId == ''
+        && request.resource.data.memberName.size() >= 0
+        && request.resource.data.memberName.size() <= 20
+        && request.resource.data.createdAt == request.time
+        );
       }
     }
 
