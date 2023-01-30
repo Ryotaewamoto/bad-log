@@ -17,13 +17,13 @@ final membersProvider = StreamProvider.autoDispose<List<Member>>((ref) {
   return members;
 });
 
-/// [Member] に関して Firestore の操作を行う [AsyncNotifierProvider]。
-final memberControllerProvider =
-    AutoDisposeAsyncNotifierProvider<MemberController, void>(
-  MemberController.new,
+/// [Member] を Firestore に追加する [AsyncNotifierProvider]。
+final memberAddControllerProvider =
+    AutoDisposeAsyncNotifierProvider<AddMemberController, void>(
+  AddMemberController.new,
 );
 
-class MemberController extends AutoDisposeAsyncNotifier<void> {
+class AddMemberController extends AutoDisposeAsyncNotifier<void> {
   @override
   FutureOr<void> build() {
     // FutureOr<void> より、初期の処理の必要がないため何もしない。
@@ -60,6 +60,19 @@ class MemberController extends AutoDisposeAsyncNotifier<void> {
       }
     });
   }
+}
+
+/// [Member] の 更新を行う [AsyncNotifierProvider]。
+final memberUpdateControllerProvider =
+    AutoDisposeAsyncNotifierProvider<UpdateMemberController, void>(
+  UpdateMemberController.new,
+);
+
+class UpdateMemberController extends AutoDisposeAsyncNotifier<void> {
+  @override
+  FutureOr<void> build() {
+    // FutureOr<void> より、初期の処理の必要がないため何もしない。
+  }
 
   /// メンバー情報を更新する
   Future<void> updateMember({
@@ -93,6 +106,19 @@ class MemberController extends AutoDisposeAsyncNotifier<void> {
         rethrow;
       }
     });
+  }
+}
+
+/// [Member] の削除処理を行う [AsyncNotifierProvider]。
+final memberDeleteControllerProvider =
+    AutoDisposeAsyncNotifierProvider<DeleteMemberController, void>(
+  DeleteMemberController.new,
+);
+
+class DeleteMemberController extends AutoDisposeAsyncNotifier<void> {
+  @override
+  FutureOr<void> build() {
+    // FutureOr<void> より、初期の処理の必要がないため何もしない。
   }
 
   /// メンバーを削除する

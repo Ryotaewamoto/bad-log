@@ -75,7 +75,7 @@ class CreateResultPage extends HookConsumerWidget {
         },
       )
       ..listen<AsyncValue<void>>(
-        memberControllerProvider,
+        memberAddControllerProvider,
         (_, state) async {
           if (state.isLoading) {
             ref.watch(overlayLoadingProvider.notifier).update((state) => true);
@@ -89,7 +89,7 @@ class CreateResultPage extends HookConsumerWidget {
                   .watch(overlayLoadingProvider.notifier)
                   .update((state) => false);
 
-              // ログインできたらスナックバーでメッセージを表示してホーム画面に遷移する
+              // スナックバーでメッセージを表示してホーム画面に遷移する
               ref
                   .read(scaffoldMessengerServiceProvider)
                   .showSnackBar('メンバーを追加しました！');
@@ -192,6 +192,16 @@ class CreateResultPage extends HookConsumerWidget {
                         IconButton(
                           splashRadius: 20,
                           onPressed: () async {
+                            // 注意:
+                            // 追加メンバーを指定した状態でメンバーと追加しようとすると
+                            // [DropdownButton] の [value] に関してエラーが出る。
+                            // そのため選択したメンバーをリセットする。
+                            ref
+                                .read(
+                                  dropdownButtonFirstOpponentMemberProvider
+                                      .notifier,
+                                )
+                                .selectedMember(initMember);
                             if (members.length < 20) {
                               await addMemberDialog(
                                 context,
@@ -202,14 +212,16 @@ class CreateResultPage extends HookConsumerWidget {
                                         useMemberNameController.value.text,
                                     active: true,
                                     createdAt:
-                                        UnionTimestamp.dateTime(DateTime.now()),
+                                        const UnionTimestamp.serverTimestamp(),
                                     updatedAt:
-                                        UnionTimestamp.dateTime(DateTime.now()),
+                                        const UnionTimestamp.serverTimestamp(),
                                   );
 
                                   if (userId != null) {
                                     await ref
-                                        .read(memberControllerProvider.notifier)
+                                        .read(
+                                          memberAddControllerProvider.notifier,
+                                        )
                                         .createMember(
                                           userId: userId,
                                           member: member,
@@ -224,8 +236,8 @@ class CreateResultPage extends HookConsumerWidget {
                                 context: context,
                                 title: 'メンバーの上限',
                                 defaultActionText: 'OK',
-                                content:
-                                    '''メンバーの数が上限の20人に達しています。\n今後のアップデートにより人数を増やすことのできる仕様にする予定です。''',
+                                content: '''メンバーの数が上限の20人に達しています。\n今後の
+                                    アップデートにより人数を増やす予定です。''',
                               );
                             }
                           },
@@ -501,8 +513,8 @@ class CreateResultPage extends HookConsumerWidget {
                           yourScore: yourScore,
                           opponentsScore: opponentsScore,
                           isWinner: isWinner,
-                          createdAt: UnionTimestamp.dateTime(DateTime.now()),
-                          updatedAt: UnionTimestamp.dateTime(DateTime.now()),
+                          createdAt: const UnionTimestamp.serverTimestamp(),
+                          updatedAt: const UnionTimestamp.serverTimestamp(),
                         );
 
                         if (userId != null) {
@@ -580,7 +592,7 @@ class _DropdownMemberSelectButton extends HookWidget {
     required this.membersList,
   });
 
-  final Member selectedSecondOpponentMember;
+  final Member? selectedSecondOpponentMember;
   final void Function(Member?)? onChanged;
   final List<Member> membersList;
 

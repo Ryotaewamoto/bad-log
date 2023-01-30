@@ -22,40 +22,127 @@ class MemberListPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    ref.listen<AsyncValue<void>>(
-      memberControllerProvider,
-      (_, state) async {
-        if (state.isLoading) {
-          ref.watch(overlayLoadingProvider.notifier).update((state) => true);
-          return;
-        }
-
-        await state.when(
-          data: (_) async {
-            // ローディングを非表示にする
-            ref.watch(overlayLoadingProvider.notifier).update((state) => false);
-
-            // ログインできたらスナックバーでメッセージを表示してホーム画面に遷移する
-            ref
-                .read(scaffoldMessengerServiceProvider)
-                .showSnackBar('メンバーを追加しました！');
-
-            Navigator.of(context).pop();
-          },
-          error: (e, s) async {
-            // ローディングを非表示にする
-            ref.watch(overlayLoadingProvider.notifier).update((state) => false);
-
-            // エラーが発生したらエラーダイアログを表示する
-            state.showAlertDialogOnError(context);
-          },
-          loading: () {
-            // ローディングを表示する
+    ref
+      ..listen<AsyncValue<void>>(
+        memberAddControllerProvider,
+        (_, state) async {
+          if (state.isLoading) {
             ref.watch(overlayLoadingProvider.notifier).update((state) => true);
-          },
-        );
-      },
-    );
+            return;
+          }
+
+          await state.when(
+            data: (_) async {
+              // ローディングを非表示にする
+              ref
+                  .watch(overlayLoadingProvider.notifier)
+                  .update((state) => false);
+
+              // ログインできたらスナックバーでメッセージを表示してホーム画面に遷移する
+              ref
+                  .read(scaffoldMessengerServiceProvider)
+                  .showSnackBar('メンバーを追加しました！');
+
+              Navigator.of(context).pop();
+            },
+            error: (e, s) async {
+              // ローディングを非表示にする
+              ref
+                  .watch(overlayLoadingProvider.notifier)
+                  .update((state) => false);
+
+              // エラーが発生したらエラーダイアログを表示する
+              state.showAlertDialogOnError(context);
+            },
+            loading: () {
+              // ローディングを表示する
+              ref
+                  .watch(overlayLoadingProvider.notifier)
+                  .update((state) => true);
+            },
+          );
+        },
+      )
+      ..listen<AsyncValue<void>>(
+        memberUpdateControllerProvider,
+        (_, state) async {
+          if (state.isLoading) {
+            ref.watch(overlayLoadingProvider.notifier).update((state) => true);
+            return;
+          }
+
+          await state.when(
+            data: (_) async {
+              // ローディングを非表示にする
+              ref
+                  .watch(overlayLoadingProvider.notifier)
+                  .update((state) => false);
+
+              // ログインできたらスナックバーでメッセージを表示してホーム画面に遷移する
+              ref
+                  .read(scaffoldMessengerServiceProvider)
+                  .showSnackBar('メンバーの情報を更新しました！');
+
+              Navigator.of(context).pop();
+            },
+            error: (e, s) async {
+              // ローディングを非表示にする
+              ref
+                  .watch(overlayLoadingProvider.notifier)
+                  .update((state) => false);
+
+              // エラーが発生したらエラーダイアログを表示する
+              state.showAlertDialogOnError(context);
+            },
+            loading: () {
+              // ローディングを表示する
+              ref
+                  .watch(overlayLoadingProvider.notifier)
+                  .update((state) => true);
+            },
+          );
+        },
+      )
+      ..listen<AsyncValue<void>>(
+        memberDeleteControllerProvider,
+        (_, state) async {
+          if (state.isLoading) {
+            ref.watch(overlayLoadingProvider.notifier).update((state) => true);
+            return;
+          }
+
+          await state.when(
+            data: (_) async {
+              // ローディングを非表示にする
+              ref
+                  .watch(overlayLoadingProvider.notifier)
+                  .update((state) => false);
+
+              // ログインできたらスナックバーでメッセージを表示してホーム画面に遷移する
+              ref
+                  .read(scaffoldMessengerServiceProvider)
+                  .showSnackBar('メンバーを削除しました。');
+
+              Navigator.of(context).pop();
+            },
+            error: (e, s) async {
+              // ローディングを非表示にする
+              ref
+                  .watch(overlayLoadingProvider.notifier)
+                  .update((state) => false);
+
+              // エラーが発生したらエラーダイアログを表示する
+              state.showAlertDialogOnError(context);
+            },
+            loading: () {
+              // ローディングを表示する
+              ref
+                  .watch(overlayLoadingProvider.notifier)
+                  .update((state) => true);
+            },
+          );
+        },
+      );
 
     final members = ref.watch(membersProvider).maybeWhen<List<Member>>(
           data: (data) {
@@ -84,13 +171,13 @@ class MemberListPage extends HookConsumerWidget {
                     final member = Member(
                       memberName: useMemberNameController.value.text,
                       active: true,
-                      createdAt: UnionTimestamp.dateTime(DateTime.now()),
-                      updatedAt: UnionTimestamp.dateTime(DateTime.now()),
+                      createdAt: const UnionTimestamp.serverTimestamp(),
+                      updatedAt: const UnionTimestamp.serverTimestamp(),
                     );
 
                     if (userId != null) {
                       await ref
-                          .read(memberControllerProvider.notifier)
+                          .read(memberAddControllerProvider.notifier)
                           .createMember(
                             userId: userId,
                             member: member,
@@ -105,8 +192,8 @@ class MemberListPage extends HookConsumerWidget {
                   context: context,
                   title: 'メンバーの上限',
                   defaultActionText: 'OK',
-                  content:
-                      '''メンバーの数が上限の20人に達しています。\n今後のアップデートにより人数を増やすことのできる仕様にする予定です。''',
+                  content: '''メンバーの数が上限の20人に達しています。\n今後の
+                      アップデートにより人数を増やす予定です。''',
                 );
               }
             },
@@ -135,7 +222,7 @@ class MemberListPage extends HookConsumerWidget {
                           onPressed: () async {
                             if (userId != null) {
                               await ref
-                                  .read(memberControllerProvider.notifier)
+                                  .read(memberDeleteControllerProvider.notifier)
                                   .deleteMember(
                                     userId: userId,
                                     memberId: e.memberId,
@@ -163,7 +250,7 @@ class MemberListPage extends HookConsumerWidget {
 
                             if (userId != null) {
                               await ref
-                                  .read(memberControllerProvider.notifier)
+                                  .read(memberUpdateControllerProvider.notifier)
                                   .updateMember(
                                     userId: userId,
                                     memberId: e.memberId,
