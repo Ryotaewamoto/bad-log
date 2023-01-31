@@ -171,8 +171,10 @@ final typesSeparatedResultsProvider =
               (element) => element.any(
                 (e) =>
                     e.partner == result.partner &&
-                    e.opponents[0] == result.opponents[0] &&
-                    e.opponents[1] == result.opponents[1],
+                        (e.opponents[0] == result.opponents[0] &&
+                            e.opponents[1] == result.opponents[1]) ||
+                    (e.opponents[0] == result.opponents[1] &&
+                        e.opponents[1] == result.opponents[0]),
               ),
             )) {
               doublesResults
@@ -180,8 +182,10 @@ final typesSeparatedResultsProvider =
                     (element) => element.any(
                       (e) =>
                           e.partner == result.partner &&
-                          e.opponents[0] == result.opponents[0] &&
-                          e.opponents[1] == result.opponents[1],
+                              (e.opponents[0] == result.opponents[0] &&
+                                  e.opponents[1] == result.opponents[1]) ||
+                          (e.opponents[0] == result.opponents[1] &&
+                              e.opponents[1] == result.opponents[0]),
                     ),
                   )
                   .add(result);

@@ -39,7 +39,7 @@ class SettingsPage extends HookConsumerWidget {
             // ログインできたらスナックバーでメッセージを表示してホーム画面に遷移する
             ref
                 .read(scaffoldMessengerServiceProvider)
-                .showSnackBar('You are logged out !');
+                .showSnackBar('ログアウトしました！');
 
             await Navigator.pushAndRemoveUntil<dynamic>(
               context,

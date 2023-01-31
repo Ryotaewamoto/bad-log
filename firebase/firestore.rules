@@ -79,8 +79,8 @@ service cloud.firestore {
         && request.resource.data.type == 'singles' || request.resource.data.type == 'doubles'
         && request.resource.data.comment.size() >= 0
         && request.resource.data.comment.size() <= 200
-        && request.resource.data.opponents.size >= 1
-        && request.resource.data.opponents.size <= 2
+        && request.resource.data.opponents.size() >= 1
+        && request.resource.data.opponents.size() <= 2
         && request.resource.data.yourScore.size() == request.resource.data.opponentsScore.size()
         && request.resource.data.createdAt == request.time
         );

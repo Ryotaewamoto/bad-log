@@ -52,7 +52,7 @@ class CreateResultPage extends HookConsumerWidget {
               // ログインできたらスナックバーでメッセージを表示してホーム画面に遷移する
               ref
                   .read(scaffoldMessengerServiceProvider)
-                  .showSnackBar('Success !');
+                  .showSnackBar('試合結果を追加しました！');
 
               Navigator.of(context).pop();
             },
