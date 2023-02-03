@@ -14,7 +14,7 @@ import '../../utils/text_styles.dart';
 import '../../widgets/gradation_background.dart';
 import '../../widgets/rounded_button.dart';
 import '../../widgets/white_app_bar.dart';
-import '../home_page.dart';
+import '../home/home_page.dart';
 import 'src/log_in.dart';
 
 class LogInPage extends HookConsumerWidget {

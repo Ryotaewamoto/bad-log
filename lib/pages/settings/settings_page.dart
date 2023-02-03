@@ -2,21 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../features/auth/sign_out.dart';
-import '../features/member.dart';
-import '../repositories/auth/auth_repository_impl.dart';
-import '../utils/async_value_error_dialog.dart';
-import '../utils/constants/app_colors.dart';
-import '../utils/constants/string.dart';
-import '../utils/dialog.dart';
-import '../utils/exceptions/app_exception.dart';
-import '../utils/loading.dart';
-import '../utils/scaffold_messenger_service.dart';
-import '../utils/text_styles.dart';
-import '../widgets/white_app_bar.dart';
-import 'auth_page.dart';
-import 'delete_account_page.dart';
-import 'member_list_page.dart';
+import '../../features/auth/sign_out.dart';
+import '../../features/member.dart';
+import '../../repositories/auth/auth_repository_impl.dart';
+import '../../utils/async_value_error_dialog.dart';
+import '../../utils/constants/app_colors.dart';
+import '../../utils/constants/string.dart';
+import '../../utils/dialog.dart';
+import '../../utils/exceptions/app_exception.dart';
+import '../../utils/loading.dart';
+import '../../utils/scaffold_messenger_service.dart';
+import '../../utils/text_styles.dart';
+import '../../widgets/white_app_bar.dart';
+import '../auth_page.dart';
+import '../delete_account/delete_account_page.dart';
+import '../member_list/member_list_page.dart';
 
 class SettingsPage extends HookConsumerWidget {
   const SettingsPage({super.key});

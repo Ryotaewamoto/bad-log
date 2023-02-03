@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../features/auth/delete_account.dart';
-import '../utils/async_value_error_dialog.dart';
-import '../utils/constants/app_colors.dart';
-import '../utils/constants/measure.dart';
-import '../utils/dialog.dart';
-import '../utils/loading.dart';
-import '../utils/scaffold_messenger_service.dart';
-import '../utils/text_styles.dart';
-import '../widgets/rounded_button.dart';
-import '../widgets/white_app_bar.dart';
-import 'auth_page.dart';
+import '../../features/auth/delete_account.dart';
+import '../../utils/async_value_error_dialog.dart';
+import '../../utils/constants/app_colors.dart';
+import '../../utils/constants/measure.dart';
+import '../../utils/dialog.dart';
+import '../../utils/loading.dart';
+import '../../utils/scaffold_messenger_service.dart';
+import '../../utils/text_styles.dart';
+import '../../widgets/rounded_button.dart';
+import '../../widgets/white_app_bar.dart';
+import '../auth_page.dart';
 
 class DeleteAccountPage extends HookConsumerWidget {
   const DeleteAccountPage({super.key});

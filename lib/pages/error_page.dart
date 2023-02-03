@@ -5,6 +5,10 @@ class ErrorPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return const Scaffold(
+      body: Center(
+        child: Text('エラーが発生しました。'),
+      ),
+    );
   }
 }
