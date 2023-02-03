@@ -1,39 +1,18 @@
 # Bad Log
 
-バドミントンの試合結果を記録するアプリ
+バドミントンの試合結果をサクッと記録できるアプリ
 
-## 開発の進め方
+[App Store](https://apps.apple.com/us/app/badlog/id1666920940?platform=iphone)
 
-開発に関して、``develop``ブランチからブランチを切って作業を行う。ブランチ名は``{自分の名前}/#{issue番号}_{実装内容の概略}``で行う。プルリクは少なくとも一人から``approve``されている状態で``develop``ブランチにマージする。
+[Google Play]() (審査中)
 
-### ローカルでの開発の準備
+## スクリーンショット（全画面）
 
-#### リポジトリの複製
+| get_started | log_in | sign_up |
+----|----|----
+| <img src="https://user-images.githubusercontent.com/75112184/216643981-f739adcf-bb34-4945-8ee7-cbfc8af9db7a.png" width=300> | <img src="https://user-images.githubusercontent.com/75112184/216643971-d83866fb-bc14-411f-b1e2-9860fbe901aa.png" width=300> | <img src="https://user-images.githubusercontent.com/75112184/216643946-5c5c1667-c32d-4c8d-af8e-7e239b17cd5e.png" width=300> |
 
-Github のリポジトリを複製するために任意のディレクトリで以下のコマンドを実行してください。
+## その他
 
-```shell
-git clone https://github.com/Ryotaewamoto/bad-log.git
-```
+[開発者を始める方はこちら]()
 
-or
-
-```shell
-git clone git@github.com:Ryotaewamoto/bad-log.git
-```
-
-#### FVM の導入
-
-Flutter のバージョンを統一するために[Flutter Version Management(略して、FVM)](https://fvm.app/)を使用します。まだインストールが済んでいない場合は[この記事](https://zenn.dev/altiveinc/articles/flutter-version-management)を参考にインストールをしてください。
-
-このプロジェクトでは Flutter のバージョンは``3.3.10``を使用するのでルートディレクトリ（``bad-log``）で以下のコマンドを実行してください。
-
-```shell
-fvm use 3.3.10
-```
-
-#### デバックビルドの確認
-
-Android（iOSも同様）のエミュレータを起動し以下の操作を行い、デバックビルドが``mobile dev``と``mobile prod``で通るかどうかを確認してください。(VSCodeの場合)
-
-<img src="https://user-images.githubusercontent.com/75112184/210572448-2b8be289-e06c-4a70-9a73-07b4d594b745.png" width=70%>
