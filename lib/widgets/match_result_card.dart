@@ -13,6 +13,7 @@ import '../utils/constants/measure.dart';
 import '../utils/extensions/date_time.dart';
 import '../utils/text_styles.dart';
 
+/// 試合結果の概要を表示するカードのような [Widget]
 class MatchResultCard extends HookConsumerWidget {
   const MatchResultCard({
     required this.result,

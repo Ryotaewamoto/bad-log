@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'constants/app_colors.dart';
 
+/// [TextFormField] の引数 [InputDecoration] に渡すフォームのスタイル
 class AppTextFormStyles {
   AppTextFormStyles();
 

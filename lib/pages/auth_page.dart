@@ -5,7 +5,7 @@ import '../repositories/auth/auth_repository_impl.dart';
 import '../utils/extensions/widget_ref.dart';
 import '../utils/loading.dart';
 import 'error_page.dart';
-import 'get_started_page.dart';
+import 'get_started/get_started_page.dart';
 import 'home_page.dart';
 
 /// 注意：画面遷移に [MaterialPageRoute] を採用しているので、ローディング時に重ねる

@@ -11,6 +11,7 @@ import '../../utils/constants/measure.dart';
 import '../../utils/loading.dart';
 import '../../utils/scaffold_messenger_service.dart';
 import '../../utils/text_styles.dart';
+import '../../widgets/gradation_background.dart';
 import '../../widgets/rounded_button.dart';
 import '../../widgets/white_app_bar.dart';
 import '../home_page.dart';

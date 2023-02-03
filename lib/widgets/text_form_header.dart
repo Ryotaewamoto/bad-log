@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../utils/constants/app_colors.dart';
 import '../utils/text_styles.dart';
 
+/// [TextFormField] の上に置くテキストの [Widget]
 class TextFormHeader extends StatelessWidget {
   const TextFormHeader({
     required this.title,

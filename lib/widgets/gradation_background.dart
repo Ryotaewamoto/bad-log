@@ -2,22 +2,25 @@ import 'package:flutter/material.dart';
 
 import '/utils/constants/app_colors.dart';
 
+/// グラデーションをつけた背景の [Widget]
 class GradationBackground extends StatelessWidget {
-  const GradationBackground({super.key});
+  const GradationBackground({this.startPoint = 0.80, super.key});
+
+  final double startPoint;
 
   @override
   Widget build(BuildContext context) {
-    return const SizedBox.expand(
+    return SizedBox.expand(
       child: DecoratedBox(
         decoration: BoxDecoration(
           gradient: LinearGradient(
             stops: [
-              0.80,
+              startPoint,
               1.0,
             ],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
-            colors: <Color>[
+            colors: const <Color>[
               AppColors.baseWhite,
               AppColors.accent,
             ],
