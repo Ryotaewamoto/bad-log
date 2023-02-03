@@ -7,7 +7,7 @@ import 'package:infinite_listview/infinite_listview.dart';
 typedef TextMapper = String Function(String numberText);
 
 /// 参考: https://pub.dev/packages/numberpicker
-/// 
+///
 /// 更新が2年近く止まっているので一部修正をして使用。
 class NumberPicker extends StatefulWidget {
   const NumberPicker({
