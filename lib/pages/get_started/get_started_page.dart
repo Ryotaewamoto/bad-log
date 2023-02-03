@@ -6,7 +6,7 @@ import '../../widgets/gradation_background.dart';
 import '../../widgets/rounded_button.dart';
 import '../../widgets/white_app_bar.dart';
 import '../log_in/log_in_page.dart';
-import '../sign_up_page.dart';
+import '../sign_up/sign_up_page.dart';
 import 'src/get_started.dart';
 
 class GetStartedPage extends StatelessWidget {
@@ -41,9 +41,7 @@ class GetStartedPage extends StatelessWidget {
                   const AppTitleText(),
                   Measure.g_32,
                   Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 32,
-                    ),
+                    padding: Measure.p_h32,
                     child: PrimaryRoundedButton(
                       text: 'アカウント作成',
                       onTap: () {
@@ -56,9 +54,7 @@ class GetStartedPage extends StatelessWidget {
                   ),
                   Measure.g_16,
                   Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 32,
-                    ),
+                    padding: Measure.p_h32,
                     child: SecondaryRoundedButton(
                       text: 'ログイン',
                       onTap: () async {

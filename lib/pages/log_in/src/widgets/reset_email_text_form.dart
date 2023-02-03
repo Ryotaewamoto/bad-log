@@ -17,9 +17,7 @@ class ResetEmailTextForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(
-        horizontal: 32,
-      ),
+      padding: Measure.p_h32,
       child: Column(
         children: [
           const TextFormHeader(

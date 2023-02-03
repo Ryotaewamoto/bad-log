@@ -16,8 +16,6 @@ import '../../widgets/rounded_button.dart';
 import '../../widgets/white_app_bar.dart';
 import '../home_page.dart';
 import 'src/log_in.dart';
-import 'src/widgets/reset_email_text_form.dart';
-import 'src/widgets/reset_password_back_button.dart';
 
 class LogInPage extends HookConsumerWidget {
   const LogInPage({super.key});
@@ -116,9 +114,9 @@ class LogInPage extends HookConsumerWidget {
 
     // Hooks
     final isObscure = useState(true);
-    final useEmailController = useTextEditingController();
-    final usePasswordController = useTextEditingController();
-    final useSendEmailController = useTextEditingController();
+    final emailController = useTextEditingController();
+    final passwordController = useTextEditingController();
+    final sendEmailController = useTextEditingController();
 
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
@@ -145,11 +143,11 @@ class LogInPage extends HookConsumerWidget {
                       ),
                       Measure.g_24,
                       EmailTextForm(
-                        controller: useEmailController,
+                        controller: emailController,
                       ),
                       Measure.g_16,
                       PasswordTextForm(
-                        controller: usePasswordController,
+                        controller: passwordController,
                         isObscure: isObscure,
                       ),
                       Measure.g_32,
@@ -157,7 +155,7 @@ class LogInPage extends HookConsumerWidget {
                         onTap: () async {
                           await _sendPasswordResetEmailSheet(
                             context,
-                            useSendEmailController,
+                            sendEmailController,
                             sendEmailState,
                             ref,
                           );
@@ -165,7 +163,7 @@ class LogInPage extends HookConsumerWidget {
                       ),
                       Measure.g_32,
                       Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 32),
+                        padding: Measure.p_h32,
                         child: PrimaryRoundedButton(
                           text: 'ログイン',
                           onTap: signInstate.isLoading
@@ -174,9 +172,9 @@ class LogInPage extends HookConsumerWidget {
                                   await ref
                                       .read(signInControllerProvider.notifier)
                                       .signIn(
-                                        email: useEmailController.value.text,
+                                        email: emailController.value.text,
                                         password:
-                                            usePasswordController.value.text,
+                                            passwordController.value.text,
                                       );
                                 },
                         ),
@@ -231,9 +229,7 @@ class LogInPage extends HookConsumerWidget {
               ),
               Measure.g_60,
               Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 32,
-                ),
+                padding: Measure.p_h32,
                 child: SecondaryRoundedButton(
                   text: '送信',
                   onTap: sendEmailState.isLoading

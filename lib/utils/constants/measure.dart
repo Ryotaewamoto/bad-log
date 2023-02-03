@@ -16,6 +16,8 @@ class Measure {
   static const double s_20 = 20;
   static const double s_32 = 32;
   static const double s_60 = 60;
+  static const double s_48 = 48;
+
   static const double s_80 = 80;
 
   // MARK: - Gap
@@ -62,6 +64,10 @@ class Measure {
   static const EdgeInsets p_v16 = EdgeInsets.symmetric(vertical: Measure.s_16);
   static const EdgeInsets p_a16 = EdgeInsets.all(Measure.s_16);
   static const EdgeInsets p_v20 = EdgeInsets.symmetric(vertical: Measure.s_20);
+  static const EdgeInsets p_h32 =
+      EdgeInsets.symmetric(horizontal: Measure.s_32);
+  static const EdgeInsets p_h48 =
+      EdgeInsets.symmetric(horizontal: Measure.s_48);
 
   // MARK: - Corner Radius
 

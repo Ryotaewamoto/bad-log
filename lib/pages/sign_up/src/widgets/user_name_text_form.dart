@@ -4,15 +4,13 @@ import '/utils/constants/measure.dart';
 import '/utils/text_form_styles.dart';
 import '/widgets/text_form_header.dart';
 
-class PasswordTextForm extends StatelessWidget {
-  const PasswordTextForm({
+class UserNameTextForm extends StatelessWidget {
+  const UserNameTextForm({
     required this.controller,
-    required this.isObscure,
     super.key,
   });
 
   final TextEditingController controller;
-  final ValueNotifier<bool> isObscure;
 
   @override
   Widget build(BuildContext context) {
@@ -20,13 +18,13 @@ class PasswordTextForm extends StatelessWidget {
       padding: Measure.p_h32,
       child: Column(
         children: [
-          const TextFormHeader(title: 'パスワード'),
+          const TextFormHeader(title: 'ユーザ名'),
           Measure.g_4,
           TextFormField(
-            obscureText: isObscure.value,
+            maxLength: 20,
             controller: controller,
-            decoration: AppTextFormStyles.onPassword(
-              isObscure: isObscure,
+            decoration: AppTextFormStyles.onGeneral(
+              iconData: Icons.account_circle,
             ),
           ),
         ],
