@@ -6,7 +6,7 @@ import '../utils/constants/measure.dart';
 import '../utils/text_styles.dart';
 import '../widgets/rounded_button.dart';
 import '../widgets/white_app_bar.dart';
-import 'log_in_page.dart';
+import 'log_in/log_in_page.dart';
 import 'sign_up_page.dart';
 
 class GetStartedPage extends StatelessWidget {

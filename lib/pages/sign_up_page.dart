@@ -17,6 +17,7 @@ import '../utils/scaffold_messenger_service.dart';
 import '../utils/text_form_styles.dart';
 import '../utils/text_styles.dart';
 import '../widgets/rounded_button.dart';
+import '../widgets/text_form_header.dart';
 import '../widgets/white_app_bar.dart';
 import 'home_page.dart';
 
@@ -118,7 +119,7 @@ class SignUpPage extends HookConsumerWidget {
                           height: 200,
                         ),
                         Measure.g_24,
-                        const TextFormHeader(title: 'User Name'),
+                        const TextFormHeader(title: 'ユーザ名'),
                         Measure.g_4,
                         TextFormField(
                           maxLength: 20,
@@ -128,7 +129,7 @@ class SignUpPage extends HookConsumerWidget {
                           ),
                         ),
                         Measure.g_16,
-                        const TextFormHeader(title: 'Email'),
+                        const TextFormHeader(title: 'メールアドレス'),
                         Measure.g_4,
                         TextFormField(
                           controller: useEmailController,
@@ -137,7 +138,7 @@ class SignUpPage extends HookConsumerWidget {
                           ),
                         ),
                         Measure.g_16,
-                        const TextFormHeader(title: 'Password'),
+                        const TextFormHeader(title: 'パスワード'),
                         Measure.g_4,
                         TextFormField(
                           obscureText: isObscure.value,
