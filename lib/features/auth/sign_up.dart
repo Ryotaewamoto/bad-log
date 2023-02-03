@@ -25,6 +25,7 @@ class SignUpController extends AutoDisposeAsyncNotifier<void> {
 
   /// 新規登録する
   Future<void> signUp({
+    required bool isCheckTerms,
     required String userName,
     required String email,
     required String password,
@@ -37,6 +38,13 @@ class SignUpController extends AutoDisposeAsyncNotifier<void> {
     // ログイン処理を実行する
     state = await AsyncValue.guard(() async {
       try {
+        if (isCheckTerms == false) {
+          const exception = AppException(
+            message: '利用規約とプライバシーポリシーに同意してください。',
+          );
+          throw exception;
+        }
+
         if (userName.isEmpty || email.isEmpty || password.isEmpty) {
           const exception = AppException(
             message: 'ユーザ名、メールアドレス、パスワードを入力してください。',

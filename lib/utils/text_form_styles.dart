@@ -1,27 +1,8 @@
 import 'package:flutter/material.dart';
 
 import 'constants/app_colors.dart';
-import 'text_styles.dart';
 
-class TextFormHeader extends StatelessWidget {
-  const TextFormHeader({
-    required this.title,
-    this.color = AppColors.baseBlack,
-    super.key,
-  });
-
-  final String title;
-  final Color color;
-
-  @override
-  Widget build(BuildContext context) {
-    return Align(
-      alignment: Alignment.centerLeft,
-      child: Text(title, style: TextStyles.h4(color: color)),
-    );
-  }
-}
-
+/// [TextFormField] の引数 [InputDecoration] に渡すフォームのスタイル
 class AppTextFormStyles {
   AppTextFormStyles();
 

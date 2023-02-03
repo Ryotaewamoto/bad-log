@@ -4,6 +4,7 @@ import '../utils/constants/app_colors.dart';
 import '../utils/constants/measure.dart';
 import '../utils/text_styles.dart';
 
+/// メインで使用するボタン
 class PrimaryRoundedButton extends StatelessWidget {
   const PrimaryRoundedButton({
     required this.text,
@@ -46,6 +47,7 @@ class PrimaryRoundedButton extends StatelessWidget {
   }
 }
 
+/// サブで使用するボタン
 class SecondaryRoundedButton extends StatelessWidget {
   const SecondaryRoundedButton({
     required this.text,

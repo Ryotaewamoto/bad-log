@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../features/result.dart';
-import '../models/result.dart';
-import '../utils/constants/app_colors.dart';
-import '../utils/constants/measure.dart';
-import '../widgets/app_over_scroll_indicator.dart';
-import '../widgets/match_result_card.dart';
-import '../widgets/white_app_bar.dart';
-import 'account_page.dart';
-import 'create_result_page.dart';
+import '../../features/result.dart';
+import '../../models/result.dart';
+import '../../utils/constants/app_colors.dart';
+import '../../utils/constants/measure.dart';
+import '../../widgets/app_over_scroll_indicator.dart';
+import '../../widgets/match_result_card.dart';
+import '../../widgets/white_app_bar.dart';
+import '../account/account_page.dart';
+import '../create_result/create_result_page.dart';
 
 class HomePage extends HookConsumerWidget {
   const HomePage({super.key});

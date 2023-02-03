@@ -49,9 +49,6 @@ app.*.map.json
 # Android App Icon
 **/android/app/src/main/res/mipmap*/
 
-# VSCode
-.vscode/
-
 # Firebase
 /lib/firebase_options_dev.dart
 /lib/firebase_options_prod.dart

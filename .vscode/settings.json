@@ -1,0 +1,49 @@
+{
+  // Dart 設定
+  "dart.runPubGetOnPubspecChanges": "never",
+  "dart.flutterSdkPath": ".fvm/flutter_sdk",
+  // JS, TS 関係
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnType": true,
+    "editor.codeActionsOnSave": {
+      "source.fixAll": true
+    }
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+      "source.fixAll": true
+    }
+  },
+  "eslint.workingDirectories": ["./firebase/functions"],
+  // スペルチェック除外
+  "cSpell.words": [
+    "commiphora",
+    "crassula",
+    "cupertino",
+    "densiflorum",
+    "firestore",
+    "fullscreen",
+    "haworthia",
+    "listview",
+    "makayense",
+    "orbicularis",
+    "pachypodium",
+    "riverpod",
+    "ryotaiwamoto",
+    "spinkit",
+    "unfocus",
+    "YYYYMMDDHHMM"
+  ],
+  // ファイルネスト設定
+  "explorer.fileNesting.enabled": true,
+  "explorer.fileNesting.expand": false,
+  "explorer.fileNesting.patterns": {
+    "pubspec.yaml": ".flutter-plugins, .packages, .dart_tool, .flutter-plugins-dependencies, .metadata, .packages, pubspec.lock, build.yaml, analysis_options.yaml, all_lint_rules.yaml",
+    ".gitignore": ".gitattributes, .gitmodules, .gitmessage, .mailmap, .git-blame*",
+    "readme.*": "authors, backers.md, changelog*, citation*, code_of_conduct.md, codeowners, contributing.md, contributors, copying, credits, governance.md, history.md, license*, maintainers, readme*, security.md, sponsors.md",
+    "*.dart": "$(capture).g.dart, $(capture).freezed.dart"
+  }
+}

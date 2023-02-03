@@ -7,12 +7,13 @@ import '../features/app_user.dart';
 import '../features/member.dart';
 import '../models/member.dart';
 import '../models/result.dart';
-import '../pages/result_page.dart';
+import '../pages/result/result_page.dart';
 import '../utils/constants/app_colors.dart';
 import '../utils/constants/measure.dart';
 import '../utils/extensions/date_time.dart';
 import '../utils/text_styles.dart';
 
+/// 試合結果の概要を表示するカードのような [Widget]
 class MatchResultCard extends HookConsumerWidget {
   const MatchResultCard({
     required this.result,

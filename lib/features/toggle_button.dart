@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../utils/result_types.dart';
+import '../utils/app/result_types.dart';
 
 /// アプリの表記のみ日本語。英語に対応する際は [.enName] を使用する。
 final List<Widget> types =

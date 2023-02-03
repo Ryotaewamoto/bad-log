@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../models/result.dart';
-import '../utils/constants/measure.dart';
-import '../widgets/app_over_scroll_indicator.dart';
-import '../widgets/match_result_card.dart';
-import '../widgets/white_app_bar.dart';
+import '../../models/result.dart';
+import '../../utils/constants/measure.dart';
+import '../../widgets/app_over_scroll_indicator.dart';
+import '../../widgets/match_result_card.dart';
+import '../../widgets/white_app_bar.dart';
 
 class SameMemberResultPage extends HookConsumerWidget {
   const SameMemberResultPage({
