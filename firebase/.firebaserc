@@ -1,0 +1,9 @@
+{
+  "projects": {
+    "default": "bad-log-2-dev",
+    "dev": "bad-log-2-dev",
+    "prod": "bad-log-2-prod"
+  },
+  "targets": {},
+  "etags": {}
+}
