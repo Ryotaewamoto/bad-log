@@ -100,20 +100,20 @@ class SignUpPage extends HookConsumerWidget {
                         height: 200,
                       ),
                       Measure.g_24,
-                      UserNameTextForm(
+                      _UserNameTextForm(
                         controller: userNameController,
                       ),
                       Measure.g_16,
-                      EmailTextForm(
+                      _EmailTextForm(
                         controller: emailController,
                       ),
                       Measure.g_16,
-                      PasswordTextForm(
+                      _PasswordTextForm(
                         controller: passwordController,
                         isObscure: isObscure,
                       ),
                       Measure.g_32,
-                      TermsAndPrivacyPolicyText(
+                      _TermsAndPrivacyPolicyText(
                         isCheckTerms: isCheckTerms,
                       ),
                       Measure.g_32,
@@ -150,10 +150,9 @@ class SignUpPage extends HookConsumerWidget {
   }
 }
 
-class UserNameTextForm extends StatelessWidget {
-  const UserNameTextForm({
+class _UserNameTextForm extends StatelessWidget {
+  const _UserNameTextForm({
     required this.controller,
-    super.key,
   });
 
   final TextEditingController controller;
@@ -179,11 +178,9 @@ class UserNameTextForm extends StatelessWidget {
   }
 }
 
-
-class EmailTextForm extends StatelessWidget {
-  const EmailTextForm({
+class _EmailTextForm extends StatelessWidget {
+  const _EmailTextForm({
     required this.controller,
-    super.key,
   });
 
   final TextEditingController controller;
@@ -207,11 +204,11 @@ class EmailTextForm extends StatelessWidget {
     );
   }
 }
-class PasswordTextForm extends StatelessWidget {
-  const PasswordTextForm({
+
+class _PasswordTextForm extends StatelessWidget {
+  const _PasswordTextForm({
     required this.controller,
     required this.isObscure,
-    super.key,
   });
 
   final TextEditingController controller;
@@ -237,10 +234,10 @@ class PasswordTextForm extends StatelessWidget {
     );
   }
 }
-class TermsAndPrivacyPolicyText extends HookConsumerWidget {
-  const TermsAndPrivacyPolicyText({
+
+class _TermsAndPrivacyPolicyText extends HookConsumerWidget {
+  const _TermsAndPrivacyPolicyText({
     required this.isCheckTerms,
-    super.key,
   });
 
   final ValueNotifier<bool> isCheckTerms;
