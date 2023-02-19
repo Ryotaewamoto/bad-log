@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 
 import '../../gen/assets.gen.dart';
+import '../../utils/constants/app_colors.dart';
 import '../../utils/constants/measure.dart';
+import '../../utils/text_styles.dart';
 import '../../widgets/gradation_background.dart';
 import '../../widgets/rounded_button.dart';
 import '../../widgets/white_app_bar.dart';
 import '../log_in/log_in_page.dart';
 import '../sign_up/sign_up_page.dart';
-import 'src/get_started.dart';
 
 class GetStartedPage extends StatelessWidget {
   const GetStartedPage({super.key});
@@ -38,7 +39,7 @@ class GetStartedPage extends StatelessWidget {
                     height: 280,
                   ),
                   Measure.g_32,
-                  const AppTitleText(),
+                  const _AppTitleText(),
                   Measure.g_32,
                   Padding(
                     padding: Measure.p_h32,
@@ -96,4 +97,30 @@ PageRouteBuilder<dynamic> _fadeAnimationBuilder({required Widget widget}) {
       );
     },
   );
+}
+
+class _AppTitleText extends StatelessWidget {
+  const _AppTitleText();
+
+  @override
+  Widget build(BuildContext context) {
+    return RichText(
+      text: TextSpan(
+        children: <TextSpan>[
+          TextSpan(
+            text: 'Welcome to ',
+            style: TextStyles.h2(),
+          ),
+          TextSpan(
+            text: 'BadLog',
+            style: TextStyles.h2(color: AppColors.primary),
+          ),
+          TextSpan(
+            text: ' !!',
+            style: TextStyles.h2(),
+          ),
+        ],
+      ),
+    );
+  }
 }
