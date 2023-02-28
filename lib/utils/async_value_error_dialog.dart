@@ -14,7 +14,7 @@ extension AsyncValueErrorDialog on AsyncValue<void> {
     if (!isLoading && hasError) {
       showExceptionAlertDialog(
         context: context,
-        title: 'Error',
+        title: 'エラー',
         exception: error,
       );
     }

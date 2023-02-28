@@ -1,21 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:gap/gap.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../features/auth/send_password_reset_email.dart';
-import '../features/auth/sign_in.dart';
-import '../gen/assets.gen.dart';
-import '../utils/async_value_error_dialog.dart';
-import '../utils/constants/app_colors.dart';
-import '../utils/constants/measure.dart';
-import '../utils/loading.dart';
-import '../utils/scaffold_messenger_service.dart';
-import '../utils/text_form_styles.dart';
-import '../utils/text_styles.dart';
-import '../widgets/rounded_button.dart';
-import '../widgets/white_app_bar.dart';
-import 'home_page.dart';
+import '../../features/auth/send_password_reset_email.dart';
+import '../../features/auth/sign_in.dart';
+import '../../gen/assets.gen.dart';
+import '../../utils/async_value_error_dialog.dart';
+import '../../utils/constants/app_colors.dart';
+import '../../utils/constants/measure.dart';
+import '../../utils/loading.dart';
+import '../../utils/scaffold_messenger_service.dart';
+import '../../utils/text_form_styles.dart';
+import '../../utils/text_styles.dart';
+import '../../widgets/gradation_background.dart';
+import '../../widgets/rounded_button.dart';
+import '../../widgets/text_form_header.dart';
+import '../../widgets/white_app_bar.dart';
+import '../home/home_page.dart';
 
 class LogInPage extends HookConsumerWidget {
   const LogInPage({super.key});
@@ -114,9 +115,9 @@ class LogInPage extends HookConsumerWidget {
 
     // Hooks
     final isObscure = useState(true);
-    final useEmailController = useTextEditingController();
-    final usePasswordController = useTextEditingController();
-    final useSendEmailController = useTextEditingController();
+    final emailController = useTextEditingController();
+    final passwordController = useTextEditingController();
+    final sendEmailController = useTextEditingController();
 
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
@@ -125,96 +126,61 @@ class LogInPage extends HookConsumerWidget {
         children: [
           Scaffold(
             appBar: const WhiteAppBar(
-              title: 'Log In',
+              title: 'ログイン',
               elevation: 0,
               automaticallyImplyLeading: true,
             ),
             body: Stack(
               children: [
-                const SizedBox.expand(
-                  child: DecoratedBox(
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        stops: [
-                          0.80,
-                          1.0,
-                        ],
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                        colors: <Color>[
-                          AppColors.baseWhite,
-                          AppColors.accent,
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
+                const GradationBackground(),
                 SingleChildScrollView(
                   reverse: true,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 32,
-                    ),
-                    child: Column(
-                      children: [
-                        Measure.g_24,
-                        Assets.images.badLogIcon.image(
-                          width: 200,
-                          height: 200,
-                        ),
-                        Measure.g_24,
-                        const TextFormHeader(title: 'Email'),
-                        Measure.g_4,
-                        TextFormField(
-                          controller: useEmailController,
-                          decoration: AppTextFormStyles.onGeneral(
-                            iconData: Icons.mail,
-                          ),
-                        ),
-                        Measure.g_16,
-                        const TextFormHeader(title: 'Password'),
-                        Measure.g_4,
-                        TextFormField(
-                          obscureText: isObscure.value,
-                          controller: usePasswordController,
-                          decoration: AppTextFormStyles.onPassword(
-                            isObscure: isObscure,
-                          ),
-                        ),
-                        Measure.g_32,
-                        InkWell(
-                          // behavior: HitTestBehavior.opaque,
-                          onTap: () async {
-                            await _sendPasswordResetEmailSheet(
-                              context,
-                              useSendEmailController,
-                              sendEmailState,
-                              ref,
-                            );
-                          },
-                          child: Text(
-                            'Lost your password?',
-                            style: TextStyles.p1(color: AppColors.secondary),
-                          ),
-                        ),
-                        Measure.g_32,
-                        PrimaryRoundedButton(
-                          text: 'Log In',
+                  child: Column(
+                    children: [
+                      Measure.g_24,
+                      Assets.images.badLogIcon.image(
+                        width: 200,
+                        height: 200,
+                      ),
+                      Measure.g_24,
+                      _EmailTextForm(
+                        controller: emailController,
+                      ),
+                      Measure.g_16,
+                      _PasswordTextForm(
+                        controller: passwordController,
+                        isObscure: isObscure,
+                      ),
+                      Measure.g_32,
+                      _ForgetPasswordTextButton(
+                        onTap: () async {
+                          await _sendPasswordResetEmailSheet(
+                            context,
+                            sendEmailController,
+                            sendEmailState,
+                            ref,
+                          );
+                        },
+                      ),
+                      Measure.g_32,
+                      Padding(
+                        padding: Measure.p_h32,
+                        child: PrimaryRoundedButton(
+                          text: 'ログイン',
                           onTap: signInstate.isLoading
                               ? null
                               : () async {
                                   await ref
                                       .read(signInControllerProvider.notifier)
                                       .signIn(
-                                        email: useEmailController.value.text,
-                                        password:
-                                            usePasswordController.value.text,
+                                        email: emailController.value.text,
+                                        password: passwordController.value.text,
                                       );
                                 },
                         ),
-                        Measure.g_32,
-                      ],
-                    ),
+                      ),
+                      Measure.g_32,
+                    ],
                   ),
                 ),
               ],
@@ -242,63 +208,28 @@ class LogInPage extends HookConsumerWidget {
           onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
           child: Column(
             children: [
-              const Gap(80),
-              Align(
-                alignment: Alignment.centerLeft,
-                child: IconButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                  icon: const Icon(
-                    Icons.close,
-                    size: 32,
-                    color: AppColors.baseDark,
-                  ),
-                ),
-              ),
-              const Gap(60),
+              Measure.g_80,
+              const _ResetPasswordBackButton(),
+              Measure.g_60,
               const Icon(
                 Icons.lock,
                 size: 80,
                 color: AppColors.baseWhite,
               ),
-              const Gap(60),
+              Measure.g_60,
               Text(
                 'パスワードの再設定メールを送信',
                 style: TextStyles.h3(
                   color: AppColors.baseWhite,
                 ),
               ),
-              const Gap(60),
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 32,
-                ),
-                child: Column(
-                  children: [
-                    const TextFormHeader(
-                      title: 'Email',
-                      color: AppColors.baseWhite,
-                    ),
-                    Measure.g_16,
-                    TextFormField(
-                      style: TextStyles.p1(
-                        color: AppColors.baseWhite,
-                      ),
-                      controller: useSendEmailController,
-                      decoration: AppTextFormStyles.onGeneral(
-                        iconData: Icons.mail,
-                        color: AppColors.baseWhite,
-                      ),
-                    ),
-                  ],
-                ),
+              Measure.g_60,
+              _ResetEmailTextForm(
+                controller: useSendEmailController,
               ),
-              const Gap(60),
+              Measure.g_60,
               Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 32,
-                ),
+                padding: Measure.p_h32,
                 child: SecondaryRoundedButton(
                   text: '送信',
                   onTap: sendEmailState.isLoading
@@ -323,6 +254,137 @@ class LogInPage extends HookConsumerWidget {
         borderRadius: BorderRadius.only(
           topLeft: Measure.r_16,
           topRight: Measure.r_16,
+        ),
+      ),
+    );
+  }
+}
+
+class _EmailTextForm extends StatelessWidget {
+  const _EmailTextForm({
+    required this.controller,
+  });
+
+  final TextEditingController controller;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: Measure.p_h32,
+      child: Column(
+        children: [
+          const TextFormHeader(title: 'メールアドレス'),
+          Measure.g_4,
+          TextFormField(
+            controller: controller,
+            decoration: AppTextFormStyles.onGeneral(
+              iconData: Icons.mail,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _ForgetPasswordTextButton extends StatelessWidget {
+  const _ForgetPasswordTextButton({
+    required this.onTap,
+  });
+
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: onTap,
+      child: Text(
+        'パスワードを忘れた方はこちら',
+        style: TextStyles.p1(color: AppColors.secondary),
+      ),
+    );
+  }
+}
+
+class _PasswordTextForm extends StatelessWidget {
+  const _PasswordTextForm({
+    required this.controller,
+    required this.isObscure,
+  });
+
+  final TextEditingController controller;
+  final ValueNotifier<bool> isObscure;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: Measure.p_h32,
+      child: Column(
+        children: [
+          const TextFormHeader(title: 'パスワード'),
+          Measure.g_4,
+          TextFormField(
+            obscureText: isObscure.value,
+            controller: controller,
+            decoration: AppTextFormStyles.onPassword(
+              isObscure: isObscure,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _ResetEmailTextForm extends StatelessWidget {
+  const _ResetEmailTextForm({
+    required this.controller,
+  });
+
+  final TextEditingController controller;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: Measure.p_h32,
+      child: Column(
+        children: [
+          const TextFormHeader(
+            title: 'Email',
+            color: AppColors.baseWhite,
+          ),
+          Measure.g_16,
+          TextFormField(
+            style: TextStyles.p1(
+              color: AppColors.baseWhite,
+            ),
+            controller: controller,
+            decoration: AppTextFormStyles.onGeneral(
+              iconData: Icons.mail,
+              color: AppColors.baseWhite,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _ResetPasswordBackButton extends StatelessWidget {
+  const _ResetPasswordBackButton();
+
+  @override
+  Widget build(BuildContext context) {
+    return Align(
+      alignment: Alignment.centerLeft,
+      child: IconButton(
+        onPressed: () {
+          Navigator.of(context).pop();
+        },
+        icon: const Icon(
+          Icons.close,
+          size: 32,
+          color: AppColors.baseDark,
         ),
       ),
     );

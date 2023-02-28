@@ -1,114 +1,41 @@
-# Flutter開発ドキュメント
-ここにはFlutterのコードを書いていく上での基礎知識や気をつけるべき点についてまとめておく。
+# 開発者向けドキュメント
 
-## AppColors クラス
+開発に関して、``develop``ブランチからブランチを切って作業を行う。ブランチ名は``{自分の名前}/#{issue番号}_{実装内容の概略}``で行う。プルリクは少なくとも一人から``approve``されている状態で``develop``ブランチにマージする。
 
-ファイル: lib/utils/constants/app_colors.dart
+### ローカルでの開発の準備
 
-アプリ内の色はここから選択して使用する。クラスに定義されていない場合は随時追加する。
+#### リポジトリの複製
 
-### Example:
+Github のリポジトリを複製するために任意のディレクトリで以下のコマンドを実行してください。
 
-```dart
-Container(
-    color: AppColors.primary,
-    width: 100,
-    height: 100,
-),
+```shell
+git clone https://github.com/Ryotaewamoto/bad-log.git
 ```
 
-### Figure:
+or
 
-<img src="https://user-images.githubusercontent.com/75112184/210955347-36d5d30c-5c77-4fb0-ab20-6867476c22ef.png" width=30%>
-
-### 参考:
-
-https://24sy.jp/color-system/
-
-## Measure クラス
-
-ファイル: lib/utils/constants/measure.dart
-
-Padding 値や Widget と Widget に幅を持たせたい時などに使用する。名前に関しては以下のように省略して命名している。
-
-a...allの略
-
-t...topの略
-
-b...bottomの略
-
-l...leftの略
-
-r...rightの略
-
-v...verticalの略
-
-h...horizonの略
-
-br...border radiusの略
-
-### Example:
-
-```dart
-Center(
-    child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-            Padding(
-                padding: Measure.p_a16,
-                child: Container(
-                color: AppColors.primary,
-                width: 100,
-                height: 100,
-                ),
-            ),
-            Container(
-                color: AppColors.primary,
-                width: 100,
-                height: 100,
-            ),
-            Measure.g_16,
-            Container(
-                color: AppColors.secondary,
-                width: 100,
-                height: 100,
-            ),
-        ],
-    ),
-),
+```shell
+git clone git@github.com:Ryotaewamoto/bad-log.git
 ```
 
-### Figure:
+#### FVM の導入
 
-<img src="https://user-images.githubusercontent.com/75112184/210955358-e125f2f0-b53a-4db7-bb77-e23b1b02b140.png" width=30%>
+Flutter のバージョンを統一するために[Flutter Version Management(略して、FVM)](https://fvm.app/)を使用します。まだインストールが済んでいない場合は[この記事](https://zenn.dev/altiveinc/articles/flutter-version-management)を参考にインストールをしてください。
 
-### 参考:
+このプロジェクトでは Flutter のバージョンは``3.3.10``を使用するのでルートディレクトリ（``bad-log``）で以下のコマンドを実行してください。
 
-https://zenn.dev/sgr_ksmt/articles/13e7f1f5b4f33a
-
-## 画面遷移
-
-GoRouter や NamedRoute 等は使わずに下記のようにして画面遷移を行う。
-
-```dart
-onPressed: () {
-    Navigator.push(
-    context,
-    MaterialPageRoute<bool>(
-        builder: (_) => const AccountPage(),
-    ),
-    );
-},
+```shell
+fvm use 3.3.10
 ```
 
-もし、前の画面戻りたくない場合には下記のように記述する。
+#### Firebase の API key
 
-```dart
-Navigator.pushAndRemoveUntil<dynamic>(
-    context,
-    MaterialPageRoute<dynamic>(
-        builder: (_) => const LogInPage(),
-    ),
-    (_) => false,
-);
-```
+既存の開発者にファイルを送信するようにお伝えください。
+
+
+#### デバックビルドの確認
+
+Android（iOSも同様）のエミュレータを起動し以下の操作を行い、デバックビルドが ``mobile-dev`` と ``mobile-prod`` で通るかどうかを確認してください。(VSCodeの場合)
+
+<img src="https://user-images.githubusercontent.com/75112184/210572448-2b8be289-e06c-4a70-9a73-07b4d594b745.png" width=70%>
+

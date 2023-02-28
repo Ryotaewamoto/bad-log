@@ -4,6 +4,9 @@ import 'package:flutter/material.dart';
 
 import 'numberpicker.dart';
 
+/// 参考: https://pub.dev/packages/numberpicker
+///
+/// 更新が2年近く止まっているので一部修正をして使用。
 class DecimalNumberPicker extends StatelessWidget {
   const DecimalNumberPicker({
     super.key,

@@ -6,8 +6,8 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../models/result.dart';
 import '../repositories/auth/auth_repository_impl.dart';
 import '../repositories/result/result_repository_impl.dart';
+import '../utils/app/result_types.dart';
 import '../utils/exceptions/app_exception.dart';
-import '../utils/result_types.dart';
 
 /// ユーザーの results コレクションを購読する [StreamProvider]。
 final resultsProvider = StreamProvider.autoDispose<List<Result>>((ref) {

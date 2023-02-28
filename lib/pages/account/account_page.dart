@@ -3,21 +3,21 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gap/gap.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../features/app_user.dart';
-import '../features/member.dart';
-import '../features/result.dart';
-import '../features/toggle_button.dart';
-import '../models/member.dart';
-import '../models/result.dart';
-import '../utils/constants/app_colors.dart';
-import '../utils/constants/measure.dart';
-import '../utils/extensions/date_time.dart';
-import '../utils/loading.dart';
-import '../utils/text_styles.dart';
-import '../widgets/app_over_scroll_indicator.dart';
-import '../widgets/white_app_bar.dart';
-import 'same_member_result_page.dart';
-import 'settings_page.dart';
+import '../../features/app_user.dart';
+import '../../features/member.dart';
+import '../../features/result.dart';
+import '../../features/toggle_button.dart';
+import '../../models/member.dart';
+import '../../models/result.dart';
+import '../../utils/constants/app_colors.dart';
+import '../../utils/constants/measure.dart';
+import '../../utils/extensions/date_time.dart';
+import '../../utils/loading.dart';
+import '../../utils/text_styles.dart';
+import '../../widgets/app_over_scroll_indicator.dart';
+import '../../widgets/white_app_bar.dart';
+import '../same_member_result/same_member_result_page.dart';
+import '../settings/settings_page.dart';
 
 class AccountPage extends HookConsumerWidget {
   const AccountPage({super.key});
