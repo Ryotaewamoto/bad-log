@@ -53,118 +53,21 @@ Tools • Dart 2.18.6 • DevTools 2.15.0
 
 ## フォルダ構成
 
+基本的な構成は以下の図のようになります。
+
+<img src="https://user-images.githubusercontent.com/75112184/228169653-23ab4342-1b01-4dba-84a8-f78c89931f3c.png" width=600>
+
 ```
 .
 ├── app.dart
 ├── features（状態管理）
-│   ├── app_user.dart
-│   ├── auth
-│   │   ├── delete_account.dart
-│   │   ├── send_password_reset_email.dart
-│   │   ├── sign_in.dart
-│   │   ├── sign_out.dart
-│   │   └── sign_up.dart
-│   ├── dropdown_button.dart
-│   ├── member.dart
-│   ├── radio_button.dart
-│   ├── result.dart
-│   └── toggle_button.dart
-├── gen
-│   ├── assets.gen.dart
-│   └── fonts.gen.dart
+├── gen（画像やフォント）
 ├── main.dart
 ├── models（ドメイン）
-│   ├── app_user.dart
-│   ├── app_user.freezed.dart
-│   ├── app_user.g.dart
-│   ├── deleted_user.dart
-│   ├── deleted_user.freezed.dart
-│   ├── deleted_user.g.dart
-│   ├── member.dart
-│   ├── member.freezed.dart
-│   ├── member.g.dart
-│   ├── result.dart
-│   ├── result.freezed.dart
-│   └── result.g.dart
 ├── pages（画面）
-│   ├── account
-│   │   └── account_page.dart
-│   ├── auth_page.dart
-│   ├── create_result
-│   │   └── create_result_page.dart
-│   ├── delete_account
-│   │   └── delete_account_page.dart
-│   ├── error_page.dart
-│   ├── get_started
-│   │   └── get_started_page.dart
-│   ├── home
-│   │   └── home_page.dart
-│   ├── log_in
-│   │   └── log_in_page.dart
-│   ├── member_list
-│   │   └── member_list_page.dart
-│   ├── result
-│   │   └── result_page.dart
-│   ├── same_member_result
-│   │   └── same_member_result_page.dart
-│   ├── settings
-│   │   └── settings_page.dart
-│   └── sign_up
-│       └── sign_up_page.dart
 ├── repositories（リポジトリ）
-│   ├── app_user
-│   │   ├── app_user_repository.dart
-│   │   └── app_user_repository_impl.dart
-│   ├── auth
-│   │   ├── auth_repository.dart
-│   │   └── auth_repository_impl.dart
-│   ├── member
-│   │   ├── member_repository.dart
-│   │   └── member_repository_impl.dart
-│   └── result
-│       ├── result_repository.dart
-│       └── result_repository_impl.dart
 ├── utils（定数やダイアログ、ローディングなど）
-│   ├── app
-│   │   ├── result_format.dart
-│   │   └── result_types.dart
-│   ├── async_value_error_dialog.dart
-│   ├── connectivity.dart
-│   ├── constants
-│   │   ├── app_colors.dart
-│   │   ├── measure.dart
-│   │   ├── member.dart
-│   │   ├── snack_bar.dart
-│   │   └── string.dart
-│   ├── dialog.dart
-│   ├── exceptions
-│   │   └── app_exception.dart
-│   ├── extensions
-│   │   ├── date_time.dart
-│   │   ├── firebase_auth_exception.dart
-│   │   ├── string.dart
-│   │   └── widget_ref.dart
-│   ├── firestore_refs.dart
-│   ├── global_key.dart
-│   ├── json_converters
-│   │   ├── union_timestamp.dart
-│   │   └── union_timestamp.freezed.dart
-│   ├── loading.dart
-│   ├── logger.dart
-│   ├── scaffold_messenger_service.dart
-│   ├── settings.dart
-│   ├── text_form_styles.dart
-│   └── text_styles.dart
 └── widgets（共通ウィジェット）
-    ├── app_over_scroll_indicator.dart
-    ├── gradation_background.dart
-    ├── match_result_card.dart
-    ├── number_picker
-    │   ├── decimal_numberpicker.dart
-    │   └── numberpicker.dart
-    ├── rounded_button.dart
-    ├── text_form_header.dart
-    └── white_app_bar.dart
 ```
 
 ## 今後の予定
